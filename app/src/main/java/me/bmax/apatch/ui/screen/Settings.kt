@@ -454,149 +454,55 @@ fun SettingScreen() {
                 summary = stringResource(id = R.string.settings_hide_apatch_card_summary),
                 checked = hideApatchCard
             ) {
-                APApplication.sharedPreferences.edit {
-                    putBoolean("hide_apatch_card", it)
-                }
+                prefs.edit { putBoolean("hide_apatch_card", it) }
                 hideApatchCard = it
             }
-            
-            // Home Layout Style
-            val showHomeLayoutDialog = remember { mutableStateOf(false) }
-            val homeLayoutStyle = prefs.getString("home_layout_style", "default")
-            
-            ListItem(
-                headlineContent = { Text(stringResource(R.string.settings_home_layout_style)) },
-                modifier = Modifier.clickable {
-                    showHomeLayoutDialog.value = true
-                },
-                supportingContent = {
-                    Text(
-                        text = if (homeLayoutStyle == "kernelsu") stringResource(R.string.settings_home_layout_grid) else stringResource(R.string.settings_home_layout_default),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.outline
+
+            // Night Mode Settings
+            val isNightModeSupported = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+            if (isNightModeSupported) {
+                var nightModeFollowSys by rememberSaveable {
+                    mutableStateOf(
+                        prefs.getBoolean("night_mode_follow_sys", true)
                     )
-                },
-                leadingContent = { Icon(Icons.Filled.AspectRatio, null) }
-            )
-            
-            if (showHomeLayoutDialog.value) {
-                HomeLayoutChooseDialog(showHomeLayoutDialog)
-            }
-
-            // Home Page Hide Settings
-            var hideSuPath by rememberSaveable {
-                mutableStateOf(
-                    prefs.getBoolean("hide_su_path", false)
-                )
-            }
-            SwitchItem(
-                icon = if (hideSuPath) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
-                title = stringResource(id = R.string.home_hide_su_path),
-                summary = stringResource(id = R.string.home_hide_su_path_summary),
-                checked = hideSuPath
-            ) {
-                APApplication.sharedPreferences.edit {
-                    putBoolean("hide_su_path", it)
                 }
-                hideSuPath = it
-            }
-            
-            var hideKpatchVersion by rememberSaveable {
-                mutableStateOf(
-                    prefs.getBoolean("hide_kpatch_version", false)
-                )
-            }
-            SwitchItem(
-                icon = if (hideKpatchVersion) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
-                title = stringResource(id = R.string.home_hide_kpatch_version),
-                summary = stringResource(id = R.string.home_hide_kpatch_version_summary),
-                checked = hideKpatchVersion
-            ) {
-                APApplication.sharedPreferences.edit {
-                    putBoolean("hide_kpatch_version", it)
-                }
-                hideKpatchVersion = it
-            }
-            
-            var hideFingerprint by rememberSaveable {
-                mutableStateOf(
-                    prefs.getBoolean("hide_fingerprint", false)
-                )
-            }
-            SwitchItem(
-                icon = if (hideFingerprint) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
-                title = stringResource(id = R.string.home_hide_fingerprint),
-                summary = stringResource(id = R.string.home_hide_fingerprint_summary),
-                checked = hideFingerprint
-            ) {
-                APApplication.sharedPreferences.edit {
-                    putBoolean("hide_fingerprint", it)
-                }
-                hideFingerprint = it
-            }
-
-            var simpleKernelVersionMode by rememberSaveable {
-                mutableStateOf(
-                    prefs.getBoolean("simple_kernel_version_mode", false)
-                )
-            }
-            SwitchItem(
-                icon = if (simpleKernelVersionMode) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
-                title = stringResource(id = R.string.settings_simple_kernel_version_mode),
-                summary = stringResource(id = R.string.settings_simple_kernel_version_mode_summary),
-                checked = simpleKernelVersionMode
-            ) {
-                APApplication.sharedPreferences.edit {
-                    putBoolean("simple_kernel_version_mode", it)
-                }
-                simpleKernelVersionMode = it
-            }
-
-
-
-            // Night Mode Follow System
-            val refreshThemeObserver by refreshTheme.observeAsState(false)
-            var nightFollowSystem by rememberSaveable {
-                mutableStateOf(
-                    prefs.getBoolean("night_mode_follow_sys", true)
-                )
-            }
-            if (refreshThemeObserver) {
-                nightFollowSystem = prefs.getBoolean("night_mode_follow_sys", true)
-            }
-            SwitchItem(
-                icon = Icons.Filled.InvertColors,
-                title = stringResource(id = R.string.settings_night_mode_follow_sys),
-                summary = stringResource(id = R.string.settings_night_mode_follow_sys_summary),
-                checked = nightFollowSystem
-            ) {
-                prefs.edit { putBoolean("night_mode_follow_sys", it) }
-                nightFollowSystem = it
-                refreshTheme.value = true
-            }
-
-            // Custom Night Theme Switch
-            if (!nightFollowSystem) {
-                var nightThemeEnabled by rememberSaveable {
+                var nightModeEnabled by rememberSaveable {
                     mutableStateOf(
                         prefs.getBoolean("night_mode_enabled", false)
                     )
                 }
+                val refreshThemeObserver by refreshTheme.observeAsState(false)
                 if (refreshThemeObserver) {
-                    nightThemeEnabled = prefs.getBoolean("night_mode_enabled", false)
+                    nightModeFollowSys = prefs.getBoolean("night_mode_follow_sys", true)
+                    nightModeEnabled = prefs.getBoolean("night_mode_enabled", false)
                 }
+
                 SwitchItem(
                     icon = Icons.Filled.DarkMode,
-                    title = stringResource(id = R.string.settings_night_theme_enabled),
-                    checked = nightThemeEnabled
+                    title = stringResource(id = R.string.settings_night_mode_follow_sys),
+                    summary = stringResource(id = R.string.settings_night_mode_follow_sys_summary),
+                    checked = nightModeFollowSys
                 ) {
-                    prefs.edit { putBoolean("night_mode_enabled", it) }
-                    nightThemeEnabled = it
+                    prefs.edit { putBoolean("night_mode_follow_sys", it) }
+                    nightModeFollowSys = it
                     refreshTheme.value = true
+                }
+
+                if (!nightModeFollowSys) {
+                    SwitchItem(
+                        icon = if (nightModeEnabled) Icons.Filled.DarkMode else Icons.Filled.VisibilityOff,
+                        title = stringResource(id = R.string.settings_night_theme_enabled),
+                        summary = null,
+                        checked = nightModeEnabled
+                    ) {
+                        prefs.edit { putBoolean("night_mode_enabled", it) }
+                        nightModeEnabled = it
+                        refreshTheme.value = true
+                    }
                 }
             }
 
-            // System dynamic color theme
+            // Theme Color Settings
             val isDynamicColorSupport = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
             if (isDynamicColorSupport) {
                 var useSystemDynamicColor by rememberSaveable {
@@ -604,6 +510,7 @@ fun SettingScreen() {
                         prefs.getBoolean("use_system_color_theme", true)
                     )
                 }
+                val refreshThemeObserver by refreshTheme.observeAsState(false)
                 if (refreshThemeObserver) {
                     useSystemDynamicColor = prefs.getBoolean("use_system_color_theme", true)
                 }
@@ -986,20 +893,42 @@ fun SettingScreen() {
             }, leadingContent = { Icon(Icons.Filled.Translate, null) })
 
             // theme import/export
+            var pendingExportMetadata by remember { mutableStateOf<ThemeManager.ThemeMetadata?>(null) }
+            val showExportDialog = remember { mutableStateOf(false) }
+            
             val exportThemeLauncher = rememberLauncherForActivityResult(
                 ActivityResultContracts.CreateDocument("application/octet-stream")
             ) { uri: Uri? ->
-                if (uri != null) {
+                if (uri != null && pendingExportMetadata != null) {
                     scope.launch {
                         loadingDialog.show()
-                        val success = ThemeManager.exportTheme(context, uri)
+                        val success = ThemeManager.exportTheme(context, uri, pendingExportMetadata!!)
                         loadingDialog.hide()
                         snackBarHost.showSnackbar(
                             message = if (success) context.getString(R.string.settings_theme_saved) else context.getString(R.string.settings_theme_save_failed)
                         )
+                        pendingExportMetadata = null
                     }
                 }
             }
+
+            if (showExportDialog.value) {
+                ThemeExportDialog(
+                    showDialog = showExportDialog,
+                    onConfirm = { metadata ->
+                        pendingExportMetadata = metadata
+                        try {
+                            exportThemeLauncher.launch("theme.fpt")
+                        } catch (e: ActivityNotFoundException) {
+                            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                )
+            }
+
+            var pendingImportUri by remember { mutableStateOf<Uri?>(null) }
+            var pendingImportMetadata by remember { mutableStateOf<ThemeManager.ThemeMetadata?>(null) }
+            val showImportDialog = remember { mutableStateOf(false) }
 
             val importThemeLauncher = rememberLauncherForActivityResult(
                 ActivityResultContracts.OpenDocument()
@@ -1007,23 +936,51 @@ fun SettingScreen() {
                 if (uri != null) {
                     scope.launch {
                         loadingDialog.show()
-                        val success = ThemeManager.importTheme(context, uri)
+                        val metadata = ThemeManager.readThemeMetadata(context, uri)
                         loadingDialog.hide()
-                        snackBarHost.showSnackbar(
-                            message = if (success) context.getString(R.string.settings_theme_imported) else context.getString(R.string.settings_theme_import_failed)
-                        )
+                        
+                        if (metadata != null) {
+                            pendingImportUri = uri
+                            pendingImportMetadata = metadata
+                            showImportDialog.value = true
+                        } else {
+                            // Fallback for old themes or failed read
+                            loadingDialog.show()
+                            val success = ThemeManager.importTheme(context, uri)
+                            loadingDialog.hide()
+                            snackBarHost.showSnackbar(
+                                message = if (success) context.getString(R.string.settings_theme_imported) else context.getString(R.string.settings_theme_import_failed)
+                            )
+                        }
                     }
                 }
+            }
+            
+            if (showImportDialog.value && pendingImportMetadata != null) {
+                ThemeImportDialog(
+                    showDialog = showImportDialog,
+                    metadata = pendingImportMetadata!!,
+                    onConfirm = {
+                        pendingImportUri?.let { uri ->
+                            scope.launch {
+                                loadingDialog.show()
+                                val success = ThemeManager.importTheme(context, uri)
+                                loadingDialog.hide()
+                                snackBarHost.showSnackbar(
+                                    message = if (success) context.getString(R.string.settings_theme_imported) else context.getString(R.string.settings_theme_import_failed)
+                                )
+                                pendingImportUri = null
+                                pendingImportMetadata = null
+                            }
+                        }
+                    }
+                )
             }
 
             ListItem(
                 headlineContent = { Text(text = stringResource(id = R.string.settings_save_theme)) },
                 modifier = Modifier.clickable {
-                    try {
-                        exportThemeLauncher.launch("theme.fpt")
-                    } catch (e: ActivityNotFoundException) {
-                        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-                    }
+                    showExportDialog.value = true
                 },
                 leadingContent = { Icon(Icons.Filled.Save, null) }
             )
@@ -1591,6 +1548,221 @@ fun HomeLayoutChooseDialog(showDialog: MutableState<Boolean>) {
                 ) {
                     TextButton(onClick = { showDialog.value = false }) {
                         Text(stringResource(id = android.R.string.cancel))
+                    }
+                }
+            }
+            val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
+            APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ThemeExportDialog(
+    showDialog: MutableState<Boolean>,
+    onConfirm: (ThemeManager.ThemeMetadata) -> Unit
+) {
+    var name by remember { mutableStateOf("") }
+    var type by remember { mutableStateOf("phone") }
+    var version by remember { mutableStateOf("") }
+    var author by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+
+    BasicAlertDialog(
+        onDismissRequest = { showDialog.value = false },
+        properties = DialogProperties(
+            decorFitsSystemWindows = true,
+            usePlatformDefaultWidth = false,
+        )
+    ) {
+        Surface(
+            modifier = Modifier
+                .width(320.dp)
+                .wrapContentHeight(),
+            shape = RoundedCornerShape(28.dp),
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            color = AlertDialogDefaults.containerColor,
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(24.dp)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Text(
+                    text = stringResource(R.string.theme_export_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text(stringResource(R.string.theme_name)) },
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+                )
+
+                Text(
+                    text = stringResource(R.string.theme_type),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(bottom = 4.dp, top = 4.dp)
+                )
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .clickable { type = "phone" }
+                            .padding(end = 16.dp)
+                    ) {
+                        RadioButton(
+                            selected = type == "phone",
+                            onClick = { type = "phone" }
+                        )
+                        Text(stringResource(R.string.theme_type_phone))
+                    }
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.clickable { type = "tablet" }
+                    ) {
+                        RadioButton(
+                            selected = type == "tablet",
+                            onClick = { type = "tablet" }
+                        )
+                        Text(stringResource(R.string.theme_type_tablet))
+                    }
+                }
+
+                OutlinedTextField(
+                    value = version,
+                    onValueChange = { version = it },
+                    label = { Text(stringResource(R.string.theme_version)) },
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+                )
+
+                OutlinedTextField(
+                    value = author,
+                    onValueChange = { author = it },
+                    label = { Text(stringResource(R.string.theme_author)) },
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+                )
+
+                OutlinedTextField(
+                    value = description,
+                    onValueChange = { description = it },
+                    label = { Text(stringResource(R.string.theme_description)) },
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                    minLines = 3,
+                    maxLines = 5
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = { showDialog.value = false }) {
+                        Text(stringResource(android.R.string.cancel))
+                    }
+                    Button(
+                        onClick = {
+                            showDialog.value = false
+                            onConfirm(
+                                ThemeManager.ThemeMetadata(
+                                    name = name,
+                                    type = type,
+                                    version = version,
+                                    author = author,
+                                    description = description
+                                )
+                            )
+                        },
+                        enabled = name.isNotBlank() && version.isNotBlank() && author.isNotBlank()
+                    ) {
+                        Text(stringResource(R.string.theme_export_action))
+                    }
+                }
+            }
+            val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
+            APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ThemeImportDialog(
+    showDialog: MutableState<Boolean>,
+    metadata: ThemeManager.ThemeMetadata,
+    onConfirm: () -> Unit
+) {
+    BasicAlertDialog(
+        onDismissRequest = { showDialog.value = false },
+        properties = DialogProperties(
+            decorFitsSystemWindows = true,
+            usePlatformDefaultWidth = false,
+        )
+    ) {
+        Surface(
+            modifier = Modifier
+                .width(320.dp)
+                .wrapContentHeight(),
+            shape = RoundedCornerShape(28.dp),
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            color = AlertDialogDefaults.containerColor,
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(24.dp)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Text(
+                    text = stringResource(R.string.theme_import_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                Text(
+                    text = stringResource(R.string.theme_import_confirm),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.theme_name)) },
+                    supportingContent = { Text(metadata.name) }
+                )
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.theme_type)) },
+                    supportingContent = { 
+                        Text(if (metadata.type == "tablet") stringResource(R.string.theme_type_tablet) else stringResource(R.string.theme_type_phone)) 
+                    }
+                )
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.theme_version)) },
+                    supportingContent = { Text(metadata.version) }
+                )
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.theme_author)) },
+                    supportingContent = { Text(metadata.author) }
+                )
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.theme_description)) },
+                    supportingContent = { Text(metadata.description) }
+                )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = { showDialog.value = false }) {
+                        Text(stringResource(android.R.string.cancel))
+                    }
+                    Button(
+                        onClick = {
+                            showDialog.value = false
+                            onConfirm()
+                        }
+                    ) {
+                        Text(stringResource(R.string.theme_import_action))
                     }
                 }
             }

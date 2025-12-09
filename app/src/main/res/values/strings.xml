@@ -423,4 +423,19 @@
     <string name="settings_theme_imported">Theme imported</string>
     <string name="settings_theme_save_failed">Failed to save theme</string>
     <string name="settings_theme_import_failed">Failed to import theme</string>
+
+    <!-- Theme Strings -->
+    <string name="theme_export_title">Export Theme</string>
+    <string name="theme_import_title">Import Theme</string>
+    <string name="theme_name">Theme Name</string>
+    <string name="theme_type">Theme Type</string>
+    <string name="theme_type_phone">Phone</string>
+    <string name="theme_type_tablet">Tablet</string>
+    <string name="theme_version">Version</string>
+    <string name="theme_author">Author</string>
+    <string name="theme_description">Description</string>
+    <string name="theme_export_action">Export</string>
+    <string name="theme_import_action">Import</string>
+    <string name="theme_import_confirm">Are you sure you want to import this theme?</string>
+    <string name="theme_info">Theme Info</string>
 </resources>

@@ -421,4 +421,19 @@
     <string name="settings_theme_imported">Motyw zaimportowany</string>
     <string name="settings_theme_save_failed">Nie udało się zapisać motywu</string>
     <string name="settings_theme_import_failed">Nie udało się zaimportować motywu</string>
+
+    <!-- Theme Strings -->
+    <string name="theme_export_title">Eksportuj motyw</string>
+    <string name="theme_import_title">Importuj motyw</string>
+    <string name="theme_name">Nazwa motywu</string>
+    <string name="theme_type">Typ motywu</string>
+    <string name="theme_type_phone">Telefon</string>
+    <string name="theme_type_tablet">Tablet</string>
+    <string name="theme_version">Wersja</string>
+    <string name="theme_author">Autor</string>
+    <string name="theme_description">Opis</string>
+    <string name="theme_export_action">Eksportuj</string>
+    <string name="theme_import_action">Importuj</string>
+    <string name="theme_import_confirm">Czy na pewno chcesz zaimportować ten motyw?</string>
+    <string name="theme_info">Informacje o motywie</string>
 </resources>

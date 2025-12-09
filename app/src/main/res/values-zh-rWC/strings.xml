@@ -417,4 +417,19 @@
     <string name="settings_theme_imported">仙府色章已引</string>
     <string name="settings_theme_save_failed">藏仙府色章败陨</string>
     <string name="settings_theme_import_failed">引仙府色章败陨</string>
+
+    <!-- Theme Strings -->
+    <string name="theme_export_title">拓印仙府色章</string>
+    <string name="theme_import_title">引入仙府色章</string>
+    <string name="theme_name">色章名讳</string>
+    <string name="theme_type">色章品阶</string>
+    <string name="theme_type_phone">传音玉简</string>
+    <string name="theme_type_tablet">留影宝鉴</string>
+    <string name="theme_version">色章篇次</string>
+    <string name="theme_author">炼制者</string>
+    <string name="theme_description">色章玄义</string>
+    <string name="theme_export_action">拓印</string>
+    <string name="theme_import_action">引入</string>
+    <string name="theme_import_confirm">道友确欲引入此仙府色章乎？</string>
+    <string name="theme_info">色章天机</string>
 </resources>

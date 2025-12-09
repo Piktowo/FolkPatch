@@ -380,4 +380,19 @@
     <string name="settings_theme_imported">テーマがインポートされました</string>
     <string name="settings_theme_save_failed">テーマの保存に失敗しました</string>
     <string name="settings_theme_import_failed">テーマのインポートに失敗しました</string>
+
+    <!-- Theme Strings -->
+    <string name="theme_export_title">テーマをエクスポート</string>
+    <string name="theme_import_title">テーマをインポート</string>
+    <string name="theme_name">テーマ名</string>
+    <string name="theme_type">テーマの種類</string>
+    <string name="theme_type_phone">スマホ</string>
+    <string name="theme_type_tablet">タブレット</string>
+    <string name="theme_version">バージョン</string>
+    <string name="theme_author">作者</string>
+    <string name="theme_description">説明</string>
+    <string name="theme_export_action">エクスポート</string>
+    <string name="theme_import_action">インポート</string>
+    <string name="theme_import_confirm">このテーマをインポートしてもよろしいですか？</string>
+    <string name="theme_info">テーマ情報</string>
 </resources>

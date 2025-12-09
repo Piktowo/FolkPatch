@@ -13,15 +13,29 @@ import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.security.MessageDigest
+import java.security.SecureRandom
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
+import javax.crypto.Cipher
+import javax.crypto.CipherInputStream
+import javax.crypto.CipherOutputStream
+import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.SecretKeySpec
 
 object ThemeManager {
     private const val TAG = "ThemeManager"
     private const val THEME_CONFIG_FILENAME = "theme.json"
     private const val BACKGROUND_FILENAME = "background.jpg"
     private const val FONT_FILENAME = "font.ttf"
+    private const val KEY_STR = "FolkPatchThemeSecretKey2025"
+
+    private fun getSecretKey(): SecretKeySpec {
+        val digest = MessageDigest.getInstance("SHA-256")
+        val bytes = digest.digest(KEY_STR.toByteArray())
+        return SecretKeySpec(bytes, "AES")
+    }
 
     data class ThemeConfig(
         val isBackgroundEnabled: Boolean,
@@ -34,7 +48,15 @@ object ThemeManager {
         val nightModeFollowSys: Boolean
     )
 
-    suspend fun exportTheme(context: Context, uri: Uri): Boolean {
+    data class ThemeMetadata(
+        val name: String,
+        val type: String, // "phone" or "tablet"
+        val version: String,
+        val author: String,
+        val description: String
+    )
+
+    suspend fun exportTheme(context: Context, uri: Uri, metadata: ThemeMetadata): Boolean {
         return withContext(Dispatchers.IO) {
             val cacheDir = File(context.cacheDir, "theme_export")
             if (cacheDir.exists()) cacheDir.deleteRecursively()
@@ -64,8 +86,16 @@ object ThemeManager {
                     put("homeLayoutStyle", config.homeLayoutStyle)
                     put("nightModeEnabled", config.nightModeEnabled)
                     put("nightModeFollowSys", config.nightModeFollowSys)
+
+                    // Add metadata
+                    put("meta_name", metadata.name)
+                    put("meta_type", metadata.type)
+                    put("meta_version", metadata.version)
+                    put("meta_author", metadata.author)
+                    put("meta_description", metadata.description)
                 }
                 File(cacheDir, THEME_CONFIG_FILENAME).writeText(json.toString())
+
 
                 // 3. Copy Background if enabled
                 if (config.isBackgroundEnabled) {
@@ -86,16 +116,26 @@ object ThemeManager {
                     }
                 }
 
-                // 5. Zip to Uri
+                // 5. Encrypt and Zip to Uri
                 context.contentResolver.openOutputStream(uri)?.use { os ->
-                    ZipOutputStream(BufferedOutputStream(os)).use { zos ->
-                        cacheDir.listFiles()?.forEach { file ->
-                            val entry = ZipEntry(file.name)
-                            zos.putNextEntry(entry)
-                            FileInputStream(file).use { fis ->
-                                fis.copyTo(zos)
+                    // Init Cipher
+                    val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+                    val iv = ByteArray(16).also { SecureRandom().nextBytes(it) }
+                    cipher.init(Cipher.ENCRYPT_MODE, getSecretKey(), IvParameterSpec(iv))
+
+                    // Write IV first
+                    os.write(iv)
+
+                    CipherOutputStream(os, cipher).use { cos ->
+                        ZipOutputStream(BufferedOutputStream(cos)).use { zos ->
+                            cacheDir.listFiles()?.forEach { file ->
+                                val entry = ZipEntry(file.name)
+                                zos.putNextEntry(entry)
+                                FileInputStream(file).use { fis ->
+                                    fis.copyTo(zos)
+                                }
+                                zos.closeEntry()
                             }
-                            zos.closeEntry()
                         }
                     }
                 }
@@ -109,6 +149,44 @@ object ThemeManager {
         }
     }
 
+    suspend fun readThemeMetadata(context: Context, uri: Uri): ThemeMetadata? {
+        return withContext(Dispatchers.IO) {
+            try {
+                context.contentResolver.openInputStream(uri)?.use { `is` ->
+                    // Read IV
+                    val iv = ByteArray(16)
+                    if (`is`.read(iv) != 16) return@withContext null
+
+                    val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+                    cipher.init(Cipher.DECRYPT_MODE, getSecretKey(), IvParameterSpec(iv))
+
+                    CipherInputStream(`is`, cipher).use { cis ->
+                        ZipInputStream(BufferedInputStream(cis)).use { zis ->
+                            var entry: ZipEntry?
+                            while (zis.nextEntry.also { entry = it } != null) {
+                                if (entry!!.name == THEME_CONFIG_FILENAME) {
+                                    // Read the JSON content
+                                    val jsonStr = zis.bufferedReader().use { it.readText() }
+                                    val json = JSONObject(jsonStr)
+                                    return@withContext ThemeMetadata(
+                                        name = json.optString("meta_name", ""),
+                                        type = json.optString("meta_type", "phone"),
+                                        version = json.optString("meta_version", ""),
+                                        author = json.optString("meta_author", ""),
+                                        description = json.optString("meta_description", "")
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to read theme metadata", e)
+            }
+            null
+        }
+    }
+
     suspend fun importTheme(context: Context, uri: Uri): Boolean {
         return withContext(Dispatchers.IO) {
             val cacheDir = File(context.cacheDir, "theme_import")
@@ -116,18 +194,27 @@ object ThemeManager {
             cacheDir.mkdirs()
 
             try {
-                // 1. Unzip
+                // 1. Decrypt and Unzip
                 context.contentResolver.openInputStream(uri)?.use { `is` ->
-                    ZipInputStream(BufferedInputStream(`is`)).use { zis ->
-                        var entry: ZipEntry?
-                        while (zis.nextEntry.also { entry = it } != null) {
-                            val file = File(cacheDir, entry!!.name)
-                            // Prevent path traversal
-                            if (!file.canonicalPath.startsWith(cacheDir.canonicalPath)) {
-                                continue
-                            }
-                            FileOutputStream(file).use { fos ->
-                                zis.copyTo(fos)
+                    // Read IV
+                    val iv = ByteArray(16)
+                    if (`is`.read(iv) != 16) throw Exception("Invalid theme file")
+
+                    val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+                    cipher.init(Cipher.DECRYPT_MODE, getSecretKey(), IvParameterSpec(iv))
+
+                    CipherInputStream(`is`, cipher).use { cis ->
+                        ZipInputStream(BufferedInputStream(cis)).use { zis ->
+                            var entry: ZipEntry?
+                            while (zis.nextEntry.also { entry = it } != null) {
+                                val file = File(cacheDir, entry!!.name)
+                                // Prevent path traversal
+                                if (!file.canonicalPath.startsWith(cacheDir.canonicalPath)) {
+                                    continue
+                                }
+                                FileOutputStream(file).use { fos ->
+                                    zis.copyTo(fos)
+                                }
                             }
                         }
                     }

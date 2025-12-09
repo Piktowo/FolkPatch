@@ -416,4 +416,19 @@
     <string name="settings_theme_imported">主题已导入</string>
     <string name="settings_theme_save_failed">保存主题失败</string>
     <string name="settings_theme_import_failed">导入主题失败</string>
+
+    <!-- Theme Strings -->
+    <string name="theme_export_title">导出主题</string>
+    <string name="theme_import_title">导入主题</string>
+    <string name="theme_name">主题名称</string>
+    <string name="theme_type">主题类型</string>
+    <string name="theme_type_phone">手机</string>
+    <string name="theme_type_tablet">平板</string>
+    <string name="theme_version">版本</string>
+    <string name="theme_author">作者</string>
+    <string name="theme_description">描述</string>
+    <string name="theme_export_action">导出</string>
+    <string name="theme_import_action">导入</string>
+    <string name="theme_import_confirm">确定要导入此主题吗？</string>
+    <string name="theme_info">主题信息</string>
 </resources>

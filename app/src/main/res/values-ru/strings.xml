@@ -423,4 +423,19 @@
     <string name="settings_theme_imported">Тема импортирована</string>
     <string name="settings_theme_save_failed">Не удалось сохранить тему</string>
     <string name="settings_theme_import_failed">Не удалось импортировать тему</string>
+
+    <!-- Theme Strings -->
+    <string name="theme_export_title">Экспорт темы</string>
+    <string name="theme_import_title">Импорт темы</string>
+    <string name="theme_name">Название темы</string>
+    <string name="theme_type">Тип темы</string>
+    <string name="theme_type_phone">Телефон</string>
+    <string name="theme_type_tablet">Планшет</string>
+    <string name="theme_version">Версия</string>
+    <string name="theme_author">Автор</string>
+    <string name="theme_description">Описание</string>
+    <string name="theme_export_action">Экспорт</string>
+    <string name="theme_import_action">Импорт</string>
+    <string name="theme_import_confirm">Вы уверены, что хотите импортировать эту тему?</string>
+    <string name="theme_info">Информация о теме</string>
 </resources>
