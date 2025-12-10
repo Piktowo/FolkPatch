@@ -16,7 +16,7 @@ class OnlineModuleViewModel : ViewModel() {
     companion object {
         private const val TAG = "OnlineModuleViewModel"
         // Placeholder URL. User should update this.
-        const val MODULES_URL = "https://folk.mysqil.com/api/modules.php?type=apm"s
+        const val MODULES_URL = "https://folk.mysqil.com/api/modules.php?type=apm"
     }
 
     data class OnlineModule(
