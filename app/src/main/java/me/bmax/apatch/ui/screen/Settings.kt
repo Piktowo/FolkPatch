@@ -1,5 +1,9 @@
 package me.bmax.apatch.ui.screen
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.layout.Spacer
 import me.bmax.apatch.ui.component.FilePickerDialog
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -60,6 +64,7 @@ import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Animation
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.generated.destinations.ThemeStoreScreenDestination
 
@@ -260,6 +265,11 @@ fun SettingScreen(navigator: DestinationsNavigator) {
             AppTitleChooseDialog(showAppTitleDialog)
         }
 
+        val showFolkXAnimationTypeDialog = remember { mutableStateOf(false) }
+        if (showFolkXAnimationTypeDialog.value) {
+            FolkXAnimationTypeDialog(showFolkXAnimationTypeDialog)
+        }
+
         var showLogBottomSheet by remember { mutableStateOf(false) }
 
         val scope = rememberCoroutineScope()
@@ -276,6 +286,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                             it.copyTo(output)
                         }
                     }
+
                     loadingDialog.hide()
                     snackBarHost.showSnackbar(message = logSavedMessage)
                 }
@@ -621,6 +632,33 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                             prefs.edit { putBoolean("folkx_engine_enabled", it) }
                             folkXEngineEnabled = it
                         }
+                    }
+
+                    AnimatedVisibility(
+                        visible = folkXEngineEnabled,
+                        enter = expandVertically(),
+                        exit = shrinkVertically()
+                    ) {
+                        ListItem(
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                            headlineContent = { Text(stringResource(R.string.settings_folkx_animation_type)) },
+                            supportingContent = {
+                                val currentType = prefs.getString("folkx_animation_type", "linear")
+                                Text(
+                                    text = when (currentType) {
+                                        "spatial" -> stringResource(R.string.settings_folkx_animation_spatial)
+                                        "fade" -> stringResource(R.string.settings_folkx_animation_fade)
+                                        "vertical" -> stringResource(R.string.settings_folkx_animation_vertical)
+                                        "diagonal" -> stringResource(R.string.settings_folkx_animation_diagonal)
+                                        else -> stringResource(R.string.settings_folkx_animation_linear)
+                                    },
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.outline
+                                )
+                            },
+                            leadingContent = { Icon(Icons.Filled.Animation, null) },
+                            modifier = Modifier.clickable { showFolkXAnimationTypeDialog.value = true }
+                        )
                     }
 
                     // Global Namespace
@@ -2292,6 +2330,129 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                 })
         }
 
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FolkXAnimationTypeDialog(showDialog: MutableState<Boolean>) {
+    val prefs = APApplication.sharedPreferences
+
+    BasicAlertDialog(
+        onDismissRequest = { showDialog.value = false }, properties = DialogProperties(
+            decorFitsSystemWindows = true,
+            usePlatformDefaultWidth = false,
+        )
+    ) {
+        Surface(
+            modifier = Modifier
+                .width(310.dp)
+                .wrapContentHeight(),
+            shape = RoundedCornerShape(30.dp),
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            color = AlertDialogDefaults.containerColor,
+        ) {
+            Column(modifier = Modifier.padding(24.dp)) {
+                Text(
+                    text = stringResource(R.string.settings_folkx_animation_type),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+                
+                val currentType = prefs.getString("folkx_animation_type", "linear")
+                
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = AlertDialogDefaults.containerColor,
+                    tonalElevation = 2.dp
+                ) {
+                    Column {
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.settings_folkx_animation_linear)) },
+                            leadingContent = {
+                                RadioButton(
+                                    selected = currentType == "linear",
+                                    onClick = null
+                                )
+                            },
+                            modifier = Modifier.clickable {
+                                prefs.edit().putString("folkx_animation_type", "linear").apply()
+                                showDialog.value = false
+                            }
+                        )
+                        
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.settings_folkx_animation_spatial)) },
+                            leadingContent = {
+                                RadioButton(
+                                    selected = currentType == "spatial",
+                                    onClick = null
+                                )
+                            },
+                            modifier = Modifier.clickable {
+                                prefs.edit().putString("folkx_animation_type", "spatial").apply()
+                                showDialog.value = false
+                            }
+                        )
+
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.settings_folkx_animation_fade)) },
+                            leadingContent = {
+                                RadioButton(
+                                    selected = currentType == "fade",
+                                    onClick = null
+                                )
+                            },
+                            modifier = Modifier.clickable {
+                                prefs.edit().putString("folkx_animation_type", "fade").apply()
+                                showDialog.value = false
+                            }
+                        )
+
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.settings_folkx_animation_vertical)) },
+                            leadingContent = {
+                                RadioButton(
+                                    selected = currentType == "vertical",
+                                    onClick = null
+                                )
+                            },
+                            modifier = Modifier.clickable {
+                                prefs.edit().putString("folkx_animation_type", "vertical").apply()
+                                showDialog.value = false
+                            }
+                        )
+
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.settings_folkx_animation_diagonal)) },
+                            leadingContent = {
+                                RadioButton(
+                                    selected = currentType == "diagonal",
+                                    onClick = null
+                                )
+                            },
+                            modifier = Modifier.clickable {
+                                prefs.edit().putString("folkx_animation_type", "diagonal").apply()
+                                showDialog.value = false
+                            }
+                        )
+                    }
+                }
+                
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 24.dp),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = { showDialog.value = false }) {
+                        Text(stringResource(id = android.R.string.cancel))
+                    }
+                }
+            }
+            val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
+            APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
+        }
     }
 }
 

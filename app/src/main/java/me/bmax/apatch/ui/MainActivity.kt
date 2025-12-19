@@ -14,9 +14,12 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -171,11 +174,17 @@ class MainActivity : AppCompatActivity() {
             var folkXEngineEnabled by remember {
                 mutableStateOf(prefs.getBoolean("folkx_engine_enabled", true))
             }
+            var folkXAnimationType by remember {
+                mutableStateOf(prefs.getString("folkx_animation_type", "linear"))
+            }
 
             DisposableEffect(Unit) {
                 val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
                     if (key == "folkx_engine_enabled") {
                         folkXEngineEnabled = sharedPreferences.getBoolean("folkx_engine_enabled", true)
+                    }
+                    if (key == "folkx_animation_type") {
+                        folkXAnimationType = sharedPreferences.getString("folkx_animation_type", "linear")
                     }
                 }
                 prefs.registerOnSharedPreferenceChangeListener(listener)
@@ -244,10 +253,40 @@ class MainActivity : AppCompatActivity() {
                                                 val targetIndex = BottomBarDestination.entries.indexOfFirst { it.direction.route == targetRoute }
 
                                                 if (initialIndex != -1 && targetIndex != -1) {
-                                                    if (targetIndex > initialIndex) {
-                                                        slideInHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetX = { it })
-                                                    } else {
-                                                        slideInHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetX = { -it })
+                                                    when (folkXAnimationType) {
+                                                        "spatial" -> {
+                                                            if (targetIndex > initialIndex) {
+                                                                scaleIn(initialScale = 0.9f, animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f)) + fadeIn(animationSpec = tween(300))
+                                                            } else {
+                                                                scaleIn(initialScale = 1.1f, animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f)) + fadeIn(animationSpec = tween(300))
+                                                            }
+                                                        }
+                                                        "fade" -> {
+                                                            fadeIn(animationSpec = tween(300))
+                                                        }
+                                                        "vertical" -> {
+                                                            if (targetIndex > initialIndex) {
+                                                                slideInVertically(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetY = { height: Int -> height }) + fadeIn()
+                                                            } else {
+                                                                slideInVertically(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetY = { height: Int -> -height }) + fadeIn()
+                                                            }
+                                                        }
+                                                        "diagonal" -> {
+                                                            if (targetIndex > initialIndex) {
+                                                                slideInHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetX = { width: Int -> width }) +
+                                                                slideInVertically(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetY = { height: Int -> height }) + fadeIn()
+                                                            } else {
+                                                                slideInHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetX = { width: Int -> -width }) +
+                                                                slideInVertically(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetY = { height: Int -> -height }) + fadeIn()
+                                                            }
+                                                        }
+                                                        else -> {
+                                                            if (targetIndex > initialIndex) {
+                                                                slideInHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetX = { width: Int -> width })
+                                                            } else {
+                                                                slideInHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetX = { width: Int -> -width })
+                                                            }
+                                                        }
                                                     }
                                                 } else {
                                                     fadeIn(animationSpec = tween(340))
@@ -272,10 +311,40 @@ class MainActivity : AppCompatActivity() {
                                                 val targetIndex = BottomBarDestination.entries.indexOfFirst { it.direction.route == targetRoute }
 
                                                 if (initialIndex != -1 && targetIndex != -1) {
-                                                    if (targetIndex > initialIndex) {
-                                                        slideOutHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), targetOffsetX = { -it })
-                                                    } else {
-                                                        slideOutHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), targetOffsetX = { it })
+                                                    when (folkXAnimationType) {
+                                                        "spatial" -> {
+                                                            if (targetIndex > initialIndex) {
+                                                                scaleOut(targetScale = 1.1f, animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f)) + fadeOut(animationSpec = tween(300))
+                                                            } else {
+                                                                scaleOut(targetScale = 0.9f, animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f)) + fadeOut(animationSpec = tween(300))
+                                                            }
+                                                        }
+                                                        "fade" -> {
+                                                            fadeOut(animationSpec = tween(600))
+                                                        }
+                                                        "vertical" -> {
+                                                            if (targetIndex > initialIndex) {
+                                                                slideOutVertically(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), targetOffsetY = { height -> -height }) + fadeOut()
+                                                            } else {
+                                                                slideOutVertically(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), targetOffsetY = { height -> height }) + fadeOut()
+                                                            }
+                                                        }
+                                                        "diagonal" -> {
+                                                            if (targetIndex > initialIndex) {
+                                                                slideOutHorizontally(animationSpec = tween(600), targetOffsetX = { width -> -width }) +
+                                                                slideOutVertically(animationSpec = tween(600), targetOffsetY = { height -> -height }) + fadeOut(animationSpec = tween(600))
+                                                            } else {
+                                                                slideOutHorizontally(animationSpec = tween(600), targetOffsetX = { width -> width }) +
+                                                                slideOutVertically(animationSpec = tween(600), targetOffsetY = { height -> height }) + fadeOut(animationSpec = tween(600))
+                                                            }
+                                                        }
+                                                        else -> {
+                                                            if (targetIndex > initialIndex) {
+                                                                slideOutHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), targetOffsetX = { width -> -width })
+                                                            } else {
+                                                                slideOutHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), targetOffsetX = { width -> width })
+                                                            }
+                                                        }
                                                     }
                                                 } else {
                                                     fadeOut(animationSpec = tween(340))

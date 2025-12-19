@@ -40,8 +40,12 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import me.bmax.apatch.ui.screen.BottomBarDestination
 
@@ -56,6 +60,7 @@ fun BackgroundLayer(currentRoute: String? = null) {
     val darkThemeFollowSys = prefs.getBoolean("night_mode_follow_sys", true)
     val nightModeEnabled = prefs.getBoolean("night_mode_enabled", false)
     val folkXEngineEnabled = prefs.getBoolean("folkx_engine_enabled", true)
+    val folkXAnimationType = prefs.getString("folkx_animation_type", "linear")
     val isDarkTheme = if (darkThemeFollowSys) {
         isSystemInDarkTheme()
     } else {
@@ -145,7 +150,7 @@ fun BackgroundLayer(currentRoute: String? = null) {
 
     // Image Background Logic
     if (BackgroundConfig.isCustomBackgroundEnabled) {
-        if (BackgroundConfig.isMultiBackgroundEnabled && folkXEngineEnabled) {
+        if (folkXEngineEnabled) {
             AnimatedContent(
                 targetState = currentRoute,
                 modifier = Modifier.fillMaxSize(),
@@ -157,12 +162,50 @@ fun BackgroundLayer(currentRoute: String? = null) {
                     val targetIndex = BottomBarDestination.entries.indexOfFirst { it.direction.route == targetRoute }
 
                     if (initialIndex != -1 && targetIndex != -1) {
-                        if (targetIndex > initialIndex) {
-                            (slideInHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetX = { it }) + fadeIn()) togetherWith
-                                    (slideOutHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), targetOffsetX = { -it }) + fadeOut())
-                        } else {
-                            (slideInHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetX = { -it }) + fadeIn()) togetherWith
-                                    (slideOutHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), targetOffsetX = { it }) + fadeOut())
+                        when (folkXAnimationType) {
+                            "spatial" -> {
+                                if (targetIndex > initialIndex) {
+                                    (scaleIn(initialScale = 0.9f, animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f)) + fadeIn(animationSpec = tween(300))) togetherWith
+                                            (scaleOut(targetScale = 1.1f, animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f)) + fadeOut(animationSpec = tween(300)))
+                                } else {
+                                    (scaleIn(initialScale = 1.1f, animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f)) + fadeIn(animationSpec = tween(300))) togetherWith
+                                            (scaleOut(targetScale = 0.9f, animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f)) + fadeOut(animationSpec = tween(300)))
+                                }
+                            }
+                            "fade" -> {
+                                fadeIn(animationSpec = tween(600)) togetherWith fadeOut(animationSpec = tween(600))
+                            }
+                            "vertical" -> {
+                                if (targetIndex > initialIndex) {
+                                    (slideInVertically(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetY = { height: Int -> height }) + fadeIn()) togetherWith
+                                            (slideOutVertically(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), targetOffsetY = { height: Int -> -height }) + fadeOut())
+                                } else {
+                                    (slideInVertically(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetY = { height: Int -> -height }) + fadeIn()) togetherWith
+                                            (slideOutVertically(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), targetOffsetY = { height: Int -> height }) + fadeOut())
+                                }
+                            }
+                            "diagonal" -> {
+                                if (targetIndex > initialIndex) {
+                                    (slideInHorizontally(animationSpec = tween(600), initialOffsetX = { width: Int -> width }) + 
+                                     slideInVertically(animationSpec = tween(600), initialOffsetY = { height: Int -> height }) + fadeIn(animationSpec = tween(600))) togetherWith
+                                            (slideOutHorizontally(animationSpec = tween(600), targetOffsetX = { width: Int -> -width }) + 
+                                             slideOutVertically(animationSpec = tween(600), targetOffsetY = { height: Int -> -height }) + fadeOut(animationSpec = tween(600)))
+                                } else {
+                                    (slideInHorizontally(animationSpec = tween(600), initialOffsetX = { width: Int -> -width }) + 
+                                     slideInVertically(animationSpec = tween(600), initialOffsetY = { height: Int -> -height }) + fadeIn(animationSpec = tween(600))) togetherWith
+                                            (slideOutHorizontally(animationSpec = tween(600), targetOffsetX = { width: Int -> width }) + 
+                                             slideOutVertically(animationSpec = tween(600), targetOffsetY = { height: Int -> height }) + fadeOut(animationSpec = tween(600)))
+                                }
+                            }
+                            else -> {
+                                if (targetIndex > initialIndex) {
+                                    (slideInHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetX = { width: Int -> width }) + fadeIn()) togetherWith
+                                            (slideOutHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), targetOffsetX = { width: Int -> -width }) + fadeOut())
+                                } else {
+                                    (slideInHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), initialOffsetX = { width: Int -> -width }) + fadeIn()) togetherWith
+                                            (slideOutHorizontally(animationSpec = spring(dampingRatio = 0.8f, stiffness = 300f), targetOffsetX = { width: Int -> width }) + fadeOut())
+                                }
+                            }
                         }
                     } else {
                         // Default fade for other transitions (e.g. to details)
@@ -171,13 +214,17 @@ fun BackgroundLayer(currentRoute: String? = null) {
                 },
                 label = "BackgroundAnimation"
             ) { route ->
-                val rawTargetUri = when (route) {
-                    HomeScreenDestination.route -> BackgroundConfig.homeBackgroundUri
-                    KPModuleScreenDestination.route -> BackgroundConfig.kernelBackgroundUri
-                    SuperUserScreenDestination.route -> BackgroundConfig.superuserBackgroundUri
-                    APModuleScreenDestination.route -> BackgroundConfig.systemModuleBackgroundUri
-                    SettingScreenDestination.route -> BackgroundConfig.settingsBackgroundUri
-                    else -> BackgroundConfig.homeBackgroundUri
+                val rawTargetUri = if (BackgroundConfig.isMultiBackgroundEnabled) {
+                    when (route) {
+                        HomeScreenDestination.route -> BackgroundConfig.homeBackgroundUri
+                        KPModuleScreenDestination.route -> BackgroundConfig.kernelBackgroundUri
+                        SuperUserScreenDestination.route -> BackgroundConfig.superuserBackgroundUri
+                        APModuleScreenDestination.route -> BackgroundConfig.systemModuleBackgroundUri
+                        SettingScreenDestination.route -> BackgroundConfig.settingsBackgroundUri
+                        else -> BackgroundConfig.homeBackgroundUri
+                    }
+                } else {
+                    BackgroundConfig.customBackgroundUri
                 }
                 
                 RenderBackgroundImage(rawTargetUri, isDarkTheme)

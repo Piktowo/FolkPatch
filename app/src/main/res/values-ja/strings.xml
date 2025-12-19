@@ -161,6 +161,12 @@
 
     <string name="settings_folkx_engine_title">FolkX アニメーションエンジン</string>
     <string name="settings_folkx_engine_summary">トップレベルページの切り替え時に滑らかな物理スプリングアニメーションを使用</string>
+    <string name="settings_folkx_animation_type">アニメーションタイプ</string>
+    <string name="settings_folkx_animation_linear">リニアモーション</string>
+    <string name="settings_folkx_animation_spatial">空間モーション</string>
+    <string name="settings_folkx_animation_fade">フェードイン/アウト</string>
+    <string name="settings_folkx_animation_vertical">垂直スライド</string>
+    <string name="settings_folkx_animation_diagonal">対角スライド</string>
     <string name="apm_webui_open">開く</string>
     <string name="apm_action">アクション</string>
     <string name="enable_web_debugging">WebView デバッグを有効</string>
