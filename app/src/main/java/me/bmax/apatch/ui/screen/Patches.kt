@@ -641,6 +641,7 @@ private fun SelectFileButton(text: String, onSelected: (data: Intent, uri: Uri) 
             onClick = {
                 val intent = Intent(Intent.ACTION_GET_CONTENT)
                 intent.type = "*/*"
+                intent.addCategory(Intent.CATEGORY_OPENABLE)
                 selectFileLauncher.launch(intent)
             },
             colors = ButtonDefaults.buttonColors(

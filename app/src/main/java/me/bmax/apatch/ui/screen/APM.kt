@@ -307,6 +307,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                             // select the zip file to install
                             val intent = Intent(Intent.ACTION_GET_CONTENT)
                             intent.type = "application/zip"
+                            intent.addCategory(Intent.CATEGORY_OPENABLE)
                             selectZipLauncher.launch(intent)
                         }
                     }

@@ -183,6 +183,7 @@ private fun SelectInstallMethod(
                 selectImageLauncher.launch(
                     Intent(Intent.ACTION_GET_CONTENT).apply {
                         type = "application/octet-stream"
+                        addCategory(Intent.CATEGORY_OPENABLE)
                     }
                 )
             }
@@ -201,6 +202,7 @@ private fun SelectInstallMethod(
                 selectRestoreImageLauncher.launch(
                     Intent(Intent.ACTION_GET_CONTENT).apply {
                         type = "application/octet-stream"
+                        addCategory(Intent.CATEGORY_OPENABLE)
                     }
                 )
             }

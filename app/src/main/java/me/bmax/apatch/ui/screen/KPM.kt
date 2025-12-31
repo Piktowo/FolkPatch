@@ -287,6 +287,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                                     moduleLoad -> {
                                         val intent = Intent(Intent.ACTION_GET_CONTENT)
                                         intent.type = "*/*"
+                                        intent.addCategory(Intent.CATEGORY_OPENABLE)
                                         selectKpmLauncher.launch(intent)
                                     }
                                 }
