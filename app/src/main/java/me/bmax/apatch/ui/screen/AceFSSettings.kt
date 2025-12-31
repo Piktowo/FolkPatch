@@ -377,7 +377,7 @@ fun ExpandableSettingsCard(
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
+                tint = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.padding(end = 16.dp)
             )
             Text(
