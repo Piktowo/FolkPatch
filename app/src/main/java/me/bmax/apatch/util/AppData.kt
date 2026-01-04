@@ -38,11 +38,13 @@ object AppData {
 
     /**
      * Get superuser count
+     * Note: Minus 1 to exclude the APatch manager itself from the count
      */
     private fun getSuperuserCount(): Int {
         return try {
             val uids = Natives.suUids()
-            uids.size
+            // Subtract 1 because the manager itself is hidden from the list
+            (uids.size - 1).coerceAtLeast(0)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to get superuser count", e)
             0
