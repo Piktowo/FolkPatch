@@ -46,6 +46,10 @@ pub fn ensure_binary<T: AsRef<Path>>(path: T) -> Result<()> {
     Ok(())
 }
 
+pub fn get_work_dir() -> &'static str {
+    defs::WORKING_DIR
+}
+
 #[cfg(any(target_os = "linux", target_os = "android"))]
 pub fn getprop(prop: &str) -> Option<String> {
     android_properties::getprop(prop).value()

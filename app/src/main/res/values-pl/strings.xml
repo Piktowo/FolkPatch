@@ -177,6 +177,9 @@
     <string name="apm_desc">Opis</string>
     <string name="apm_overlay_fs_not_available">Moduły są niedostępne, ponieważ OverlayFS jest wyłączony przez jądro!</string>
     <string name="apm_magisk_conflict">Moduły są niedostępne z powodu konfliktu z Magisk!</string>
+    <string name="apm_mount_warning_title">Ważne powiadomienie</string>
+    <string name="apm_mount_warning_message">Domyślnie moduły nie są montowane. Użyj wbudowanego systemu montowania lub metamodułów.</string>
+    <string name="apm_mount_warning_button">Rozumiem</string>
     <string name="apm_reboot_to_apply">Uruchom ponownie, aby zastosować</string>
     <string name="apm_changelog">Dziennik zmian</string>
     <string name="apm_update">Aktualizuj</string>
@@ -331,6 +334,8 @@
     <string name="settings_lite_mode_mode_summary">Nie montuj plików, aby uzyskać lepszą wydajność i ukrycie</string>
     <string name="settings_force_overlayfs_mode">Wymuś tryb OverlayFS</string>
     <string name="settings_force_overlayfs_mode_summary">Wymuś użycie OverlayFS dla modułów</string>
+    <string name="settings_magic_mount">Włącz Magic Mount</string>
+    <string name="settings_magic_mount_summary">Włącz wbudowany system montowania bez polegania na metamodułach</string>
     <string name="settings_app_title">Tytuł aplikacji</string>
     <string name="settings_custom_background">Niestandardowe tło</string>
     <string name="settings_custom_background_enabled">Włączono niestandardowe tło</string>

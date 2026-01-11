@@ -454,6 +454,12 @@ private fun ModuleList(
     context: Context
 ) {
     var expandedModuleId by rememberSaveable { mutableStateOf<String?>(null) }
+
+    // Warning Banner State
+    val prefs = remember { APApplication.sharedPreferences }
+    var showMountWarning by remember {
+        mutableStateOf(!prefs.getBoolean("apm_mount_warning_shown", false))
+    }
     val failedEnable = stringResource(R.string.apm_failed_to_enable)
     val failedDisable = stringResource(R.string.apm_failed_to_disable)
     val failedUninstall = stringResource(R.string.apm_uninstall_failed)
@@ -584,6 +590,73 @@ private fun ModuleList(
                 )
             },
         ) {
+            // Warning Banner
+            if (showMountWarning) {
+                item {
+                    Surface(
+                        modifier = Modifier.fillMaxWidth(),
+                        color = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f),
+                        shape = RoundedCornerShape(16.dp),
+                        tonalElevation = 2.dp
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Delete,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.error,
+                                    modifier = Modifier.size(24.dp)
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Text(
+                                    text = stringResource(R.string.apm_mount_warning_title),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    color = MaterialTheme.colorScheme.error,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(12.dp))
+
+                            Text(
+                                text = stringResource(R.string.apm_mount_warning_message),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onErrorContainer
+                            )
+
+                            Spacer(modifier = Modifier.height(12.dp))
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                FilledTonalButton(
+                                    onClick = {
+                                        prefs.edit()
+                                            .putBoolean("apm_mount_warning_shown", true)
+                                            .apply()
+                                        showMountWarning = false
+                                    },
+                                    colors = ButtonDefaults.filledTonalButtonColors(
+                                        containerColor = MaterialTheme.colorScheme.error,
+                                        contentColor = MaterialTheme.colorScheme.onError
+                                    )
+                                ) {
+                                    Text(stringResource(R.string.apm_mount_warning_button))
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             when {
                 modules.isEmpty() -> {
                     item {
@@ -983,6 +1056,14 @@ private fun ModuleItem(
                                         text = "Action",
                                         containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = labelOpacity),
                                         contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                                    )
+                                }
+                                
+                                if (module.isMetamodule && !module.remove) {
+                                    ModuleLabel(
+                                        text = "META",
+                                        containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = labelOpacity),
+                                        contentColor = MaterialTheme.colorScheme.onErrorContainer
                                     )
                                 }
                             }

@@ -154,6 +154,9 @@
     <string name="apm_desc">説明</string>
     <string name="apm_overlay_fs_not_available">カーネルによって OverlayFS が無効なため、モジュールを使用できません。</string>
     <string name="apm_magisk_conflict">Magisk と競合したためモジュールを使用できません。</string>
+    <string name="apm_mount_warning_title">重要なお知らせ</string>
+    <string name="apm_mount_warning_message">デフォルトではモジュールはマウントされません。内蔵マウントシステムまたはメタモジュールを使用してください。</string>
+    <string name="apm_mount_warning_button">理解しました</string>
     <string name="apm_reboot_to_apply">再起動して適用する</string>
     <string name="apm_changelog">変更履歴</string>
     <string name="apm_update">アップデート</string>
@@ -289,6 +292,8 @@
     <string name="settings_lite_mode_mode_summary">より良いパフォーマンスと隠匿性のためにファイルをマウントしない</string>
     <string name="settings_force_overlayfs_mode">強制OverlayFSモード</string>
     <string name="settings_force_overlayfs_mode_summary">モジュール機能にOverlayFSを強制的に使用する</string>
+    <string name="settings_magic_mount">マウントシステムを有効にする</string>
+    <string name="settings_magic_mount_summary">メタモジュールに依存せずに内蔵マウントシステムを有効にする</string>
     <string name="settings_app_title">アプリタイトル</string>
     <string name="settings_custom_background">カスタム背景</string>
     <string name="settings_custom_background_enabled">カスタム背景が有効です</string>

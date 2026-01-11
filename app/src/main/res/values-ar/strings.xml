@@ -193,6 +193,9 @@
     <string name="apm_desc">الوصف</string>
     <string name="apm_overlay_fs_not_available">الوحدات غير متاحة لأن OverlayFS معطل بواسطة النواة!</string>
     <string name="apm_magisk_conflict">الوحدات غير متاحة بسبب تعارض مع Magisk!</string>
+    <string name="apm_mount_warning_title">إشعار مهم</string>
+    <string name="apm_mount_warning_message">الوحدات غير مثبتة افتراضياً. يرجى استخدام نظام التركيب المدمج أو الوحدات الفوقية.</string>
+    <string name="apm_mount_warning_button">فهمت</string>
     <string name="apm_reboot_to_apply">أعد التشغيل للتطبيق</string>
     <string name="apm_changelog">سجل التغييرات</string>
     <string name="apm_update">تحديث</string>
@@ -335,6 +338,8 @@
     <string name="settings_lite_mode_mode_summary">لا تقم بتحميل الملفات لتحسين الأداء والتخفي</string>
     <string name="settings_force_overlayfs_mode">فرض وضع OverlayFS</string>
     <string name="settings_force_overlayfs_mode_summary">فرض استخدام OverlayFS للوحدات</string>
+    <string name="settings_magic_mount">تفعيل Magic Mount</string>
+    <string name="settings_magic_mount_summary">تفعيل نظام التركيب المدمج دون الاعتماد على الوحدات الفوقية</string>
     <string name="settings_app_title">عنوان التطبيق</string>
     <string name="settings_custom_background">خلفية مخصصة</string>
     <string name="settings_custom_background_enabled">تمكين الخلفية المخصصة</string>

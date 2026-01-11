@@ -172,6 +172,9 @@
     <string name="apm_desc">Mô tả</string>
     <string name="apm_overlay_fs_not_available">OverlayFS bị nhân vô hiệu hóa, module không khả dụng!</string>
     <string name="apm_magisk_conflict">Module không khả dụng do xung đột với Magisk!</string>
+    <string name="apm_mount_warning_title">Thông báo quan trọng</string>
+    <string name="apm_mount_warning_message">Theo mặc định, module không được gắn kết. Vui lòng sử dụng hệ thống gắn kết tích hợp hoặc metamodule.</string>
+    <string name="apm_mount_warning_button">Đã hiểu</string>
     <string name="apm_reboot_to_apply">Khởi động lại để áp dụng</string>
     <string name="apm_changelog">Nhật ký cập nhật</string>
     <string name="apm_update">Cập nhật</string>
@@ -327,6 +330,8 @@
     <string name="settings_lite_mode_mode_summary">Không gắn kết tệp để có hiệu suất và khả năng ẩn tốt hơn</string>
     <string name="settings_force_overlayfs_mode">Buộc chế độ OverlayFS</string>
     <string name="settings_force_overlayfs_mode_summary">Buộc sử dụng OverlayFS để tải module</string>
+    <string name="settings_magic_mount">Bật Magic Mount</string>
+    <string name="settings_magic_mount_summary">Bật hệ thống gắn kết tích hợp mà không cần phụ thuộc vào metamodule</string>
     <string name="settings_app_title">Tên ứng dụng</string>
     <string name="settings_custom_background">Hình nền tùy chỉnh</string>
     <string name="settings_custom_background_enabled">Đã bật hình nền tùy chỉnh</string>

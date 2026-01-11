@@ -192,6 +192,9 @@
     <string name="apm_desc">Desc</string>
     <string name="apm_overlay_fs_not_available">¡Los módulos no están disponibles porque OverlayFS está deshabilitado por el kernel!</string>
     <string name="apm_magisk_conflict">¡Los módulos no están disponibles debido a un conflicto con Magisk!</string>
+    <string name="apm_mount_warning_title">Aviso importante</string>
+    <string name="apm_mount_warning_message">Por defecto, los módulos no se montan. Utilice el sistema de montado integrado o metamódulos.</string>
+    <string name="apm_mount_warning_button">Entendido</string>
     <string name="apm_reboot_to_apply">Reiniciar para aplicar</string>
     <string name="apm_changelog">Registro de cambios</string>
     <string name="apm_update">Actualizar</string>
@@ -333,6 +336,8 @@
     <string name="settings_lite_mode_mode_summary">No montar archivos para un mejor rendimiento y sigilo</string>
     <string name="settings_force_overlayfs_mode">Forzar Modo OverlayFS</string>
     <string name="settings_force_overlayfs_mode_summary">Forzar el uso de OverlayFS para módulos</string>
+    <string name="settings_magic_mount">Activar Montaje Mágico</string>
+    <string name="settings_magic_mount_summary">Activar el sistema de montaje integrado sin depender de metamódulos</string>
     <string name="settings_app_title">Título de la App</string>
     <string name="settings_custom_background">Fondo Personalizado</string>
     <string name="settings_custom_background_enabled">Fondo Personalizado Habilitado</string>

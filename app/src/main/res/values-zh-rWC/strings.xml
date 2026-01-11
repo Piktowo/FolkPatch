@@ -170,6 +170,9 @@
     <string name="apm_desc">符篆玄义</string>
     <string name="apm_overlay_fs_not_available">OverlayFS仙域为道核所禁，天道仙符不可用！</string>
     <string name="apm_magisk_conflict">以与Magisk魔符相戾，天道仙符不可用！</string>
+    <string name="apm_mount_warning_title">重要提示</string>
+    <string name="apm_mount_warning_message">默认不挂载仙符，请使用内置挂载系统或者元仙符</string>
+    <string name="apm_mount_warning_button">我知道了</string>
     <string name="apm_reboot_to_apply">重铸仙躯乃显符效</string>
     <string name="apm_changelog">仙法易新录</string>
     <string name="apm_update">渡劫升符</string>
@@ -319,6 +322,8 @@
     <string name="settings_lite_mode_mode_summary">不挂载仙法符箓以获得更好的施法性能和隐藏性</string>
     <string name="settings_force_overlayfs_mode">强启OverlayFS仙域</string>
     <string name="settings_force_overlayfs_mode_summary">强以OverlayFS仙域引仙符入道</string>
+    <string name="settings_magic_mount">启仙域挂载</string>
+    <string name="settings_magic_mount_summary">启内建挂载系统而不赖元仙符</string>
     <string name="settings_app_title">仙器名讳</string>
     <string name="settings_custom_background">自定仙府背景</string>
     <string name="settings_custom_background_enabled">已启自定仙府背景</string>

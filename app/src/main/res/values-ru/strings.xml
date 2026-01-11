@@ -178,6 +178,9 @@
     <string name="apm_desc">Описание</string>
     <string name="apm_overlay_fs_not_available">Модули недоступны, так как OverlayFS отключён ядром!</string>
     <string name="apm_magisk_conflict">Модули недоступны из-за конфликта с Magisk!</string>
+    <string name="apm_mount_warning_title">Важное уведомление</string>
+    <string name="apm_mount_warning_message">По умолчанию модули не монтируются. Используйте встроенную систему монтирования или метамодули.</string>
+    <string name="apm_mount_warning_button">Понятно</string>
     <string name="apm_reboot_to_apply">Перезагрузите, чтобы применить изменения</string>
     <string name="apm_changelog">Список изменений</string>
     <string name="apm_update">Обновить</string>
@@ -331,6 +334,8 @@
     <string name="settings_lite_mode_mode_summary">Не монтировать файлы для лучшей производительности и скрытности</string>
     <string name="settings_force_overlayfs_mode">Принудительный режим OverlayFS</string>
     <string name="settings_force_overlayfs_mode_summary">Принудительно использовать OverlayFS для модулей</string>
+    <string name="settings_magic_mount">Включить Magic Mount</string>
+    <string name="settings_magic_mount_summary">Включить встроенную систему монтирования без использования метамодулей</string>
     <string name="settings_app_title">Заголовок приложения</string>
     <string name="settings_custom_background">Пользовательский фон</string>
     <string name="settings_custom_background_enabled">Пользовательский фон включен</string>

@@ -172,6 +172,9 @@
     <string name="apm_desc">說明</string>
     <string name="apm_overlay_fs_not_available">裝置核心停用了 OverlayFS，你無法使用模組功能!</string>
     <string name="apm_magisk_conflict">與 Magisk 發生衝突，你無法使用模組功能!</string>
+    <string name="apm_mount_warning_title">重要提示</string>
+    <string name="apm_mount_warning_message">預設不掛載模組，請使用內建掛載系統或者元模組</string>
+    <string name="apm_mount_warning_button">我知道了</string>
     <string name="apm_reboot_to_apply">重新啟動以應用變更</string>
     <string name="apm_changelog">《更新紀錄》</string>
     <string name="apm_update">更新</string>
@@ -323,6 +326,8 @@
     <string name="settings_lite_mode_mode_summary">不掛載檔案以獲得更好的效能和隱藏性</string>
     <string name="settings_force_overlayfs_mode">強制 OverlayFS 模式</string>
     <string name="settings_force_overlayfs_mode_summary">強制使用 OverlayFS 模組功能</string>
+    <string name="settings_magic_mount">啟用掛載系統</string>
+    <string name="settings_magic_mount_summary">啟用內建的掛載系統而不依賴元模組</string>
     <string name="settings_app_title">應用程式標題</string>
     <string name="settings_custom_background">自訂背景</string>
     <string name="settings_custom_background_enabled">已啟用自訂背景</string>

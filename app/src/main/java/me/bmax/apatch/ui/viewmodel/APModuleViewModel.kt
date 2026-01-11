@@ -50,6 +50,7 @@ class APModuleViewModel : ViewModel() {
         val updateJson: String,
         val hasWebUi: Boolean,
         val hasActionScript: Boolean,
+        val isMetamodule: Boolean,
         val isZygisk: Boolean,
         val isLSPosed: Boolean,
     )
@@ -86,7 +87,8 @@ class APModuleViewModel : ViewModel() {
         val collator = Collator.getInstance(Locale.getDefault())
         val sortedList = if (sortOptimizationEnabled) {
             modules.sortedWith(
-                compareByDescending<ModuleInfo> { it.isZygisk }
+                compareByDescending<ModuleInfo> { it.isMetamodule }
+                    .thenByDescending { it.isZygisk }
                     .thenByDescending { it.isLSPosed }
                     .thenByDescending { it.hasWebUi }
                     .thenByDescending { it.hasActionScript }
@@ -153,6 +155,7 @@ class APModuleViewModel : ViewModel() {
                             obj.optString("updateJson"),
                             obj.optBoolean("web"),
                             obj.optBoolean("action"),
+                            obj.optString("metamodule").let { it == "1" || it.equals("true", ignoreCase = true) },
                             zygiskModuleIds.contains(obj.getString("id")),
                             obj.optString("name").contains("LSPosed", ignoreCase = true)
                         )

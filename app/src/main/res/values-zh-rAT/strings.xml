@@ -171,6 +171,9 @@
     <string name="apm_desc">圣光描述</string>
     <string name="apm_overlay_fs_not_available">星辰回廊被灵魂核心封印，圣光阵不可用！</string>
     <string name="apm_magisk_conflict">由于与Magisk圣光阵冲突，此圣光阵不可用！</string>
+    <string name="apm_mount_warning_title">重要提示</string>
+    <string name="apm_mount_warning_message">默认不挂载圣光阵，请使用内置挂载系统或者元圣光阵</string>
+    <string name="apm_mount_warning_button">我知道了</string>
     <string name="apm_reboot_to_apply">神翼再生后生效</string>
     <string name="apm_changelog">圣光更新记录</string>
     <string name="apm_update">更新神恩</string>
@@ -321,6 +324,8 @@
     <string name="settings_lite_mode_mode_summary">不挂载魔法文件以获得更好的施法性能和隐蔽性</string>
     <string name="settings_force_overlayfs_mode">强制星之回廊模式</string>
     <string name="settings_force_overlayfs_mode_summary">强制使用星之回廊加载魔法阵</string>
+    <string name="settings_magic_mount">启用魔法挂载</string>
+    <string name="settings_magic_mount_summary">启用内置挂载系统而不依赖元魔法阵</string>
     <string name="settings_app_title">天使使名称</string>
     <string name="settings_custom_background">自定义天使背景</string>
     <string name="settings_custom_background_enabled">已启用自定义天使背景</string>

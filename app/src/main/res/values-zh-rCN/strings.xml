@@ -187,6 +187,9 @@
     <string name="apm_desc">描述</string>
     <string name="apm_overlay_fs_not_available">OverlayFS 被内核禁用，模块不可用！</string>
     <string name="apm_magisk_conflict">由于与 Magisk 冲突，模块不可用！</string>
+    <string name="apm_mount_warning_title">重要提示</string>
+    <string name="apm_mount_warning_message">默认不挂载模块，请使用内置挂载系统或者元模块</string>
+    <string name="apm_mount_warning_button">我知道了</string>
     <string name="apm_reboot_to_apply">重启生效</string>
     <string name="apm_changelog">更新日志</string>
     <string name="apm_update">更新</string>
@@ -328,6 +331,8 @@
     <string name="settings_app_dpi">应用 DPI</string>
     <string name="settings_lite_mode">Lite模式</string>
     <string name="settings_lite_mode_mode_summary">不挂载文件以获得更好的性能和隐藏性</string>
+    <string name="settings_magic_mount">启用挂载系统</string>
+    <string name="settings_magic_mount_summary">启用内置的挂载系统而不依赖元模块</string>
     <string name="settings_force_overlayfs_mode">强制 OverlayFS 模式</string>
     <string name="settings_force_overlayfs_mode_summary">强制使用 OverlayFS 加载模块</string>
     <string name="settings_app_title">应用名称</string>

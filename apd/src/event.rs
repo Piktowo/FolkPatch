@@ -48,6 +48,15 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
         return Ok(());
     }
 
+    if Path::new(defs::MAGIC_MOUNT_FILE).exists() {
+        info!("Magic Mount enabled");
+        if let Err(e) = crate::magic_mount::magic_mount() {
+            log::error!("Magic Mount failed: {}", e);
+        }
+    } else {
+        info!("Magic Mount disabled");
+    }
+
     // Create log environment
     if !Path::new(defs::APATCH_LOG_FOLDER).exists() {
         fs::create_dir(defs::APATCH_LOG_FOLDER).expect("Failed to create log folder");

@@ -145,15 +145,12 @@ import me.bmax.apatch.util.APatchKeyHelper
 import me.bmax.apatch.util.PermissionRequestHandler
 import me.bmax.apatch.util.PermissionUtils
 import me.bmax.apatch.util.getBugreportFile
-import me.bmax.apatch.util.isForceUsingOverlayFS
 import me.bmax.apatch.util.isGlobalNamespaceEnabled
-import me.bmax.apatch.util.isLiteModeEnabled
+import me.bmax.apatch.util.isMagicMountEnabled
 import me.bmax.apatch.util.outputStream
-import me.bmax.apatch.util.overlayFsAvailable
 import me.bmax.apatch.util.rootShellForResult
-import me.bmax.apatch.util.setForceUsingOverlayFS
 import me.bmax.apatch.util.setGlobalNamespaceEnabled
-import me.bmax.apatch.util.setLiteMode
+import me.bmax.apatch.util.setMagicMountEnabled
 import me.bmax.apatch.util.ui.APDialogBlurBehindUtils
 import me.bmax.apatch.util.ui.LocalSnackbarHost
 import me.bmax.apatch.util.ui.NavigationBarsSpacer
@@ -199,10 +196,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
     var isGlobalNamespaceEnabled by rememberSaveable {
         mutableStateOf(false)
     }
-    var isLiteModeEnabled by rememberSaveable {
-        mutableStateOf(false)
-    }
-    var forceUsingOverlayFS by rememberSaveable {
+    var isMagicMountEnabled by rememberSaveable {
         mutableStateOf(false)
     }
     var autoBackupBoot by rememberSaveable {
@@ -211,15 +205,11 @@ fun SettingScreen(navigator: DestinationsNavigator) {
     var bSkipStoreSuperKey by rememberSaveable {
         mutableStateOf(APatchKeyHelper.shouldSkipStoreSuperKey())
     }
-    val isOverlayFSAvailable by rememberSaveable {
-        mutableStateOf(overlayFsAvailable())
-    }
     var searchText by rememberSaveable { mutableStateOf("") }
 
     if (kPatchReady && aPatchReady) {
         isGlobalNamespaceEnabled = isGlobalNamespaceEnabled()
-        isLiteModeEnabled = isLiteModeEnabled()
-        forceUsingOverlayFS = isForceUsingOverlayFS()
+        isMagicMountEnabled = isMagicMountEnabled()
     }
 
     val snackBarHost = LocalSnackbarHost.current
@@ -565,13 +555,9 @@ fun SettingScreen(navigator: DestinationsNavigator) {
             val globalNamespaceSummary = stringResource(id = R.string.settings_global_namespace_mode_summary)
             val showGlobalNamespace = (kPatchReady && aPatchReady) && (matchGeneral || shouldShow(globalNamespaceTitle, globalNamespaceSummary))
 
-            val liteModeTitle = stringResource(id = R.string.settings_lite_mode)
-            val liteModeSummary = stringResource(id = R.string.settings_lite_mode_mode_summary)
-            val showLiteMode = (kPatchReady && aPatchReady) && (matchGeneral || shouldShow(liteModeTitle, liteModeSummary))
-
-            val overlayFSTitle = stringResource(id = R.string.settings_force_overlayfs_mode)
-            val overlayFSSummary = stringResource(id = R.string.settings_force_overlayfs_mode_summary)
-            val showOverlayFS = (kPatchReady && aPatchReady && isOverlayFSAvailable) && (matchGeneral || shouldShow(overlayFSTitle, overlayFSSummary))
+            val magicMountTitle = stringResource(id = R.string.settings_magic_mount)
+            val magicMountSummary = stringResource(id = R.string.settings_magic_mount_summary)
+            val showMagicMount = (kPatchReady && aPatchReady) && (matchGeneral || shouldShow(magicMountTitle, magicMountSummary))
 
             val autoBackupBootTitle = stringResource(id = R.string.setting_auto_backup_boot)
             val autoBackupBootSummary = stringResource(id = R.string.setting_auto_backup_boot_summary)
@@ -611,7 +597,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
             val currentSchemeLabel = if (currentScheme == "root_service") stringResource(R.string.app_list_loading_scheme_root_service) else stringResource(R.string.app_list_loading_scheme_package_manager)
             val showAppListLoadingScheme = matchGeneral || shouldShow(appListLoadingSchemeTitle, currentSchemeLabel)
 
-            val showGeneralCategory = showLanguage || showUpdate || showAutoUpdate || showGlobalNamespace || showLiteMode || showOverlayFS || showAutoBackupBoot || showResetSuPath || showAppTitle || showLauncherIcon || showDesktopAppName || showDpi || showLog || showFolkXEngine || showAppListLoadingScheme
+            val showGeneralCategory = showLanguage || showUpdate || showAutoUpdate || showGlobalNamespace || showMagicMount || showAutoBackupBoot || showResetSuPath || showAppTitle || showLauncherIcon || showDesktopAppName || showDpi || showLog || showFolkXEngine || showAppListLoadingScheme
 
             if (showGeneralCategory) {
                 SettingsCategory(icon = Icons.Filled.Tune, title = generalTitle, isSearching = searchText.isNotEmpty()) {
@@ -753,29 +739,16 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                             })
                     }
 
-                    // Lite Mode
-                    if (showLiteMode) {
+                    // Magic Mount
+                    if (showMagicMount) {
                         SwitchItem(
-                            icon = Icons.Filled.RemoveFromQueue,
-                            title = liteModeTitle,
-                            summary = liteModeSummary,
-                            checked = isLiteModeEnabled,
+                            icon = Icons.Filled.Extension,
+                            title = magicMountTitle,
+                            summary = magicMountSummary,
+                            checked = isMagicMountEnabled,
                             onCheckedChange = {
-                                setLiteMode(it)
-                                isLiteModeEnabled = it
-                            })
-                    }
-
-                    // OverlayFS
-                    if (showOverlayFS) {
-                        SwitchItem(
-                            icon = Icons.Filled.FilePresent,
-                            title = overlayFSTitle,
-                            summary = overlayFSSummary,
-                            checked = forceUsingOverlayFS,
-                            onCheckedChange = {
-                                setForceUsingOverlayFS(it)
-                                forceUsingOverlayFS = it
+                                setMagicMountEnabled(it)
+                                isMagicMountEnabled = it
                             })
                     }
 
