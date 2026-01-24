@@ -833,7 +833,7 @@ private fun KStatusCard(
                     if (kpState != APApplication.State.UNKNOWN_STATE && kpState != APApplication.State.KERNELPATCH_NEED_UPDATE && kpState != APApplication.State.KERNELPATCH_NEED_REBOOT) {
                         Spacer(Modifier.height(4.dp))
                         Text(
-                            text = "${Version.installedKPVString()} (${managerVersion.second})" + if (!BackgroundConfig.isListWorkingCardModeHidden) " - " + (if (apState != APApplication.State.ANDROIDPATCH_NOT_INSTALLED) "Full" else "KernelPatch") else "",
+                            text = "${Version.installedKPVString()} (${managerVersion.second})" + if (BackgroundConfig.isListWorkingCardModeHidden) " - " + (if (apState != APApplication.State.ANDROIDPATCH_NOT_INSTALLED) "Full" else "KernelPatch") else "",
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
