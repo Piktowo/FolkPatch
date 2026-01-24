@@ -321,6 +321,12 @@
     <string name="online_kpm_download_complete">下载完成了喵：%s</string>
     <string name="online_kpm_download_notification">正在下 %s 喵！看通知栏进度，下完看下载文件夹哦喵</string>
 
+    <!-- Online Script Strings -->
+    <string name="online_script_title">给主人脚本喵</string>
+    <string name="online_script_download_start">开始下载喵：%s</string>
+    <string name="online_script_download_complete">下载完成了喵：%s</string>
+    <string name="online_script_download_notification">正在下 %s 喵</string>
+
     <!-- Crash Handle Strings -->
     <string name="crash_handle_title">崩溃报告喵</string>
     <string name="crash_handle_copy">复制一下喵！</string>
@@ -697,4 +703,28 @@
 
     <string name="patch_output_written_to"> 修补成功喵，文件输出到 </string>
     <string name="patch_write_failed"> 修补失败喵，发生了致命错误</string>
+
+    <!-- Script Library Strings -->
+    <string name="script_library">脚本库喵</string>
+    <string name="script_library_title">脚本库喵</string>
+    <string name="script_library_empty">还没有脚本喵，戳添加按钮加一个喵！</string>
+    <string name="script_library_add">添加脚本喵</string>
+    <string name="script_library_add_title">添加脚本喵</string>
+    <string name="script_library_select_file">选脚本文件喵！</string>
+    <string name="script_library_alias">别名喵</string>
+    <string name="script_library_alias_hint">输脚本别名喵（可选）</string>
+    <string name="script_library_run">运行喵！</string>
+    <string name="script_library_delete">删掉喵！</string>
+    <string name="script_library_path">路径喵：%s</string>
+    <string name="script_library_confirm_delete">真的要删这个脚本喵？</string>
+    <string name="script_library_delete_success">脚本删掉了喵！</string>
+    <string name="script_library_delete_failed">删除脚本失败了喵...</string>
+    <string name="script_library_add_success">脚本加好了喵！</string>
+    <string name="script_library_add_failed">加脚本失败了喵：%s</string>
+    <string name="script_library_load_failed">加载脚本库失败了喵...</string>
+    <string name="script_library_output">执行输出喵</string>
+    <string name="script_library_no_output">没输出喵</string>
+    <string name="script_library_save_log">保存日志喵！</string>
+    <string name="script_library_log_saved">日志保存到 %s 喵！</string>
+    <string name="script_library_log_save_failed">保存日志失败了喵：%s</string>
 </resources>

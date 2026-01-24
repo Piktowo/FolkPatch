@@ -304,6 +304,12 @@
     <string name="online_kpm_download_complete">下載完成：%s</string>
     <string name="online_kpm_download_notification">正在下載 %s。請查看通知列取得下載進度，下載檔案位於 Download資料夾中。</string>
 
+    <!-- Online Script Strings -->
+    <string name="online_script_title">線上腳本</string>
+    <string name="online_script_download_start">開始下載：%s</string>
+    <string name="online_script_download_complete">下載完成：%s</string>
+    <string name="online_script_download_notification">正在下載 %s</string>
+
     <!-- Crash Handle Strings -->
     <string name="crash_handle_title">崩潰報告</string>
     <string name="crash_handle_copy">複製</string>
@@ -674,5 +680,29 @@
 
     <string name="patch_output_written_to"> 修補成功，檔案輸出到 </string>
     <string name="patch_write_failed"> 修補失敗，發生了致命錯誤</string>
+
+    <!-- Script Library Strings -->
+    <string name="script_library">腳本庫</string>
+    <string name="script_library_title">腳本庫</string>
+    <string name="script_library_empty">暫無腳本，點擊新增按鈕新增一個</string>
+    <string name="script_library_add">新增腳本</string>
+    <string name="script_library_add_title">新增腳本</string>
+    <string name="script_library_select_file">選擇腳本檔案</string>
+    <string name="script_library_alias">別名</string>
+    <string name="script_library_alias_hint">輸入腳本別名（可選）</string>
+    <string name="script_library_run">執行</string>
+    <string name="script_library_delete">刪除</string>
+    <string name="script_library_path">路徑：%s</string>
+    <string name="script_library_confirm_delete">確認刪除腳本？</string>
+    <string name="script_library_delete_success">腳本刪除成功</string>
+    <string name="script_library_delete_failed">刪除腳本失敗</string>
+    <string name="script_library_add_success">腳本新增成功</string>
+    <string name="script_library_add_failed">新增腳本失敗：%s</string>
+    <string name="script_library_load_failed">載入腳本庫失敗</string>
+    <string name="script_library_output">執行輸出</string>
+    <string name="script_library_no_output">無輸出</string>
+    <string name="script_library_save_log">儲存日誌</string>
+    <string name="script_library_log_saved">日誌已儲存至 %s</string>
+    <string name="script_library_log_save_failed">儲存日誌失敗：%s</string>
 
 </resources>
