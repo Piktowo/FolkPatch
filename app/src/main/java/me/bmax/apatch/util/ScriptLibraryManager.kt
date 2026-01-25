@@ -91,11 +91,12 @@ import java.io.File
 
     suspend fun loadScripts(): List<ScriptInfo> = withContext(Dispatchers.IO) {
         try {
-            val parsedLegacy = readConfig(legacyConfigFile())
+            val parsedLegacy = if (isLegacyWritable()) readConfig(legacyConfigFile()) else emptyList()
             val parsedApp = readConfig(appConfigFile())
-            val combined = (parsedLegacy + parsedApp)
-                .distinctBy { it.path }
-                .filter { File(it.path).exists() }
+            val merged = linkedMapOf<String, ScriptInfo>()
+            parsedLegacy.forEach { merged[it.path] = it }
+            parsedApp.forEach { merged[it.path] = it }
+            val combined = merged.values.filter { File(it.path).exists() }
             if (combined.isNotEmpty()) {
                 saveScripts(combined)
                 return@withContext combined
