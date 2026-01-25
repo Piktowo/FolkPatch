@@ -18,6 +18,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,21 +29,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import com.topjohnwu.superuser.CallbackList
+import com.topjohnwu.superuser.Shell
+import com.topjohnwu.superuser.internal.UiThreadHandler
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.R
 import me.bmax.apatch.data.ScriptInfo
-import me.bmax.apatch.util.ScriptLibraryManager
+import me.bmax.apatch.util.createRootShell
 import me.bmax.apatch.util.ui.LocalSnackbarHost
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.Future
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Destination<RootGraph>
@@ -60,45 +64,59 @@ fun ScriptExecutionLogScreen(
     val scrollState = rememberScrollState()
 
     val context = androidx.compose.ui.platform.LocalContext.current
+    val shell = remember { createRootShell() }
+    val jobFuture = remember { mutableStateOf<Future<Shell.Result>?>(null) }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            jobFuture.value?.cancel(true)
+            shell.close()
+        }
+    }
 
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
-            val success = ScriptLibraryManager.executeScriptWithCallbacks(
-                scriptInfo,
-                onStdout = {
-                    val tempText = "$it\n"
+            val stdout = object : CallbackList<String>(UiThreadHandler::runAndWait) {
+                override fun onAddElement(s: String) {
+                    val tempText = "$s\n"
                     if (tempText.startsWith("[H[J")) {
                         displayBuffer.setLength(0)
                         displayBuffer.append(tempText.substring(6))
                     } else {
                         displayBuffer.append(tempText)
                     }
-                    fullLogBuffer.append(it).append("\n")
+                    fullLogBuffer.append(s).append("\n")
                     val newText = displayBuffer.toString()
-                    scope.launch(Dispatchers.Main) {
-                        if (text != newText) {
-                            text = newText
-                        }
-                    }
-                },
-                onStderr = {
-                    val tempText = "$it\n"
-                    if (tempText.startsWith("[H[J")) {
-                        displayBuffer.setLength(0)
-                        displayBuffer.append(tempText.substring(6))
-                    } else {
-                        displayBuffer.append(tempText)
-                    }
-                    fullLogBuffer.append(it).append("\n")
-                    val newText = displayBuffer.toString()
-                    scope.launch(Dispatchers.Main) {
-                        if (text != newText) {
-                            text = newText
-                        }
+                    if (text != newText) {
+                        text = newText
                     }
                 }
-            )
-            if (!success && fullLogBuffer.isEmpty()) {
+            }
+
+            val stderr = object : CallbackList<String>(UiThreadHandler::runAndWait) {
+                override fun onAddElement(s: String) {
+                    val tempText = "$s\n"
+                    if (tempText.startsWith("[H[J")) {
+                        displayBuffer.setLength(0)
+                        displayBuffer.append(tempText.substring(6))
+                    } else {
+                        displayBuffer.append(tempText)
+                    }
+                    fullLogBuffer.append(s).append("\n")
+                    val newText = displayBuffer.toString()
+                    if (text != newText) {
+                        text = newText
+                    }
+                }
+            }
+
+            val future = shell.newJob()
+                .add("sh \"${scriptInfo.path}\"")
+                .to(stdout, stderr)
+                .enqueue()
+            jobFuture.value = future
+            val result = future.get()
+            if (!result.isSuccess && fullLogBuffer.isEmpty()) {
                 displayBuffer.append(context.getString(R.string.script_library_no_output))
             }
         }
