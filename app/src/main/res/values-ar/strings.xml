@@ -257,6 +257,8 @@
     <string name="apm_install_confirm_content">هل أنت متأكد من أنك تريد تثبيت %s؟</string>
     <string name="apm_disable_all_title">تعطيل كل الوحدات</string>
     <string name="apm_disable_all_confirm">هل أنت متأكد من أنك تريد تعطيل جميع الوحدات؟ بشكل عام، يتم ذلك قبل تحديث OTA.</string>
+    <string name="apm_enable_module_banner">تمكين لافتة الوحدة</string>
+    <string name="apm_enable_module_banner_summary">عرض صورة اللافتة للوحدات إذا كانت متوفرة</string>
 
     <string name="settings_donot_store_superkey">عدم تخزين المفتاح الخارق محليًا</string>
     <string name="settings_donot_store_superkey_summary">المصادقة على المفتاح الخارق في كل مرة يبدأ فيها المدير

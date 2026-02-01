@@ -250,6 +250,8 @@
     <string name="apm_install_confirm_content">Вы уверены, что хотите установить %s?</string>
     <string name="apm_disable_all_title">Отключить все модули</string>
     <string name="apm_disable_all_confirm">Вы уверены, что хотите отключить все модули? Обычно это делается перед обновлением OTA.</string>
+    <string name="apm_enable_module_banner">Включить баннер модуля</string>
+    <string name="apm_enable_module_banner_summary">Отображать изображение баннера для модулей если доступно</string>
 
     <string name="settings_donot_store_superkey">Не сохранять SuperKey локально</string>
     <string name="settings_donot_store_superkey_summary">Аутентифицировать SuperKey каждый раз при запуске менеджера</string>

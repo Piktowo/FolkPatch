@@ -126,6 +126,7 @@ import me.bmax.apatch.util.DownloadListener
 import me.bmax.apatch.util.download
 import me.bmax.apatch.util.hasMagisk
 import me.bmax.apatch.util.ModuleShortcut
+import me.bmax.apatch.util.getRootShell
 import me.bmax.apatch.util.reboot
 import me.bmax.apatch.util.toggleModule
 import me.bmax.apatch.util.ui.LocalSnackbarHost
@@ -145,6 +146,7 @@ import me.bmax.apatch.ui.theme.BackgroundConfig
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.Properties
 
 import me.bmax.apatch.util.BiometricUtils
 
@@ -165,6 +167,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
     var showMoreModuleInfo by remember { mutableStateOf(prefs.getBoolean("show_more_module_info", true)) }
     var foldSystemModule by remember { mutableStateOf(prefs.getBoolean("fold_system_module", false)) }
     var simpleListBottomBar by remember { mutableStateOf(prefs.getBoolean("simple_list_bottom_bar", false)) }
+    var useModuleBanner by remember { mutableStateOf(prefs.getBoolean("apm_use_module_banner", true)) }
 
     DisposableEffect(Unit) {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPrefs, key ->
@@ -174,6 +177,8 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                 foldSystemModule = sharedPrefs.getBoolean("fold_system_module", false)
             } else if (key == "simple_list_bottom_bar") {
                 simpleListBottomBar = sharedPrefs.getBoolean("simple_list_bottom_bar", false)
+            } else if (key == "apm_use_module_banner") {
+                useModuleBanner = sharedPrefs.getBoolean("apm_use_module_banner", true)
             }
         }
         prefs.registerOnSharedPreferenceChangeListener(listener)
@@ -263,7 +268,20 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
 
     Scaffold(
         topBar = {
-        TopBar(navigator, viewModel, snackBarHost, searchQuery, ::checkStrongBiometric) { searchQuery = it }
+        TopBar(
+            navigator,
+            viewModel,
+            snackBarHost,
+            searchQuery,
+            useModuleBanner,
+            ::checkStrongBiometric,
+            onSearchQueryChange = { searchQuery = it },
+            onToggleModuleBanner = {
+                val newValue = !useModuleBanner
+                useModuleBanner = newValue
+                prefs.edit().putBoolean("apm_use_module_banner", newValue).apply()
+            }
+        )
     }, floatingActionButton = if (hideInstallButton) {
         { /* Empty */ }
     } else {
@@ -349,6 +367,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                     showMoreModuleInfo = showMoreModuleInfo,
                     foldSystemModule = foldSystemModule,
                     simpleListBottomBar = simpleListBottomBar,
+                    enableModuleBanner = useModuleBanner,
                     checkStrongBiometric = ::checkStrongBiometric,
                     modifier = Modifier
                         .padding(innerPadding)
@@ -454,6 +473,7 @@ private fun ModuleList(
     showMoreModuleInfo: Boolean,
     foldSystemModule: Boolean,
     simpleListBottomBar: Boolean,
+    enableModuleBanner: Boolean,
     checkStrongBiometric: suspend () -> Boolean,
     modifier: Modifier = Modifier,
     state: LazyListState,
@@ -698,10 +718,10 @@ private fun ModuleList(
                 }
 
                 else -> {
-                    items(modules) { module ->
+                    items(modules, key = { it.id }) { module ->
                         var isChecked by rememberSaveable(module) { mutableStateOf(module.enabled) }
                         val scope = rememberCoroutineScope()
-                        val updatedModule by produceState(initialValue = Triple("", "", "")) {
+                        val updatedModule by produceState(initialValue = Triple("", "", ""), key1 = module.id) {
                             scope.launch(Dispatchers.IO) {
                                 value = viewModel.checkUpdate(module)
                             }
@@ -715,6 +735,7 @@ private fun ModuleList(
                             showMoreModuleInfo = showMoreModuleInfo,
                             foldSystemModule = foldSystemModule,
                             simpleListBottomBar = simpleListBottomBar,
+                            enableModuleBanner = enableModuleBanner,
                             enableModuleShortcutAdd = enableModuleShortcutAdd,
                             expanded = expandedModuleId == module.id,
                             onExpandToggle = {
@@ -780,8 +801,10 @@ private fun TopBar(
     viewModel: APModuleViewModel,
     snackBarHost: SnackbarHostState,
     searchQuery: String,
+    useModuleBanner: Boolean,
     checkStrongBiometric: suspend () -> Boolean,
-    onSearchQueryChange: (String) -> Unit
+    onSearchQueryChange: (String) -> Unit,
+    onToggleModuleBanner: () -> Unit
 ) {
     val confirmDialog = rememberConfirmDialog()
     val scope = rememberCoroutineScope()
@@ -933,7 +956,6 @@ private fun ModuleLabel(
     }
 }
 
-
 @Composable
 private fun ModuleItem(
     navigator: DestinationsNavigator,
@@ -943,6 +965,7 @@ private fun ModuleItem(
     showMoreModuleInfo: Boolean,
     foldSystemModule: Boolean,
     simpleListBottomBar: Boolean,
+    enableModuleBanner: Boolean,
     enableModuleShortcutAdd: Boolean,
     expanded: Boolean,
     onExpandToggle: () -> Unit,
@@ -970,26 +993,94 @@ private fun ModuleItem(
         }
     }
 
-    // Banner Logic
-    val bannerData = remember(module.id) {
-        try {
-            val dir = "/data/adb/modules/${module.id}"
-            val candidates = listOf("banner", "banner.png", "banner.jpg", "banner.jpeg")
-            var bytes: ByteArray? = null
-            for (name in candidates) {
-                val file = SuFile("$dir/$name")
-                if (file.exists()) {
-                    bytes = file.newInputStream().use { it.readBytes() }
-                    break
-                }
-            }
-            bytes
-        } catch (e: Exception) {
-            null
+    val bannerInfo by produceState<APModuleViewModel.BannerInfo?>(
+        initialValue = viewModel.getBannerInfo(module.id),
+        key1 = module.id,
+        key2 = enableModuleBanner
+    ) {
+        if (!enableModuleBanner) {
+            value = null
+            return@produceState
         }
+
+        val cached = viewModel.getBannerInfo(module.id)
+        if (cached != null) {
+            value = cached
+            return@produceState
+        }
+
+        val loaded = withContext(Dispatchers.IO) {
+            try {
+                val rootShell = getRootShell(true)
+                val suFile = { path: String ->
+                    SuFile(path).apply { shell = rootShell }
+                }
+                val defaultDir = "/data/adb/modules/${module.id}"
+                val resolvedDir = runCatching {
+                    val direct = suFile(defaultDir)
+                    if (direct.exists()) {
+                        direct.path
+                    } else {
+                        val modulesRoot = suFile("/data/adb/modules")
+                        val dirs = modulesRoot.listFiles() ?: return@runCatching defaultDir
+                        for (dir in dirs) {
+                            if (!dir.isDirectory) continue
+                            val propFile = suFile("${dir.path}/module.prop")
+                            if (!propFile.exists()) continue
+                            val props = Properties()
+                            props.load(propFile.newInputStream())
+                            val id = props.getProperty("id")?.trim()
+                            if (id == module.id) {
+                                return@runCatching dir.path
+                            }
+                        }
+                        defaultDir
+                    }
+                }.getOrDefault(defaultDir)
+                val propBanner = runCatching {
+                    val propFile = suFile("$resolvedDir/module.prop")
+                    if (propFile.exists()) {
+                        val props = Properties()
+                        props.load(propFile.newInputStream())
+                        props.getProperty("banner")?.trim()?.takeIf { it.isNotEmpty() }
+                    } else {
+                        null
+                    }
+                }.getOrNull()
+
+                if (!propBanner.isNullOrEmpty() && propBanner.startsWith("http", true)) {
+                    return@withContext APModuleViewModel.BannerInfo(null, propBanner)
+                }
+
+                val candidates = buildList {
+                    if (!propBanner.isNullOrEmpty()) {
+                        add(propBanner)
+                    }
+                    addAll(listOf("banner", "banner.png", "banner.jpg", "banner.jpeg", "banner.webp"))
+                }.distinct()
+
+                for (name in candidates) {
+                    val file = if (name.startsWith("/")) {
+                        suFile(name)
+                    } else {
+                        suFile("$resolvedDir/$name")
+                    }
+                    if (file.exists()) {
+                        return@withContext APModuleViewModel.BannerInfo(file.newInputStream().use { it.readBytes() }, null)
+                    }
+                }
+                APModuleViewModel.BannerInfo(null, null)
+            } catch (e: Exception) {
+                APModuleViewModel.BannerInfo(null, null)
+            }
+        }
+
+        if (loaded != null) {
+            viewModel.putBannerInfo(module.id, loaded)
+        }
+        value = loaded
     }
 
-    val isDark = isSystemInDarkTheme()
     val cardColor = if (isWallpaperMode) {
         MaterialTheme.colorScheme.surface.copy(alpha = opacity)
     } else {
@@ -1010,22 +1101,35 @@ private fun ModuleItem(
         tonalElevation = 0.dp
     ) {
         Box(modifier = Modifier.fillMaxWidth()) {
-            if (bannerData != null) {
+            val bannerUrl = bannerInfo?.url
+            val bannerData = bannerInfo?.bytes
+            val hasBannerUrl = !bannerUrl.isNullOrEmpty()
+            if (bannerData != null || hasBannerUrl) {
                 val isDark = isSystemInDarkTheme()
-                val fadeColor = if (isDark) Color(0xFF222222) else Color.White
+                val colorScheme = MaterialTheme.colorScheme
+                val isDynamic = colorScheme.primary != colorScheme.secondary
+                val fadeColor = when {
+                    isDynamic -> colorScheme.surface
+                    isDark -> Color(0xFF222222)
+                    else -> Color.White
+                }
 
                 Box(
                     modifier = Modifier.matchParentSize(),
                     contentAlignment = Alignment.Center
                 ) {
                     AsyncImage(
-                        model = ImageRequest.Builder(context)
-                            .data(bannerData)
-                            .build(),
+                        model = if (hasBannerUrl) {
+                            bannerUrl
+                        } else {
+                            ImageRequest.Builder(context)
+                                .data(bannerData)
+                                .build()
+                        },
                         contentDescription = null,
                         modifier = Modifier.fillMaxSize(),
                         contentScale = ContentScale.Crop,
-                        alpha = 0.2f
+                        alpha = 0.18f
                     )
                     Box(
                         modifier = Modifier
@@ -1033,9 +1137,11 @@ private fun ModuleItem(
                             .background(
                                 Brush.verticalGradient(
                                     colors = listOf(
-                                        fadeColor.copy(alpha = 0.1f),
-                                        fadeColor.copy(alpha = 0.9f)
-                                    )
+                                        fadeColor.copy(alpha = 0.0f),
+                                        fadeColor.copy(alpha = 0.8f)
+                                    ),
+                                    startY = 0f,
+                                    endY = Float.POSITIVE_INFINITY
                                 )
                             )
                     )

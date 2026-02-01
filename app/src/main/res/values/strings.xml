@@ -259,6 +259,8 @@
     <string name="apm_install_confirm_content">Are you sure you want to install %s?</string>
     <string name="apm_disable_all_title">Disable All Modules</string>
     <string name="apm_disable_all_confirm">Are you sure you want to disable all modules? Generally, this is done before an OTA update.</string>
+    <string name="apm_enable_module_banner">Enable Module Banner</string>
+    <string name="apm_enable_module_banner_summary">Display banner image for modules if available</string>
 
     <string name="settings_donot_store_superkey">Don\'t store SuperKey in local</string>
     <string name="settings_donot_store_superkey_summary">Authenticate the SuperKey every time the manager starts</string>

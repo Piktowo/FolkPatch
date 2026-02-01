@@ -44,11 +44,29 @@ fun ModuleSettings(
     val simpleListBottomBarSummary = stringResource(id = R.string.settings_simple_list_bottom_bar_summary)
     val showSimpleListBottomBar = matchModule || shouldShow(searchText, simpleListBottomBarTitle, simpleListBottomBarSummary)
 
-    val showModuleCategory = showMoreInfo || showModuleSortOptimization || showDisableModuleUpdateCheck || showFoldSystemModule || showApmBatchInstallFullProcess || showSimpleListBottomBar
+    val enableModuleBannerTitle = stringResource(id = R.string.apm_enable_module_banner)
+    val enableModuleBannerSummary = stringResource(id = R.string.apm_enable_module_banner_summary)
+    val showEnableModuleBanner = matchModule || shouldShow(searchText, enableModuleBannerTitle, enableModuleBannerSummary)
+
+    val showModuleCategory = showMoreInfo || showModuleSortOptimization || showDisableModuleUpdateCheck || showFoldSystemModule || showApmBatchInstallFullProcess || showSimpleListBottomBar || showEnableModuleBanner
 
     if (showModuleCategory) {
         SettingsCategory(icon = Icons.Filled.Extension, title = moduleTitle, isSearching = searchText.isNotEmpty()) {
             
+            if (showEnableModuleBanner) {
+                var enableModuleBanner by remember { mutableStateOf(prefs.getBoolean("apm_use_module_banner", true)) }
+                SwitchItem(
+                    icon = Icons.Filled.ViewCarousel,
+                    title = enableModuleBannerTitle,
+                    summary = enableModuleBannerSummary,
+                    checked = enableModuleBanner,
+                    onCheckedChange = {
+                        enableModuleBanner = it
+                        prefs.edit().putBoolean("apm_use_module_banner", it).apply()
+                    }
+                )
+            }
+
             if (showDisableModuleUpdateCheck) {
                 var disableModuleUpdateCheck by remember { mutableStateOf(prefs.getBoolean("disable_module_update_check", false)) }
                 SwitchItem(

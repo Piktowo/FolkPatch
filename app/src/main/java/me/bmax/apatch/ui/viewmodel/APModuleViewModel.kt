@@ -5,6 +5,7 @@ import android.os.SystemClock
 import android.util.Log
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -62,11 +63,17 @@ class APModuleViewModel : ViewModel() {
         val changelog: String,
     )
 
+    data class BannerInfo(
+        val bytes: ByteArray?,
+        val url: String?
+    )
+
     var isRefreshing by mutableStateOf(false)
         private set
 
     private val prefs = APApplication.sharedPreferences
     var sortOptimizationEnabled by mutableStateOf(prefs.getBoolean("module_sort_optimization", true))
+    private val bannerCache = mutableStateMapOf<String, BannerInfo>()
 
     private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         if (key == "module_sort_optimization") {
@@ -122,6 +129,17 @@ class APModuleViewModel : ViewModel() {
         }
     }
 
+    fun getBannerInfo(id: String): BannerInfo? = bannerCache[id]
+
+    fun putBannerInfo(id: String, info: BannerInfo) {
+        bannerCache[id] = info
+    }
+
+    private fun pruneBannerCache(validIds: Set<String>) {
+        val keysToRemove = bannerCache.keys.filter { it !in validIds }
+        keysToRemove.forEach { bannerCache.remove(it) }
+    }
+
     fun fetchModuleList() {
         viewModelScope.launch(Dispatchers.IO) {
             isRefreshing = true
@@ -160,6 +178,7 @@ class APModuleViewModel : ViewModel() {
                             obj.optString("name").contains("LSPosed", ignoreCase = true)
                         )
                     }.toList()
+                pruneBannerCache(modules.map { it.id }.toSet())
                 isNeedRefresh = false
             }.onFailure { e ->
                 Log.e(TAG, "fetchModuleList: ", e)
