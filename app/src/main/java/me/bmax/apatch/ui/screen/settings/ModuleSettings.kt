@@ -48,9 +48,11 @@ fun ModuleSettings(
     val enableModuleBannerSummary = stringResource(id = R.string.apm_enable_module_banner_summary)
     val showEnableModuleBanner = matchModule || shouldShow(searchText, enableModuleBannerTitle, enableModuleBannerSummary)
 
+    var enableModuleBanner by remember { mutableStateOf(prefs.getBoolean("apm_use_module_banner", true)) }
+
     val enableFolkBannerTitle = stringResource(id = R.string.apm_enable_folk_banner)
     val enableFolkBannerSummary = stringResource(id = R.string.apm_enable_folk_banner_summary)
-    val showEnableFolkBanner = matchModule || shouldShow(searchText, enableFolkBannerTitle, enableFolkBannerSummary)
+    val showEnableFolkBanner = enableModuleBanner && (matchModule || shouldShow(searchText, enableFolkBannerTitle, enableFolkBannerSummary))
 
     val showModuleCategory = showMoreInfo || showModuleSortOptimization || showDisableModuleUpdateCheck || showFoldSystemModule || showApmBatchInstallFullProcess || showSimpleListBottomBar || showEnableModuleBanner || showEnableFolkBanner
 
@@ -58,7 +60,6 @@ fun ModuleSettings(
         SettingsCategory(icon = Icons.Filled.Extension, title = moduleTitle, isSearching = searchText.isNotEmpty()) {
             
             if (showEnableModuleBanner) {
-                var enableModuleBanner by remember { mutableStateOf(prefs.getBoolean("apm_use_module_banner", true)) }
                 SwitchItem(
                     icon = Icons.Filled.ViewCarousel,
                     title = enableModuleBannerTitle,
