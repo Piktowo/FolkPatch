@@ -347,7 +347,12 @@ private fun AdaptiveButtonRowLayout(
         }
         
         // 7. 布局
-        layout(availableWidth, finalPlaceables.maxOfOrNull { it.height } ?: 0) {
+        val layoutHeight = maxOf(
+            finalPlaceables.maxOfOrNull { it.height } ?: 0,
+            trailingPlaceable?.height ?: 0
+        )
+
+        layout(availableWidth, layoutHeight) {
             var xPosition = 0
             
             finalPlaceables.forEach { placeable ->
