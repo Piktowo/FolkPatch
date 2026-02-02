@@ -258,6 +258,13 @@
     <string name="apm_install_confirm_title">Install Module</string>
     <string name="apm_install_confirm_content">Are you sure you want to install %s?</string>
     <string name="apm_disable_all_title">Disable All Modules</string>
+    <string name="module_shortcut_name">Shortcut name</string>
+    <string name="module_shortcut_icon">Shortcut icon</string>
+    <string name="module_shortcut_type">Shortcut type</string>
+    <string name="module_shortcut_type_webui">WebUI</string>
+    <string name="module_shortcut_type_action">Action</string>
+    <string name="module_shortcut_icon_default">Use default icon</string>
+    <string name="module_shortcut_icon_select">Select icon</string>
     <string name="apm_disable_all_confirm">Are you sure you want to disable all modules? Generally, this is done before an OTA update.</string>
     <string name="apm_enable_module_banner">Enable Module Banner</string>
     <string name="apm_enable_module_banner_summary">Display banner image for modules if available</string>
@@ -269,6 +276,9 @@
     <string name="apm_folk_banner_saved">FolkBanner injected for %s.</string>
     <string name="apm_folk_banner_cleared">FolkBanner cleared for %s.</string>
     <string name="apm_folk_banner_failed">Failed to update FolkBanner for %s.</string>
+    <string name="settings_banner_custom_opacity">Banner Opacity</string>
+    <string name="settings_banner_custom_opacity_summary">Use custom opacity for banners instead of following wallpaper mode</string>
+    <string name="settings_banner_opacity">Banner transparency</string>
 
     <string name="settings_donot_store_superkey">Don\'t store SuperKey in local</string>
     <string name="settings_donot_store_superkey_summary">Authenticate the SuperKey every time the manager starts</string>

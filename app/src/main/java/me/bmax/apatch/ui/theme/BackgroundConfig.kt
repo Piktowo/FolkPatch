@@ -66,6 +66,16 @@ object BackgroundConfig {
     var isListWorkingCardModeHidden: Boolean by mutableStateOf(false)
         private set
 
+    // Banner Settings
+    var isBannerEnabled: Boolean by mutableStateOf(true)
+        private set
+    var isFolkBannerEnabled: Boolean by mutableStateOf(false)
+        private set
+    var isBannerCustomOpacityEnabled: Boolean by mutableStateOf(false)
+        private set
+    var bannerCustomOpacity: Float by mutableStateOf(0.5f)
+        private set
+
     // Multi-Background Mode
     var isMultiBackgroundEnabled: Boolean by mutableStateOf(false)
         private set
@@ -106,6 +116,11 @@ object BackgroundConfig {
     private const val KEY_GRID_WORKING_CARD_MODE_HIDDEN = "grid_working_card_mode_hidden"
 
     private const val KEY_LIST_WORKING_CARD_MODE_HIDDEN = "list_working_card_mode_hidden"
+
+    private const val KEY_BANNER_ENABLED = "banner_enabled"
+    private const val KEY_FOLK_BANNER_ENABLED = "folk_banner_enabled"
+    private const val KEY_BANNER_CUSTOM_OPACITY_ENABLED = "banner_custom_opacity_enabled"
+    private const val KEY_BANNER_CUSTOM_OPACITY = "banner_custom_opacity"
 
     private const val KEY_MULTI_BACKGROUND_ENABLED = "multi_background_enabled"
     private const val KEY_HOME_BACKGROUND_URI = "home_background_uri"
@@ -238,6 +253,34 @@ object BackgroundConfig {
     }
 
     /**
+     * 启用/禁用横幅
+     */
+    fun setBannerEnabledState(enabled: Boolean) {
+        isBannerEnabled = enabled
+    }
+
+    /**
+     * 启用/禁用FolkBanner
+     */
+    fun setFolkBannerEnabledState(enabled: Boolean) {
+        isFolkBannerEnabled = enabled
+    }
+
+    /**
+     * 启用/禁用横幅自定义透明度
+     */
+    fun setBannerCustomOpacityEnabledState(enabled: Boolean) {
+        isBannerCustomOpacityEnabled = enabled
+    }
+
+    /**
+     * 设置横幅自定义透明度
+     */
+    fun setBannerCustomOpacityValue(opacity: Float) {
+        bannerCustomOpacity = opacity
+    }
+
+    /**
      * 设置自定义背景模糊度
      */
     fun setCustomBackgroundBlurValue(blur: Float) {
@@ -328,6 +371,11 @@ object BackgroundConfig {
 
             putBoolean(KEY_LIST_WORKING_CARD_MODE_HIDDEN, isListWorkingCardModeHidden)
 
+            putBoolean(KEY_BANNER_ENABLED, isBannerEnabled)
+            putBoolean(KEY_FOLK_BANNER_ENABLED, isFolkBannerEnabled)
+            putBoolean(KEY_BANNER_CUSTOM_OPACITY_ENABLED, isBannerCustomOpacityEnabled)
+            putFloat(KEY_BANNER_CUSTOM_OPACITY, bannerCustomOpacity)
+
             putBoolean(KEY_MULTI_BACKGROUND_ENABLED, isMultiBackgroundEnabled)
             putString(KEY_HOME_BACKGROUND_URI, homeBackgroundUri)
             putString(KEY_KERNEL_BACKGROUND_URI, kernelBackgroundUri)
@@ -369,6 +417,11 @@ object BackgroundConfig {
 
         val listModeHidden = prefs.getBoolean(KEY_LIST_WORKING_CARD_MODE_HIDDEN, false)
 
+        val bannerEnabled = prefs.getBoolean(KEY_BANNER_ENABLED, true)
+        val folkBannerEnabled = prefs.getBoolean(KEY_FOLK_BANNER_ENABLED, false)
+        val bannerCustomOpacityEnabled = prefs.getBoolean(KEY_BANNER_CUSTOM_OPACITY_ENABLED, false)
+        val bannerCustomOpacity = prefs.getFloat(KEY_BANNER_CUSTOM_OPACITY, 0.5f)
+
         val multiEnabled = prefs.getBoolean(KEY_MULTI_BACKGROUND_ENABLED, false)
         val homeUri = prefs.getString(KEY_HOME_BACKGROUND_URI, null)
         val kernelUri = prefs.getString(KEY_KERNEL_BACKGROUND_URI, null)
@@ -403,6 +456,11 @@ object BackgroundConfig {
         isGridWorkingCardModeHidden = gridModeHidden
 
         isListWorkingCardModeHidden = listModeHidden
+
+        isBannerEnabled = bannerEnabled
+        isFolkBannerEnabled = folkBannerEnabled
+        isBannerCustomOpacityEnabled = bannerCustomOpacityEnabled
+        this.bannerCustomOpacity = bannerCustomOpacity
 
         isMultiBackgroundEnabled = multiEnabled
         homeBackgroundUri = homeUri
@@ -442,6 +500,11 @@ object BackgroundConfig {
         isGridWorkingCardModeHidden = false
 
         isListWorkingCardModeHidden = false
+
+        isBannerEnabled = true
+        isFolkBannerEnabled = false
+        isBannerCustomOpacityEnabled = false
+        bannerCustomOpacity = 0.5f
 
         isMultiBackgroundEnabled = false
         homeBackgroundUri = null

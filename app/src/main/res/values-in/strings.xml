@@ -231,6 +231,13 @@
     <string name="module_shortcut_permission_tip_xiaomi">Harap aktifkan izin "Buat pintasan desktop" untuk aplikasi ini di pengaturan Xiaomi.</string>
     <string name="module_shortcut_permission_tip_oppo">Harap aktifkan izin "Pintasan desktop" untuk aplikasi ini di pengaturan OPPO.</string>
     <string name="module_shortcut_permission_tip_default">Jika pembuatan pintasan gagal, harap aktifkan izin pintasan desktop untuk aplikasi ini di pengaturan sistem.</string>
+    <string name="module_shortcut_name">Nama pintasan</string>
+    <string name="module_shortcut_icon">Ikon pintasan</string>
+    <string name="module_shortcut_type">Tipe pintasan</string>
+    <string name="module_shortcut_type_webui">WebUI</string>
+    <string name="module_shortcut_type_action">Action</string>
+    <string name="module_shortcut_icon_default">Gunakan ikon default</string>
+    <string name="module_shortcut_icon_select">Pilih ikon</string>
     <string name="enable_web_debugging">Aktifkan *debugging* WebView</string>
     <string name="enable_web_debugging_summary">Dapat digunakan untuk men-*debug* WebUI. Aktifkan hanya jika diperlukan.</string>
     <string name="settings_apm_install_confirm">Konfirmasi sebelum menginstal</string>
@@ -243,8 +250,8 @@
     <string name="settings_module_sort_optimization_summary">Jadikan modul sistem dengan WebUI dan Action muncul di bagian atas</string>
     <string name="settings_fold_system_module">Lipat Modul Sistem</string>
     <string name="settings_fold_system_module_summary">Klik kartu modul untuk memperluas/menyembunyikan tindakan</string>
-        <string name="settings_simple_list_bottom_bar">Bar Bawah Daftar Sederhana</string>
-        <string name="settings_simple_list_bottom_bar_summary">Gunakan gaya tombol hanya ikon untuk tindakan modul, terinspirasi dari APatch</string>
+    <string name="settings_simple_list_bottom_bar">Bar Bawah Daftar Sederhana</string>
+    <string name="settings_simple_list_bottom_bar_summary">Gunakan gaya tombol hanya ikon untuk tindakan modul, terinspirasi dari APatch</string>
     <string name="settings_show_more_module_info">Tampilkan detail modul</string>
     <string name="settings_show_more_module_info_summary">Tampilkan ID dan ukuran modul dalam daftar modul</string>
     <string name="apm_install_confirm_title">Instal modul</string>
@@ -261,6 +268,9 @@
     <string name="apm_folk_banner_saved">FolkBanner disuntikkan untuk %s.</string>
     <string name="apm_folk_banner_cleared">FolkBanner dihapus untuk %s.</string>
     <string name="apm_folk_banner_failed">Gagal memperbarui FolkBanner untuk %s.</string>
+    <string name="settings_banner_custom_opacity">Opasitas banner</string>
+    <string name="settings_banner_custom_opacity_summary">Gunakan opasitas kustom untuk banner alih-alih mengikuti mode latar belakang</string>
+    <string name="settings_banner_opacity">Transparansi banner</string>
 
     <string name="settings_donot_store_superkey">Jangan simpan SuperKey secara lokal</string>
     <string name="settings_donot_store_superkey_summary">Autentikasi SuperKey setiap kali manajer diluncurkan</string>

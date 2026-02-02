@@ -223,6 +223,13 @@
     <string name="module_shortcut_permission_tip_xiaomi">请于小米仙门事宜之台，为本仙门者启"造仙术界之遁仙符"之宜。</string>
     <string name="module_shortcut_permission_tip_oppo">请于OPPO仙门事宜之台，为本仙门者启"仙术界之遁仙符"之宜。</string>
     <string name="module_shortcut_permission_tip_default">若造遁仙符之宜败，请于仙门事宜之台，为本仙门者启仙术界之遁仙符之宜。</string>
+    <string name="module_shortcut_name">遁仙符名</string>
+    <string name="module_shortcut_icon">遁仙符像</string>
+    <string name="module_shortcut_type">遁仙符类</string>
+    <string name="module_shortcut_type_webui">WebUI</string>
+    <string name="module_shortcut_type_action">Action</string>
+    <string name="module_shortcut_icon_default">循旧像</string>
+    <string name="module_shortcut_icon_select">择新像</string>
     <string name="enable_web_debugging">启WebView勘符之术</string>
     <string name="enable_web_debugging_summary">可勘WebUI仙符之误。唯渡劫需时启之。</string>
     <string name="settings_apm_install_confirm">凝符入体之仙籍确证</string>
@@ -255,6 +262,9 @@
     <string name="apm_folk_banner_saved">已为 %s 注入 FolkBanner 仙气。</string>
     <string name="apm_folk_banner_cleared">%s 的 FolkBanner 仙气已消解。</string>
     <string name="apm_folk_banner_failed">为 %s 注入 FolkBanner 仙气失败。</string>
+    <string name="settings_banner_custom_opacity">仙阵横幅透度</string>
+    <string name="settings_banner_custom_opacity_summary">自定仙阵横幅透度，不随凡界背景而变</string>
+    <string name="settings_banner_opacity">仙阵横幅不透法</string>
 
     <string name="settings_donot_store_superkey">不藏登仙秘钥于凡界</string>
     <string name="settings_donot_store_superkey_summary">每启仙府辖器，皆验登仙秘钥</string>

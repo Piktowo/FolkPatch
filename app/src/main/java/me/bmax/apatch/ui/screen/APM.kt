@@ -80,6 +80,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
@@ -172,8 +174,6 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
     var showMoreModuleInfo by remember { mutableStateOf(prefs.getBoolean("show_more_module_info", true)) }
     var foldSystemModule by remember { mutableStateOf(prefs.getBoolean("fold_system_module", false)) }
     var simpleListBottomBar by remember { mutableStateOf(prefs.getBoolean("simple_list_bottom_bar", false)) }
-    var useModuleBanner by remember { mutableStateOf(prefs.getBoolean("apm_use_module_banner", true)) }
-    var useFolkBanner by remember { mutableStateOf(prefs.getBoolean("apm_use_folk_banner", false)) }
 
     val viewModel = viewModel<APModuleViewModel>()
 
@@ -185,11 +185,6 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                 foldSystemModule = sharedPrefs.getBoolean("fold_system_module", false)
             } else if (key == "simple_list_bottom_bar") {
                 simpleListBottomBar = sharedPrefs.getBoolean("simple_list_bottom_bar", false)
-            } else if (key == "apm_use_module_banner") {
-                useModuleBanner = sharedPrefs.getBoolean("apm_use_module_banner", true)
-            } else if (key == "apm_use_folk_banner") {
-                useFolkBanner = sharedPrefs.getBoolean("apm_use_folk_banner", false)
-                viewModel.clearBannerCache()
             }
         }
         prefs.registerOnSharedPreferenceChangeListener(listener)
@@ -282,13 +277,12 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
             viewModel,
             snackBarHost,
             searchQuery,
-            useModuleBanner,
             ::checkStrongBiometric,
             onSearchQueryChange = { searchQuery = it },
             onToggleModuleBanner = {
-                val newValue = !useModuleBanner
-                useModuleBanner = newValue
-                prefs.edit().putBoolean("apm_use_module_banner", newValue).apply()
+                val newValue = !BackgroundConfig.isBannerEnabled
+                BackgroundConfig.setBannerEnabledState(newValue)
+                BackgroundConfig.save(context)
             }
         )
     }, floatingActionButton = if (hideInstallButton) {
@@ -376,8 +370,6 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                     showMoreModuleInfo = showMoreModuleInfo,
                     foldSystemModule = foldSystemModule,
                     simpleListBottomBar = simpleListBottomBar,
-                    enableModuleBanner = useModuleBanner,
-                    enableFolkBanner = useFolkBanner,
                     checkStrongBiometric = ::checkStrongBiometric,
                     modifier = Modifier
                         .padding(innerPadding)
@@ -483,8 +475,6 @@ private fun ModuleList(
     showMoreModuleInfo: Boolean,
     foldSystemModule: Boolean,
     simpleListBottomBar: Boolean,
-    enableModuleBanner: Boolean,
-    enableFolkBanner: Boolean,
     checkStrongBiometric: suspend () -> Boolean,
     modifier: Modifier = Modifier,
     state: LazyListState,
@@ -517,13 +507,13 @@ private fun ModuleList(
 
     // Enable Module Shortcut Add
     var enableModuleShortcutAdd by remember {
-        mutableStateOf(prefs.getBoolean("enable_module_shortcut_add", false))
+        mutableStateOf(prefs.getBoolean("enable_module_shortcut_add", true))
     }
-    
+
     DisposableEffect(Unit) {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
             if (key == "enable_module_shortcut_add") {
-                enableModuleShortcutAdd = sharedPreferences.getBoolean("enable_module_shortcut_add", false)
+                enableModuleShortcutAdd = sharedPreferences.getBoolean("enable_module_shortcut_add", true)
             }
         }
         prefs.registerOnSharedPreferenceChangeListener(listener)
@@ -746,8 +736,6 @@ private fun ModuleList(
                             showMoreModuleInfo = showMoreModuleInfo,
                             foldSystemModule = foldSystemModule,
                             simpleListBottomBar = simpleListBottomBar,
-                            enableModuleBanner = enableModuleBanner,
-                            enableFolkBanner = enableFolkBanner,
                             enableModuleShortcutAdd = enableModuleShortcutAdd,
                             expanded = expandedModuleId == module.id,
                             onExpandToggle = {
@@ -814,7 +802,6 @@ private fun TopBar(
     viewModel: APModuleViewModel,
     snackBarHost: SnackbarHostState,
     searchQuery: String,
-    useModuleBanner: Boolean,
     checkStrongBiometric: suspend () -> Boolean,
     onSearchQueryChange: (String) -> Unit,
     onToggleModuleBanner: () -> Unit
@@ -1053,8 +1040,6 @@ private fun ModuleItem(
     showMoreModuleInfo: Boolean,
     foldSystemModule: Boolean,
     simpleListBottomBar: Boolean,
-    enableModuleBanner: Boolean,
-    enableFolkBanner: Boolean,
     enableModuleShortcutAdd: Boolean,
     expanded: Boolean,
     onExpandToggle: () -> Unit,
@@ -1105,12 +1090,33 @@ private fun ModuleItem(
             }
         }
     }
-    
+
     val isWallpaperMode = BackgroundConfig.isCustomBackgroundEnabled
     val opacity = if (isWallpaperMode) {
         BackgroundConfig.customBackgroundOpacity.coerceAtLeast(0.2f)
     } else {
         1f
+    }
+
+    val bannerImageAlpha = if (BackgroundConfig.isBannerCustomOpacityEnabled) {
+        BackgroundConfig.bannerCustomOpacity
+    } else {
+        if (isWallpaperMode) {
+            (0.35f + (opacity - 0.2f) * 0.5f).coerceIn(0.25f, 0.6f)
+        } else {
+            0.18f
+        }
+    }
+    
+    var showShortcutDialog by remember { mutableStateOf(false) }
+    var shortcutName by rememberSaveable(module.id) { mutableStateOf(module.name) }
+    var shortcutIconUri by remember { mutableStateOf<String?>(null) }
+    var shortcutType by rememberSaveable(module.id) { mutableStateOf(if (module.hasWebUi) "webui" else "action") }
+    val appIcon = remember(context) { context.packageManager.getApplicationIcon(context.packageName) }
+    val pickShortcutIconLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        shortcutIconUri = uri?.toString()
     }
     
     val sizeStr by produceState(initialValue = "0 KB", key1 = module.id) {
@@ -1122,17 +1128,17 @@ private fun ModuleItem(
     val bannerInfo by produceState<APModuleViewModel.BannerInfo?>(
         initialValue = viewModel.getBannerInfo(module.id),
         module.id,
-        enableModuleBanner,
-        enableFolkBanner,
+        BackgroundConfig.isBannerEnabled,
+        BackgroundConfig.isFolkBannerEnabled,
         bannerReloadKey
     ) {
-        if (!enableModuleBanner) {
+        if (!BackgroundConfig.isBannerEnabled) {
             value = null
             return@produceState
         }
 
         val cached = viewModel.getBannerInfo(module.id)
-        if (cached != null && (enableFolkBanner || cached.bytes == null)) {
+        if (cached != null && (BackgroundConfig.isFolkBannerEnabled || cached.bytes == null)) {
             value = cached
             return@produceState
         }
@@ -1144,7 +1150,7 @@ private fun ModuleItem(
                     SuFile(path).apply { shell = rootShell }
                 }
                 val resolvedDir = resolveModuleDir(rootShell, module.id)
-                val folkBanner = if (enableFolkBanner) readFolkBanner(rootShell, resolvedDir) else null
+                val folkBanner = if (BackgroundConfig.isFolkBannerEnabled) readFolkBanner(rootShell, resolvedDir) else null
                 if (folkBanner != null) {
                     return@withContext APModuleViewModel.BannerInfo(folkBanner, null)
                 }
@@ -1203,7 +1209,7 @@ private fun ModuleItem(
                     }
                 },
                 onLongClick = {
-                    if (enableModuleBanner && enableFolkBanner) {
+                    if (BackgroundConfig.isBannerEnabled && BackgroundConfig.isFolkBannerEnabled) {
                         showFolkBannerDialog = true
                     }
                 }
@@ -1230,12 +1236,6 @@ private fun ModuleItem(
                     modifier = Modifier.matchParentSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    val imageAlpha = if (isWallpaperMode) {
-                        (0.35f + (opacity - 0.2f) * 0.5f).coerceIn(0.25f, 0.6f)
-                    } else {
-                        0.18f
-                    }
-                    
                     AsyncImage(
                         model = if (hasBannerUrl) {
                             bannerUrl
@@ -1243,12 +1243,12 @@ private fun ModuleItem(
                             ImageRequest.Builder(context)
                                 .data(bannerData)
                                 .build()
-                        },
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop,
-                        alpha = imageAlpha
-                    )
+                         },
+                         contentDescription = null,
+                         modifier = Modifier.fillMaxSize(),
+                         contentScale = ContentScale.Crop,
+                         alpha = bannerImageAlpha
+                     )
                     val gradientAlpha = if (isWallpaperMode) 0.5f else 0.8f
                     Box(
                         modifier = Modifier
@@ -1403,33 +1403,6 @@ private fun ModuleItem(
                                 }
                             }
 
-                            if (enableModuleShortcutAdd) {
-                                FilledTonalButton(
-                                    onClick = {
-                                        ModuleShortcut.createModuleWebUiShortcut(
-                                            context = context,
-                                            moduleId = module.id,
-                                            name = module.name,
-                                            iconUri = null
-                                        )
-                                    },
-                                    contentPadding = if (simpleListBottomBar) PaddingValues(12.dp) else ButtonDefaults.TextButtonContentPadding,
-                                    modifier = if (simpleListBottomBar) Modifier else Modifier.height(36.dp),
-                                    colors = ButtonDefaults.filledTonalButtonColors(
-                                        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = (opacity + 0.3f).coerceAtMost(1f))
-                                    )
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Outlined.Add,
-                                        contentDescription = shortcutAdd,
-                                        modifier = Modifier.size(20.dp)
-                                    )
-                                    if (!simpleListBottomBar) {
-                                        Spacer(Modifier.width(8.dp))
-                                        Text(shortcutAdd)
-                                    }
-                                }
-                            }
                         }
 
                         if (module.hasActionScript && module.enabled && !module.remove) {
@@ -1452,6 +1425,32 @@ private fun ModuleItem(
                                 if (!simpleListBottomBar) {
                                     Spacer(Modifier.width(8.dp))
                                     Text(stringResource(R.string.apm_action))
+                                }
+                            }
+                        }
+                        
+                        if (enableModuleShortcutAdd && module.enabled && !module.remove && (module.hasWebUi || module.hasActionScript)) {
+                            FilledTonalButton(
+                                onClick = { 
+                                    shortcutName = module.name
+                                    shortcutIconUri = null
+                                    shortcutType = if (module.hasWebUi) "webui" else "action"
+                                    showShortcutDialog = true 
+                                },
+                                contentPadding = if (simpleListBottomBar) PaddingValues(12.dp) else ButtonDefaults.TextButtonContentPadding,
+                                modifier = if (simpleListBottomBar) Modifier else Modifier.height(36.dp),
+                                colors = ButtonDefaults.filledTonalButtonColors(
+                                    containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = (opacity + 0.3f).coerceAtMost(1f))
+                                )
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Add,
+                                    contentDescription = shortcutAdd,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                                if (!simpleListBottomBar) {
+                                    Spacer(Modifier.width(8.dp))
+                                    Text(shortcutAdd)
                                 }
                             }
                         }
@@ -1505,6 +1504,84 @@ private fun ModuleItem(
                 }
             }
         }
+    }
+
+    if (showShortcutDialog) {
+        AlertDialog(
+            onDismissRequest = { showShortcutDialog = false },
+            title = { Text(stringResource(R.string.module_shortcut_add)) },
+            text = {
+                Column {
+                    OutlinedTextField(
+                        value = shortcutName,
+                        onValueChange = { shortcutName = it },
+                        label = { Text(stringResource(R.string.module_shortcut_name)) },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(Modifier.height(12.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(stringResource(R.string.module_shortcut_icon))
+                        Spacer(Modifier.width(12.dp))
+                        if (shortcutIconUri != null) {
+                            AsyncImage(
+                                model = shortcutIconUri,
+                                contentDescription = null,
+                                modifier = Modifier.size(36.dp)
+                            )
+                        } else {
+                            AsyncImage(
+                                model = appIcon,
+                                contentDescription = null,
+                                modifier = Modifier.size(36.dp)
+                            )
+                        }
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        TextButton(onClick = { pickShortcutIconLauncher.launch("image/*") }) {
+                            Text(stringResource(R.string.module_shortcut_icon_select))
+                        }
+                        TextButton(onClick = { shortcutIconUri = null }) {
+                            Text(stringResource(R.string.module_shortcut_icon_default))
+                        }
+                    }
+                    if (module.hasWebUi && module.hasActionScript) {
+                        Spacer(Modifier.height(12.dp))
+                        Text(stringResource(R.string.module_shortcut_type))
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            RadioButton(
+                                selected = shortcutType == "webui",
+                                onClick = { shortcutType = "webui" }
+                            )
+                            Text(stringResource(R.string.module_shortcut_type_webui))
+                            Spacer(Modifier.width(24.dp))
+                            RadioButton(
+                                selected = shortcutType == "action",
+                                onClick = { shortcutType = "action" }
+                            )
+                            Text(stringResource(R.string.module_shortcut_type_action))
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    if (shortcutType == "webui" && module.hasWebUi) {
+                        ModuleShortcut.createModuleWebUiShortcut(context, module.id, shortcutName.ifEmpty { module.name }, shortcutIconUri)
+                    } else if (module.hasActionScript) {
+                        ModuleShortcut.createModuleActionShortcut(context, module.id, shortcutName.ifEmpty { module.name }, shortcutIconUri)
+                    }
+                    showShortcutDialog = false
+                }) {
+                    Text(text = stringResource(id = android.R.string.ok))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showShortcutDialog = false }) {
+                    Text(text = stringResource(id = android.R.string.cancel))
+                }
+            }
+        )
     }
 
     if (showFolkBannerDialog) {

@@ -86,7 +86,12 @@ object ThemeManager {
         val soundEffectScope: String = SoundEffectConfig.SCOPE_GLOBAL,
         // Video Background
         val isVideoBackgroundEnabled: Boolean = false,
-        val videoVolume: Float = 0f
+        val videoVolume: Float = 0f,
+        // Banner Settings
+        val isBannerEnabled: Boolean = true,
+        val isFolkBannerEnabled: Boolean = false,
+        val isBannerCustomOpacityEnabled: Boolean = false,
+        val bannerCustomOpacity: Float = 0.5f
     )
 
     data class ThemeMetadata(
@@ -141,7 +146,11 @@ object ThemeManager {
                     soundEffectFilename = SoundEffectConfig.soundEffectFilename,
                     soundEffectScope = SoundEffectConfig.scope,
                     isVideoBackgroundEnabled = BackgroundConfig.isVideoBackgroundEnabled,
-                    videoVolume = BackgroundConfig.videoVolume
+                    videoVolume = BackgroundConfig.videoVolume,
+                    isBannerEnabled = BackgroundConfig.isBannerEnabled,
+                    isFolkBannerEnabled = BackgroundConfig.isFolkBannerEnabled,
+                    isBannerCustomOpacityEnabled = BackgroundConfig.isBannerCustomOpacityEnabled,
+                    bannerCustomOpacity = BackgroundConfig.bannerCustomOpacity
                 )
 
                 // 2. Write Config JSON
@@ -191,6 +200,12 @@ object ThemeManager {
                     // Video Background
                     put("isVideoBackgroundEnabled", config.isVideoBackgroundEnabled)
                     put("videoVolume", config.videoVolume.toDouble())
+
+                    // Banner Settings
+                    put("isBannerEnabled", config.isBannerEnabled)
+                    put("isFolkBannerEnabled", config.isFolkBannerEnabled)
+                    put("isBannerCustomOpacityEnabled", config.isBannerCustomOpacityEnabled)
+                    put("bannerCustomOpacity", config.bannerCustomOpacity.toDouble())
 
                     // Add metadata
                     put("meta_name", metadata.name)
@@ -450,6 +465,12 @@ object ThemeManager {
                 val isVideoBackgroundEnabled = json.optBoolean("isVideoBackgroundEnabled", false)
                 val videoVolume = json.optDouble("videoVolume", 0.0).toFloat()
 
+                // Banner Settings
+                val isBannerEnabled = json.optBoolean("isBannerEnabled", true)
+                val isFolkBannerEnabled = json.optBoolean("isFolkBannerEnabled", false)
+                val isBannerCustomOpacityEnabled = json.optBoolean("isBannerCustomOpacityEnabled", false)
+                val bannerCustomOpacity = json.optDouble("bannerCustomOpacity", 0.5).toFloat()
+
                 // Multi-Background Mode
                 val isMultiBackgroundEnabled = json.optBoolean("isMultiBackgroundEnabled", false)
 
@@ -616,6 +637,12 @@ object ThemeManager {
                         }
                     }
                 }
+
+                // Apply Banner Settings
+                BackgroundConfig.setBannerEnabledState(isBannerEnabled)
+                BackgroundConfig.setFolkBannerEnabledState(isFolkBannerEnabled)
+                BackgroundConfig.setBannerCustomOpacityEnabledState(isBannerCustomOpacityEnabled)
+                BackgroundConfig.setBannerCustomOpacityValue(bannerCustomOpacity)
 
                 BackgroundConfig.save(context)
 

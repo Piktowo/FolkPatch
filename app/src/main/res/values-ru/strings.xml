@@ -230,6 +230,13 @@
     <string name="module_shortcut_permission_tip_xiaomi">Пожалуйста, включите разрешение "Создание ярлыков на рабочем столе" для этого приложения в настройках Xiaomi.</string>
     <string name="module_shortcut_permission_tip_oppo">Пожалуйста, включите разрешение "Ярлык на рабочем столе" для этого приложения в настройках OPPO.</string>
     <string name="module_shortcut_permission_tip_default">Если создание ярлыка не удается, пожалуйста, включите разрешение ярлыка на рабочем столе для этого приложения в настройках системы.</string>
+    <string name="module_shortcut_name">Название ярлыка</string>
+    <string name="module_shortcut_icon">Иконка ярлыка</string>
+    <string name="module_shortcut_type">Тип ярлыка</string>
+    <string name="module_shortcut_type_webui">WebUI</string>
+    <string name="module_shortcut_type_action">Action</string>
+    <string name="module_shortcut_icon_default">Использовать иконку по умолчанию</string>
+    <string name="module_shortcut_icon_select">Выбрать иконку</string>
     <string name="enable_web_debugging">Включить отладку WebView</string>
     <string name="enable_web_debugging_summary">Можно использовать для отладки WebUI. Включайте только при необходимости.</string>
     <string name="settings_apm_install_confirm">Подтверждать перед установкой</string>
@@ -260,6 +267,9 @@
     <string name="apm_folk_banner_saved">FolkBanner внедрен для %s.</string>
     <string name="apm_folk_banner_cleared">FolkBanner очищен для %s.</string>
     <string name="apm_folk_banner_failed">Не удалось обновить FolkBanner для %s.</string>
+    <string name="settings_banner_custom_opacity">Непрозрачность баннера</string>
+    <string name="settings_banner_custom_opacity_summary">Использовать пользовательскую непрозрачность для баннеров вместо режима обоев</string>
+    <string name="settings_banner_opacity">Прозрачность баннера</string>
 
     <string name="settings_donot_store_superkey">Не сохранять SuperKey локально</string>
     <string name="settings_donot_store_superkey_summary">Аутентифицировать SuperKey каждый раз при запуске менеджера</string>

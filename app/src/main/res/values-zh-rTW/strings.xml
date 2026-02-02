@@ -223,6 +223,13 @@
     <string name="module_shortcut_permission_tip_xiaomi">請在小米設定中為本應用程式啟用「建立桌面捷徑」權限。</string>
     <string name="module_shortcut_permission_tip_oppo">請在OPPO設定中為本應用程式啟用「桌面捷徑」權限。</string>
     <string name="module_shortcut_permission_tip_default">若建立捷徑失敗，請在系統設定中為本應用程式啟用桌面捷徑權限。</string>
+    <string name="module_shortcut_name">捷徑名稱</string>
+    <string name="module_shortcut_icon">捷徑圖示</string>
+    <string name="module_shortcut_type">捷徑類型</string>
+    <string name="module_shortcut_type_webui">WebUI</string>
+    <string name="module_shortcut_type_action">Action</string>
+    <string name="module_shortcut_icon_default">使用預設圖示</string>
+    <string name="module_shortcut_icon_select">選取圖示</string>
     <string name="enable_web_debugging">啟用 WebView 偵錯</string>
     <string name="enable_web_debugging_summary">可用於偵錯 WebUI，請僅在需要時啟用。</string>
     <string name="settings_apm_install_confirm">安裝模組確認</string>
@@ -235,8 +242,8 @@
     <string name="settings_module_sort_optimization_summary">前置系統模組中帶有 WebUI 和 Action 的模組</string>
     <string name="settings_fold_system_module">折疊系統模組</string>
     <string name="settings_fold_system_module_summary">點擊模組卡片展開/折疊操作按鈕</string>
-        <string name="settings_simple_list_bottom_bar">簡約列表底欄</string>
-        <string name="settings_simple_list_bottom_bar_summary">模組操作使用純圖示按鈕樣式，靈感來自APatch</string>
+    <string name="settings_simple_list_bottom_bar">簡約列表底欄</string>
+    <string name="settings_simple_list_bottom_bar_summary">模組操作使用純圖示按鈕樣式，靈感來自APatch</string>
     <string name="apm_install_confirm_title">安裝模組</string>
     <string name="apm_install_confirm_content">確定要安裝 %s 嗎？</string>
     <string name="apm_disable_all_title">停用所有系統模組</string>
@@ -251,10 +258,12 @@
     <string name="apm_folk_banner_saved">已為 %s 注入 FolkBanner。</string>
     <string name="apm_folk_banner_cleared">已為 %s 清除 FolkBanner。</string>
     <string name="apm_folk_banner_failed">為 %s 更新 FolkBanner 失敗。</string>
+    <string name="settings_banner_custom_opacity">橫幅透明度</string>
+    <string name="settings_banner_custom_opacity_summary">自訂橫幅透明度，不再跟隨桌布模式</string>
+    <string name="settings_banner_opacity">橫幅不透明度</string>
 
     <string name="settings_donot_store_superkey">停用管理器儲存密鑰</string>
     <string name="settings_donot_store_superkey_summary">每次管理器啟動時驗證超級密鑰</string>
-
     <string name="settings_show_more_module_info">顯示模組資訊詳情</string>
     <string name="settings_show_more_module_info_summary">在模組列表中顯示模組 ID 和大小</string>
     <string name="mode_select_page_title">安裝</string>

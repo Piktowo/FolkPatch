@@ -245,6 +245,13 @@
     <string name="settings_disable_module_update_check">禁用模块更新检查</string>
     <string name="settings_disable_module_update_check_summary">禁用系统模块的自动更新检查</string>
     <string name="settings_module_sort_optimization">模块排序优化</string>
+    <string name="module_shortcut_name">快捷方式名称</string>
+    <string name="module_shortcut_icon">快捷方式图标</string>
+    <string name="module_shortcut_type">快捷方式类型</string>
+    <string name="module_shortcut_type_webui">WebUI</string>
+    <string name="module_shortcut_type_action">Action</string>
+    <string name="module_shortcut_icon_default">使用默认图标</string>
+    <string name="module_shortcut_icon_select">选择图标</string>
     <string name="settings_module_sort_optimization_summary">让系统模块带有WebUI和Action的模块排在前面</string>
     <string name="settings_fold_system_module">折叠系统模块</string>
     <string name="settings_fold_system_module_summary">点击模块卡片展开/折叠操作按钮</string>
@@ -264,6 +271,9 @@
     <string name="apm_folk_banner_saved">已为 %s 注入 FolkBanner。</string>
     <string name="apm_folk_banner_cleared">已为 %s 清除 FolkBanner。</string>
     <string name="apm_folk_banner_failed">为 %s 更新 FolkBanner 失败。</string>
+    <string name="settings_banner_custom_opacity">横幅透明度</string>
+    <string name="settings_banner_custom_opacity_summary">自定义横幅透明度，不再跟随壁纸模式</string>
+    <string name="settings_banner_opacity">横幅不透明度</string>
 
     <string name="settings_donot_store_superkey">不在本地存储超级密钥</string>
     <string name="settings_donot_store_superkey_summary">每次启动管理器时验证超级密钥</string>

@@ -295,6 +295,22 @@ fun AppearanceSettings(
     val listCardHideStatusBadgeSummary = stringResource(id = R.string.settings_list_card_hide_status_badge_summary)
     val showListCardHideStatusBadge = isListStyle && (matchAppearance || shouldShow(searchText, listCardHideStatusBadgeTitle, listCardHideStatusBadgeSummary))
 
+    // Banner Settings
+    val bannerEnabledTitle = stringResource(id = R.string.apm_enable_module_banner)
+    val bannerEnabledSummary = stringResource(id = R.string.apm_enable_module_banner_summary)
+    val showBannerEnabled = matchAppearance || shouldShow(searchText, bannerEnabledTitle, bannerEnabledSummary)
+
+    val folkBannerTitle = stringResource(id = R.string.apm_enable_folk_banner)
+    val folkBannerSummary = stringResource(id = R.string.apm_enable_folk_banner_summary)
+    val showFolkBanner = BackgroundConfig.isBannerEnabled && (matchAppearance || shouldShow(searchText, folkBannerTitle, folkBannerSummary))
+
+    val bannerCustomOpacityTitle = stringResource(id = R.string.settings_banner_custom_opacity)
+    val bannerCustomOpacitySummary = stringResource(id = R.string.settings_banner_custom_opacity_summary)
+    val showBannerCustomOpacitySwitch = BackgroundConfig.isBannerEnabled && (matchAppearance || shouldShow(searchText, bannerCustomOpacityTitle, bannerCustomOpacitySummary))
+
+    val bannerOpacityTitle = stringResource(id = R.string.settings_banner_opacity)
+    val showBannerOpacity = BackgroundConfig.isBannerEnabled && BackgroundConfig.isBannerCustomOpacityEnabled && (matchAppearance || shouldShow(searchText, bannerOpacityTitle))
+
     // Custom Background (Single/Multi)
     val customBackgroundTitle = stringResource(id = R.string.settings_custom_background)
     val customBackgroundSummary = stringResource(id = R.string.settings_custom_background_summary)
@@ -791,6 +807,65 @@ fun AppearanceSettings(
                     onCheckedChange = {
                         BackgroundConfig.setListWorkingCardModeHiddenState(it)
                         BackgroundConfig.save(context)
+                    }
+                )
+            }
+
+            // Banner Settings
+            if (showBannerEnabled) {
+                SwitchItem(
+                    icon = Icons.Filled.ViewCarousel,
+                    title = bannerEnabledTitle,
+                    summary = bannerEnabledSummary,
+                    checked = BackgroundConfig.isBannerEnabled,
+                    onCheckedChange = {
+                        BackgroundConfig.setBannerEnabledState(it)
+                        BackgroundConfig.save(context)
+                    }
+                )
+            }
+
+            if (showFolkBanner) {
+                SwitchItem(
+                    icon = Icons.Filled.Edit,
+                    title = folkBannerTitle,
+                    summary = folkBannerSummary,
+                    checked = BackgroundConfig.isFolkBannerEnabled,
+                    onCheckedChange = {
+                        BackgroundConfig.setFolkBannerEnabledState(it)
+                        BackgroundConfig.save(context)
+                    }
+                )
+            }
+
+            if (showBannerCustomOpacitySwitch) {
+                SwitchItem(
+                    icon = Icons.Filled.Opacity,
+                    title = bannerCustomOpacityTitle,
+                    summary = bannerCustomOpacitySummary,
+                    checked = BackgroundConfig.isBannerCustomOpacityEnabled,
+                    onCheckedChange = {
+                        BackgroundConfig.setBannerCustomOpacityEnabledState(it)
+                        BackgroundConfig.save(context)
+                    }
+                )
+            }
+
+            if (showBannerOpacity) {
+                ListItem(
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                    headlineContent = { Text(bannerOpacityTitle) },
+                    supportingContent = {
+                        Slider(
+                            value = BackgroundConfig.bannerCustomOpacity,
+                            onValueChange = { BackgroundConfig.setBannerCustomOpacityValue(it) },
+                            onValueChangeFinished = { BackgroundConfig.save(context) },
+                            valueRange = 0f..1f,
+                            colors = SliderDefaults.colors(
+                                thumbColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f),
+                                activeTrackColor = MaterialTheme.colorScheme.primary.copy(alpha = 1f)
+                            )
+                        )
                     }
                 )
             }

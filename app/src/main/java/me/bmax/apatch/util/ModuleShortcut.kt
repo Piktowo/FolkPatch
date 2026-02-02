@@ -1,6 +1,7 @@
 package me.bmax.apatch.util
 
 import android.app.AppOpsManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -20,7 +21,9 @@ import androidx.core.graphics.scale
 import androidx.core.net.toUri
 import com.topjohnwu.superuser.io.SuFile
 import com.topjohnwu.superuser.io.SuFileInputStream
+import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
+import me.bmax.apatch.ui.MainActivity
 import me.bmax.apatch.ui.WebUIActivity
 import java.util.Locale
 
@@ -60,6 +63,51 @@ object ModuleShortcut {
 
     fun deleteModuleWebUiShortcut(context: Context, moduleId: String) {
         deleteShortcut(context, "module_webui_$moduleId")
+    }
+
+    private fun getLauncherComponent(context: Context): ComponentName {
+        val prefs = APApplication.sharedPreferences
+        val useAlt = prefs.getBoolean("use_alt_icon", false)
+        val pkg = context.packageName
+        return if (useAlt) {
+            ComponentName(pkg, "me.bmax.apatch.ui.MainActivityAlias")
+        } else {
+            ComponentName(pkg, "me.bmax.apatch.ui.MainActivity")
+        }
+    }
+
+    fun createModuleActionShortcut(
+        context: Context,
+        moduleId: String,
+        name: String,
+        iconUri: String?
+    ) {
+        val shortcutId = "module_action_$moduleId"
+        val shortcutIntent = Intent().apply {
+            component = getLauncherComponent(context)
+            action = Intent.ACTION_VIEW
+            putExtra("apm_action_module_id", moduleId)
+            putExtra("from_action_shortcut", true)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        }
+        createModuleShortcut(
+            context = context,
+            moduleId = moduleId,
+            name = name,
+            iconUri = iconUri,
+            shortcutId = shortcutId,
+            shortcutIntent = shortcutIntent,
+            logPrefix = "createModuleActionShortcut"
+        )
+    }
+
+    fun hasModuleActionShortcut(context: Context, moduleId: String): Boolean {
+        val id = "module_action_$moduleId"
+        return hasPinnedShortcut(context, id)
+    }
+
+    fun deleteModuleActionShortcut(context: Context, moduleId: String) {
+        deleteShortcut(context, "module_action_$moduleId")
     }
 
     private fun createModuleShortcut(

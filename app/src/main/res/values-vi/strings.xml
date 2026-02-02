@@ -225,6 +225,13 @@
     <string name="module_shortcut_permission_tip_xiaomi">Vui lòng bật quyền "Tạo lối tắt màn hình chính" cho ứng dụng này trong cài đặt của Xiaomi.</string>
     <string name="module_shortcut_permission_tip_oppo">Vui lòng bật quyền "Lối tắt màn hình chính" cho ứng dụng này trong cài đặt của OPPO.</string>
     <string name="module_shortcut_permission_tip_default">Nếu việc tạo lối tắt không thành công, vui lòng bật quyền lối tắt màn hình chính cho ứng dụng này trong cài đặt hệ thống.</string>
+    <string name="module_shortcut_name">Tên lối tắt</string>
+    <string name="module_shortcut_icon">Biểu tượng lối tắt</string>
+    <string name="module_shortcut_type">Loại lối tắt</string>
+    <string name="module_shortcut_type_webui">WebUI</string>
+    <string name="module_shortcut_type_action">Action</string>
+    <string name="module_shortcut_icon_default">Sử dụng biểu tượng mặc định</string>
+    <string name="module_shortcut_icon_select">Chọn biểu tượng</string>
     <string name="enable_web_debugging">Bật gỡ lỗi WebView</string>
     <string name="enable_web_debugging_summary">Có thể dùng để gỡ lỗi WebUI. Vui lòng chỉ bật khi cần.</string>
     <string name="settings_apm_install_confirm">Xác nhận cài đặt module</string>
@@ -257,6 +264,9 @@
     <string name="apm_folk_banner_saved">Đã thêm FolkBanner cho %s.</string>
     <string name="apm_folk_banner_cleared">Đã xóa FolkBanner cho %s.</string>
     <string name="apm_folk_banner_failed">Cập nhật FolkBanner cho %s thất bại.</string>
+    <string name="settings_banner_custom_opacity">Độ mờ của banner</string>
+    <string name="settings_banner_custom_opacity_summary">Sử dụng độ mờ tùy chỉnh cho banner thay vì theo chế độ hình nền</string>
+    <string name="settings_banner_opacity">Độ đặc của banner</string>
 
     <string name="settings_donot_store_superkey">Không lưu khóa siêu cấp tại địa phương</string>
     <string name="settings_donot_store_superkey_summary">Xác thực khóa siêu cấp mỗi khi khởi chạy trình quản lý</string>

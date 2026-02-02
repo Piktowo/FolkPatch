@@ -80,6 +80,7 @@ import me.bmax.apatch.util.ui.LocalSnackbarHost
 import me.zhanghai.android.appiconloader.coil.AppIconFetcher
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.Button
@@ -127,6 +128,7 @@ class MainActivity : AppCompatActivity() {
     private var installUris: ArrayList<Uri>? = null
     private lateinit var permissionHandler: PermissionRequestHandler
     private val isLocked = mutableStateOf(false)
+    private var pendingActionModuleId by mutableStateOf<String?>(null)
 
     private fun getFileName(context: android.content.Context, uri: Uri): String {
         var result: String? = null
@@ -168,6 +170,21 @@ class MainActivity : AppCompatActivity() {
         super.attachBaseContext(me.bmax.apatch.util.DPIUtils.updateContext(newBase))
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        updatePendingActionFromIntent(intent)
+    }
+
+    private fun updatePendingActionFromIntent(intent: Intent?) {
+        if (intent?.getBooleanExtra("from_action_shortcut", false) == true) {
+            val id = intent.getStringExtra("apm_action_module_id")
+            if (!id.isNullOrEmpty()) {
+                pendingActionModuleId = id
+            }
+        }
+    }
+
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -179,6 +196,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         super.onCreate(savedInstanceState)
+        updatePendingActionFromIntent(intent)
         
         installUri = if (intent.action == Intent.ACTION_SEND) {
              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -304,6 +322,14 @@ class MainActivity : AppCompatActivity() {
             val snackBarHostState = remember { SnackbarHostState() }
             val bottomBarRoutes = remember {
                 BottomBarDestination.entries.map { it.direction.route }.toSet()
+            }
+
+            LaunchedEffect(pendingActionModuleId) {
+                val id = pendingActionModuleId
+                if (!id.isNullOrEmpty()) {
+                    navigator.navigate(com.ramcosta.composedestinations.generated.destinations.ExecuteAPMActionScreenDestination(id))
+                    pendingActionModuleId = null
+                }
             }
 
             LaunchedEffect(Unit) {

@@ -230,6 +230,13 @@
     <string name="module_shortcut_permission_tip_xiaomi">Proszę włączyć uprawnienie "Tworzenie skrótów pulpitu" dla tej aplikacji w ustawieniach Xiaomi.</string>
     <string name="module_shortcut_permission_tip_oppo">Proszę włączyć uprawnienie "Skrót pulpitu" dla tej aplikacji w ustawieniach OPPO.</string>
     <string name="module_shortcut_permission_tip_default">Jeśli utworzenie skrótu nie powiedzie się, proszę włączyć uprawnienie skrótu pulpitu dla tej aplikacji w ustawieniach systemu.</string>
+    <string name="module_shortcut_name">Nazwa skrótu</string>
+    <string name="module_shortcut_icon">Ikona skrótu</string>
+    <string name="module_shortcut_type">Typ skrótu</string>
+    <string name="module_shortcut_type_webui">WebUI</string>
+    <string name="module_shortcut_type_action">Action</string>
+    <string name="module_shortcut_icon_default">Użyj domyślnej ikony</string>
+    <string name="module_shortcut_icon_select">Wybierz ikonę</string>
     <string name="enable_web_debugging">Włącz debugowanie WebView</string>
     <string name="enable_web_debugging_summary">Może być używane do debugowania WebUI. Włącz tylko w razie potrzeby.</string>
     <string name="settings_apm_install_confirm">Potwierdź przed instalacją</string>
@@ -261,6 +268,9 @@
     <string name="apm_folk_banner_saved">Wstrzyknięto FolkBanner dla %s.</string>
     <string name="apm_folk_banner_cleared">Wyczyszczono FolkBanner dla %s.</string>
     <string name="apm_folk_banner_failed">Nie udało się zaktualizować FolkBanner dla %s.</string>
+    <string name="settings_banner_custom_opacity">Nieprzezroczystość banera</string>
+    <string name="settings_banner_custom_opacity_summary">Użyj niestandardowej nieprzezroczystości dla banerów zamiast trybu tapety</string>
+    <string name="settings_banner_opacity">Przezroczystość banera</string>
 
     <string name="settings_donot_store_superkey">Nie przechowuj SuperKlucza lokalnie</string>
     <string name="settings_donot_store_superkey_summary">Uwierzytelniaj SuperKlucz za każdym razem, gdy menedżer się uruchamia</string>

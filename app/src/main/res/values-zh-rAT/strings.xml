@@ -223,6 +223,13 @@
     <string name="module_shortcut_permission_tip_xiaomi">请在小米天使界面的设置中为本天使启用"创建桌面圣光传送门"权限。</string>
     <string name="module_shortcut_permission_tip_oppo">请在OPPO天使界面的设置中为本天使启用"桌面圣光传送门"权限。</string>
     <string name="module_shortcut_permission_tip_default">若创建圣光传送门失败，请在天界圣光阵设置中为本天使启用桌面圣光传送门权限。</string>
+    <string name="module_shortcut_name">圣光传送门名称</string>
+    <string name="module_shortcut_icon">圣光传送门图标</string>
+    <string name="module_shortcut_type">圣光传送门类型</string>
+    <string name="module_shortcut_type_webui">WebUI</string>
+    <string name="module_shortcut_type_action">Action</string>
+    <string name="module_shortcut_icon_default">使用默认图标</string>
+    <string name="module_shortcut_icon_select">选择图标</string>
     <string name="enable_web_debugging">启用圣光阵调试</string>
     <string name="enable_web_debugging_summary">可用于调试天界圣光阵。请仅在需要时启用。</string>
     <string name="settings_apm_install_confirm">安装圣光阵确认</string>
@@ -255,6 +262,9 @@
     <string name="apm_folk_banner_saved">已为 %s 附上 FolkBanner 圣光。</string>
     <string name="apm_folk_banner_cleared">%s 的 FolkBanner 圣光已净化。</string>
     <string name="apm_folk_banner_failed">为 %s 附上 FolkBanner 圣光失败。</string>
+    <string name="settings_banner_custom_opacity">圣光阵横幅透明度</string>
+    <string name="settings_banner_custom_opacity_summary">自定义圣光阵横幅透明度，不再跟随天界背景模式</string>
+    <string name="settings_banner_opacity">圣光阵横幅不透明度</string>
 
     <string name="settings_donot_store_superkey">不在本地存储圣光之心</string>
     <string name="settings_donot_store_superkey_summary">每次启动圣光工坊时验证圣光之心</string>

@@ -151,7 +151,7 @@ fun BehaviorSettings(
 
             // Enable Module Shortcut Add
             if (showEnableModuleShortcutAdd) {
-                var enableModuleShortcutAdd by remember { mutableStateOf(prefs.getBoolean("enable_module_shortcut_add", false)) }
+                var enableModuleShortcutAdd by remember { mutableStateOf(prefs.getBoolean("enable_module_shortcut_add", true)) }
                 SwitchItem(
                     icon = Icons.Filled.AddCircleOutline,
                     title = enableModuleShortcutAddTitle,

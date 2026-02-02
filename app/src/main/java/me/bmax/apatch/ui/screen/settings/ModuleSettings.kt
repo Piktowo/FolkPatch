@@ -44,47 +44,10 @@ fun ModuleSettings(
     val simpleListBottomBarSummary = stringResource(id = R.string.settings_simple_list_bottom_bar_summary)
     val showSimpleListBottomBar = matchModule || shouldShow(searchText, simpleListBottomBarTitle, simpleListBottomBarSummary)
 
-    val enableModuleBannerTitle = stringResource(id = R.string.apm_enable_module_banner)
-    val enableModuleBannerSummary = stringResource(id = R.string.apm_enable_module_banner_summary)
-    val showEnableModuleBanner = matchModule || shouldShow(searchText, enableModuleBannerTitle, enableModuleBannerSummary)
-
-    var enableModuleBanner by remember { mutableStateOf(prefs.getBoolean("apm_use_module_banner", true)) }
-
-    val enableFolkBannerTitle = stringResource(id = R.string.apm_enable_folk_banner)
-    val enableFolkBannerSummary = stringResource(id = R.string.apm_enable_folk_banner_summary)
-    val showEnableFolkBanner = enableModuleBanner && (matchModule || shouldShow(searchText, enableFolkBannerTitle, enableFolkBannerSummary))
-
-    val showModuleCategory = showMoreInfo || showModuleSortOptimization || showDisableModuleUpdateCheck || showFoldSystemModule || showApmBatchInstallFullProcess || showSimpleListBottomBar || showEnableModuleBanner || showEnableFolkBanner
+    val showModuleCategory = showMoreInfo || showModuleSortOptimization || showDisableModuleUpdateCheck || showFoldSystemModule || showApmBatchInstallFullProcess || showSimpleListBottomBar
 
     if (showModuleCategory) {
         SettingsCategory(icon = Icons.Filled.Extension, title = moduleTitle, isSearching = searchText.isNotEmpty()) {
-            
-            if (showEnableModuleBanner) {
-                SwitchItem(
-                    icon = Icons.Filled.ViewCarousel,
-                    title = enableModuleBannerTitle,
-                    summary = enableModuleBannerSummary,
-                    checked = enableModuleBanner,
-                    onCheckedChange = {
-                        enableModuleBanner = it
-                        prefs.edit().putBoolean("apm_use_module_banner", it).apply()
-                    }
-                )
-            }
-
-            if (showEnableFolkBanner) {
-                var enableFolkBanner by remember { mutableStateOf(prefs.getBoolean("apm_use_folk_banner", false)) }
-                SwitchItem(
-                    icon = Icons.Filled.Edit,
-                    title = enableFolkBannerTitle,
-                    summary = enableFolkBannerSummary,
-                    checked = enableFolkBanner,
-                    onCheckedChange = {
-                        enableFolkBanner = it
-                        prefs.edit().putBoolean("apm_use_folk_banner", it).apply()
-                    }
-                )
-            }
 
             if (showDisableModuleUpdateCheck) {
                 var disableModuleUpdateCheck by remember { mutableStateOf(prefs.getBoolean("disable_module_update_check", false)) }

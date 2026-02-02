@@ -225,6 +225,13 @@
     <string name="module_shortcut_permission_tip_xiaomi">请在小米魔法界面的设置中为本魔法使启用"创建桌面魔法传送门"权限。</string>
     <string name="module_shortcut_permission_tip_oppo">请在OPPO魔法界面的设置中为本魔法使启用"桌面魔法传送门"权限。</string>
     <string name="module_shortcut_permission_tip_default">若创建魔法传送门失败，请在魔法阵设置中为本魔法使启用桌面魔法传送门权限。</string>
+    <string name="module_shortcut_name">魔法传送门名称</string>
+    <string name="module_shortcut_icon">魔法传送门图标</string>
+    <string name="module_shortcut_type">魔法传送门类型</string>
+    <string name="module_shortcut_type_webui">WebUI</string>
+    <string name="module_shortcut_type_action">Action</string>
+    <string name="module_shortcut_icon_default">使用默认图标</string>
+    <string name="module_shortcut_icon_select">选择图标</string>
     <string name="enable_web_debugging">启用魔法阵调试</string>
     <string name="enable_web_debugging_summary">可用于调试星界魔法阵。请仅在需要时启用。</string>
     <string name="settings_apm_install_confirm">安装魔法阵确认</string>
@@ -239,8 +246,8 @@
     <string name="settings_module_sort_optimization_summary">让系统魔法阵带有WebUI和Action的魔法阵排在前面</string>
     <string name="settings_fold_system_module">折叠系统魔法阵</string>
     <string name="settings_fold_system_module_summary">点击魔法阵卡片展开/折叠操作按钮</string>
-        <string name="settings_simple_list_bottom_bar">简约魔法底栏</string>
-        <string name="settings_simple_list_bottom_bar_summary">魔法阵符法使用纯图标按钮样式，灵感来自APatch</string>
+    <string name="settings_simple_list_bottom_bar">简约魔法底栏</string>
+    <string name="settings_simple_list_bottom_bar_summary">魔法阵符法使用纯图标按钮样式，灵感来自APatch</string>
     <string name="settings_show_more_module_info">显示魔法阵详细信息</string>
     <string name="settings_show_more_module_info_summary">在魔法阵列表中显示魔法阵 ID 和大小</string>
     <string name="apm_install_confirm_title">安装魔法阵</string>
@@ -257,6 +264,9 @@
     <string name="apm_folk_banner_saved">已为 %s 注入 FolkBanner。</string>
     <string name="apm_folk_banner_cleared">已为 %s 清除 FolkBanner。</string>
     <string name="apm_folk_banner_failed">为 %s 更新 FolkBanner 失败。</string>
+    <string name="settings_banner_custom_opacity">横幅透光率</string>
+    <string name="settings_banner_custom_opacity_summary">自定义横幅透光率，不再跟随桌布模式</string>
+    <string name="settings_banner_opacity">横幅不透光率</string>
 
     <string name="settings_donot_store_superkey">不在本地存储心之密钥</string>
     <string name="settings_donot_store_superkey_summary">每次启动魔法工坊时验证心之密钥</string>

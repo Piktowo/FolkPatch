@@ -235,6 +235,13 @@
     <string name="module_shortcut_permission_tip_xiaomi">الرجاء تفعيل "إنشاء اختصارات سطح المكتب" لهذا التطبيق في إعدادات Xiaomi.</string>
     <string name="module_shortcut_permission_tip_oppo">الرجاء تفعيل "اختصار سطح المكتب" لهذا التطبيق في إعدادات OPPO.</string>
     <string name="module_shortcut_permission_tip_default">إذا فشل إنشاء الاختصار، الرجاء تفعيل إذن اختصار سطح المكتب لهذا التطبيق في إعدادات النظام.</string>
+    <string name="module_shortcut_name">اسم الاختصار</string>
+    <string name="module_shortcut_icon">أيقونة الاختصار</string>
+    <string name="module_shortcut_type">نوع الاختصار</string>
+    <string name="module_shortcut_type_webui">WebUI</string>
+    <string name="module_shortcut_type_action">Action</string>
+    <string name="module_shortcut_icon_default">استخدام الأيقونة الافتراضية</string>
+    <string name="module_shortcut_icon_select">اختيار أيقونة</string>
     <string name="enable_web_debugging">تمكين تصحيح أخطاء WebView</string>
     <string name="enable_web_debugging_summary">يمكن استخدامه لتصحيح أخطاء واجهة المستخدم الرسومية للويب. يرجى تمكينه عند الحاجة فقط.</string>
     <string name="settings_apm_install_confirm">تأكيد قبل التثبيت</string>
@@ -267,6 +274,9 @@
     <string name="apm_folk_banner_saved">تم حقن FolkBanner لـ %s.</string>
     <string name="apm_folk_banner_cleared">تم مسح FolkBanner لـ %s.</string>
     <string name="apm_folk_banner_failed">فشل تحديث FolkBanner لـ %s.</string>
+    <string name="settings_banner_custom_opacity">عتامة اللافتة</string>
+    <string name="settings_banner_custom_opacity_summary">استخدام عتامة مخصصة لللافتات بدلاً من اتباع وضع خلفية الشاشة</string>
+    <string name="settings_banner_opacity">شفافية اللافتة</string>
 
     <string name="settings_donot_store_superkey">عدم تخزين المفتاح الخارق محليًا</string>
     <string name="settings_donot_store_superkey_summary">المصادقة على المفتاح الخارق في كل مرة يبدأ فيها المدير

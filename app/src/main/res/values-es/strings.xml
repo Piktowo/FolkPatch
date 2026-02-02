@@ -235,6 +235,13 @@
     <string name="module_shortcut_permission_tip_xiaomi">Habilite el permiso "Crear accesos directos de escritorio" para esta aplicación en configuración de Xiaomi.</string>
     <string name="module_shortcut_permission_tip_oppo">Habilite el permiso "Acceso directo de escritorio" para esta aplicación en configuración de OPPO.</string>
     <string name="module_shortcut_permission_tip_default">Si falla la creación del acceso directo, habilite el permiso de acceso directo de escritorio para esta aplicación en configuración del sistema.</string>
+    <string name="module_shortcut_name">Nombre del acceso directo</string>
+    <string name="module_shortcut_icon">Icono del acceso directo</string>
+    <string name="module_shortcut_type">Tipo de acceso directo</string>
+    <string name="module_shortcut_type_webui">WebUI</string>
+    <string name="module_shortcut_type_action">Action</string>
+    <string name="module_shortcut_icon_default">Usar icono predeterminado</string>
+    <string name="module_shortcut_icon_select">Seleccionar icono</string>
     <string name="enable_web_debugging">Habilitar depuración WebView</string>
     <string name="enable_web_debugging_summary">Se puede usar para depurar la WebUI. Habilítalo solo si es necesario.</string>
     <string name="settings_apm_install_confirm">Confirmar antes de instalar</string>
@@ -267,6 +274,9 @@
     <string name="apm_folk_banner_saved">FolkBanner inyectado para %s.</string>
     <string name="apm_folk_banner_cleared">FolkBanner limpiado para %s.</string>
     <string name="apm_folk_banner_failed">Error al actualizar FolkBanner para %s.</string>
+    <string name="settings_banner_custom_opacity">Opacidad del banner</string>
+    <string name="settings_banner_custom_opacity_summary">Usar opacidad personalizada para banners en lugar de seguir el modo de fondo de pantalla</string>
+    <string name="settings_banner_opacity">Transparencia del banner</string>
 
     <string name="settings_donot_store_superkey">No guardar SuperKey localmente</string>
     <string name="settings_donot_store_superkey_summary">Autenticar la SuperKey cada vez que inicie el gestor</string>
