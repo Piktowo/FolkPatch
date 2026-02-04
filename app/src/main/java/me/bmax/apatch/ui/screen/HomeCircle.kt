@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.pm.PackageInfoCompat
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.generated.NavGraphs
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
@@ -99,7 +100,15 @@ fun HomeScreenCircle(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { navigator.navigate(BottomBarDestination.SuperUser.direction) }
+                            .clickable {
+                                navigator.navigate(BottomBarDestination.SuperUser.direction) {
+                                    popUpTo(NavGraphs.root) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            }
                             .padding(horizontal = 20.dp, vertical = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -131,7 +140,15 @@ fun HomeScreenCircle(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { navigator.navigate(BottomBarDestination.AModule.direction) }
+                            .clickable {
+                                navigator.navigate(BottomBarDestination.AModule.direction) {
+                                    popUpTo(NavGraphs.root) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            }
                             .padding(horizontal = 20.dp, vertical = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
