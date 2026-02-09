@@ -80,7 +80,8 @@ fun getDeviceModelForDisplay(): String {
     if (brand.equals("OnePlus", ignoreCase = true)) {
         val marketName = getSystemPropertyString("ro.vendor.oplus.market.name").trim()
         if (marketName.isNotEmpty()) {
-            return marketName
+
+            return marketName.removePrefix("OnePlus").trim()
         }
     }
     return Build.MODEL
