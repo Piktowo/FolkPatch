@@ -300,6 +300,7 @@
 
     <string name="home_more_menu_feedback_or_suggestion">呈渡劫见谛或献升仙策</string>
     <string name="home_more_menu_about">仙门叙略</string>
+    <string name="home_more_menu_document">道藏</string>
 
     <string name="home_dialog_uninstall_title">废去仙籍</string>
     <string name="home_dialog_uninstall_ap_only">唯废符箓</string>

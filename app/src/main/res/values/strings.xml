@@ -308,6 +308,7 @@ Please check and try again. If there are still issues, you can always ask questi
 
     <string name="home_more_menu_feedback_or_suggestion">Feedback or suggestion</string>
     <string name="home_more_menu_about">About</string>
+    <string name="home_more_menu_document">Document</string>
 
     <string name="home_dialog_uninstall_title">Uninstall</string>
     

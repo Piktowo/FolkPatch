@@ -302,6 +302,7 @@
 
     <string name="home_more_menu_feedback_or_suggestion">回饋或建議</string>
     <string name="home_more_menu_about">關於</string>
+    <string name="home_more_menu_document">文檔</string>
 
     <string name="home_dialog_uninstall_title">解除安裝</string>
     <string name="home_dialog_uninstall_ap_only">僅移除系統修補</string>

@@ -312,6 +312,7 @@ Por favor, verifique e tente novamente. Se houver problemas persistentes, você 
 
     <string name="home_more_menu_feedback_or_suggestion">Feedback ou sugestão</string>
     <string name="home_more_menu_about">Sobre</string>
+    <string name="home_more_menu_document">Documentação</string>
 
     <string name="home_dialog_uninstall_title">Desinstalar</string>
     

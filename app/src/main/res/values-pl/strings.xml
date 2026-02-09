@@ -306,6 +306,7 @@ Proszę sprawdzić i spróbować ponownie. Jeśli nadal występują problemy, za
 
     <string name="home_more_menu_feedback_or_suggestion">Opinie lub sugestie</string>
     <string name="home_more_menu_about">O aplikacji</string>
+    <string name="home_more_menu_document">Dokumentacja</string>
 
     <string name="home_dialog_uninstall_title">Odinstaluj</string>
     

@@ -313,6 +313,7 @@
 
     <string name="home_more_menu_feedback_or_suggestion">ملاحظات أو اقتراحات</string>
     <string name="home_more_menu_about">حول</string>
+    <string name="home_more_menu_document">توثيق</string>
 
     <string name="home_dialog_uninstall_title">إلغاء التثبيت</string>
     

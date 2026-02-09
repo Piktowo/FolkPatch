@@ -306,6 +306,7 @@
 
     <string name="home_more_menu_feedback_or_suggestion">Обратная связь или предложение</string>
     <string name="home_more_menu_about">О приложении</string>
+    <string name="home_more_menu_document">Документация</string>
 
     <string name="home_dialog_uninstall_title">Удаление</string>
     

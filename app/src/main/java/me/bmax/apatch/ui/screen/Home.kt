@@ -410,6 +410,12 @@ fun AuthFailedTipDialog(showDialog: MutableState<Boolean>) {
                 Row(
                     modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End
                 ) {
+                    val uriHandler = LocalUriHandler.current
+                    TextButton(onClick = {
+                        uriHandler.openUri("https://fp.mysqil.com/")
+                    }) {
+                        Text(text = stringResource(R.string.home_more_menu_document))
+                    }
                     TextButton(onClick = { showDialog.value = false }) {
                         Text(text = stringResource(id = android.R.string.ok))
                     }

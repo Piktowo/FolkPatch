@@ -302,6 +302,7 @@ Vui lòng kiểm tra và thử lại. Nếu vẫn có vấn đề, bạn có th�
 
     <string name="home_more_menu_feedback_or_suggestion">Phản hồi hoặc đề xuất</string>
     <string name="home_more_menu_about">Về</string>
+    <string name="home_more_menu_document">Tài liệu</string>
 
     <string name="home_dialog_uninstall_title">Gỡ cài đặt</string>
     

@@ -301,6 +301,7 @@
 
     <string name="home_more_menu_feedback_or_suggestion">反馈或建议</string>
     <string name="home_more_menu_about">关于</string>
+    <string name="home_more_menu_document">文档</string>
 
     <string name="home_dialog_uninstall_title">解除祝福</string>
     

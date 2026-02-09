@@ -308,6 +308,7 @@ Lütfen kontrol edip tekrar deneyin. Sorun devam ederse, resmi deponun issues sa
 
     <string name="home_more_menu_feedback_or_suggestion">Geri bildirim veya öneri</string>
     <string name="home_more_menu_about">Hakkında</string>
+    <string name="home_more_menu_document">Belge</string>
 
     <string name="home_dialog_uninstall_title">Kaldır</string>
     

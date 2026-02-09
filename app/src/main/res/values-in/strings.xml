@@ -306,6 +306,7 @@ Harap periksa dan coba lagi. Jika masalah masih ada, Anda selalu dapat mengajuka
 
     <string name="home_more_menu_feedback_or_suggestion">Umpan Balik atau Saran</string>
     <string name="home_more_menu_about">Tentang Aplikasi</string>
+    <string name="home_more_menu_document">Dokumentasi</string>
 
     <string name="home_dialog_uninstall_title">Hapus Instalasi</string>
 
