@@ -51,6 +51,8 @@ class APModuleViewModel : ViewModel() {
         val updateJson: String,
         val hasWebUi: Boolean,
         val hasActionScript: Boolean,
+        val webuiIcon: String?,
+        val actionIcon: String?,
         val isMetamodule: Boolean,
         val isZygisk: Boolean,
         val isLSPosed: Boolean,
@@ -181,6 +183,8 @@ class APModuleViewModel : ViewModel() {
                             obj.optString("updateJson"),
                             obj.optBoolean("web"),
                             obj.optBoolean("action"),
+                            obj.optString("webuiIcon").trim().ifEmpty { null },
+                            obj.optString("actionIcon").trim().ifEmpty { null },
                             obj.optString("metamodule").let { it == "1" || it.equals("true", ignoreCase = true) },
                             zygiskModuleIds.contains(obj.getString("id")),
                             obj.optString("name").contains("LSPosed", ignoreCase = true)

@@ -6,6 +6,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import android.util.Patterns
@@ -48,12 +49,14 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.asImageBitmap
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.topjohnwu.superuser.Shell
 import com.topjohnwu.superuser.io.SuFile
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.defaultMinSize
@@ -1160,6 +1163,36 @@ private fun ModuleItem(
     ) { uri: Uri? ->
         shortcutIconUri = uri?.toString()
     }
+
+    fun toSuIconUri(path: String?): String? {
+        val trimmed = path?.trim().orEmpty()
+        if (trimmed.isEmpty()) return null
+        return if (trimmed.startsWith("su://", true)) trimmed else "su://$trimmed"
+    }
+
+    val moduleDefaultIconPath = remember(
+        module.id,
+        shortcutType,
+        module.webuiIcon,
+        module.actionIcon
+    ) {
+        val preferred = if (shortcutType == "webui") module.webuiIcon else module.actionIcon
+        preferred?.takeIf { it.isNotBlank() }
+            ?: module.webuiIcon?.takeIf { it.isNotBlank() }
+            ?: module.actionIcon?.takeIf { it.isNotBlank() }
+    }
+    val moduleDefaultIconUri = remember(moduleDefaultIconPath) { toSuIconUri(moduleDefaultIconPath) }
+    val effectiveShortcutIconUri = shortcutIconUri ?: moduleDefaultIconUri
+
+    val shortcutPreviewBitmap by produceState<Bitmap?>(initialValue = null, key1 = effectiveShortcutIconUri) {
+        value = if (effectiveShortcutIconUri.isNullOrBlank()) {
+            null
+        } else {
+            withContext(Dispatchers.IO) {
+                ModuleShortcut.loadShortcutBitmap(context, effectiveShortcutIconUri)
+            }
+        }
+    }
     
     val sizeStr by produceState(initialValue = "0 KB", key1 = module.id) {
         value = withContext(Dispatchers.IO) {
@@ -1517,7 +1550,13 @@ private fun ModuleItem(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(stringResource(R.string.module_shortcut_icon))
                         Spacer(Modifier.width(12.dp))
-                        if (shortcutIconUri != null) {
+                        if (shortcutPreviewBitmap != null) {
+                            Image(
+                                bitmap = shortcutPreviewBitmap!!.asImageBitmap(),
+                                contentDescription = null,
+                                modifier = Modifier.size(36.dp)
+                            )
+                        } else if (shortcutIconUri != null) {
                             AsyncImage(
                                 model = shortcutIconUri,
                                 contentDescription = null,
@@ -1562,9 +1601,9 @@ private fun ModuleItem(
             confirmButton = {
                 TextButton(onClick = {
                     if (shortcutType == "webui" && module.hasWebUi) {
-                        ModuleShortcut.createModuleWebUiShortcut(context, module.id, shortcutName.ifEmpty { module.name }, shortcutIconUri)
+                        ModuleShortcut.createModuleWebUiShortcut(context, module.id, shortcutName.ifEmpty { module.name }, effectiveShortcutIconUri)
                     } else if (module.hasActionScript) {
-                        ModuleShortcut.createModuleActionShortcut(context, module.id, shortcutName.ifEmpty { module.name }, shortcutIconUri)
+                        ModuleShortcut.createModuleActionShortcut(context, module.id, shortcutName.ifEmpty { module.name }, effectiveShortcutIconUri)
                     }
                     showShortcutDialog = false
                 }) {
