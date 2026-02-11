@@ -54,19 +54,18 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
             .expect("Failed to set permissions");
     }
     let command_string = format!(
-        "rm -rf {}*.old.log; for file in {}*; do mv \"$file\" \"$file.old.log\"; done",
-        defs::APATCH_LOG_FOLDER,
+        "cd {}; rm -f *.last; [ -f dmesg.log ] && mv dmesg.log dmesg.last; [ -f logcat.log ] && mv logcat.log logcat.last; [ -f locat.log ] && mv locat.log logcat.last; rm -f *.log *.old.log",
         defs::APATCH_LOG_FOLDER
     );
     let mut args = vec!["-c", &command_string];
     // for all file to .old
     let result = utils::run_command("sh", &args, None)?.wait()?;
     if result.success() {
-        info!("Successfully deleted .old files.");
+        info!("Successfully rotated logs.");
     } else {
-        info!("Failed to delete .old files.");
+        info!("Failed to rotate logs.");
     }
-    let logcat_path = format!("{}locat.log", defs::APATCH_LOG_FOLDER);
+    let logcat_path = format!("{}logcat.log", defs::APATCH_LOG_FOLDER);
     let dmesg_path = format!("{}dmesg.log", defs::APATCH_LOG_FOLDER);
     let bootlog = fs::File::create(dmesg_path)?;
     args = vec![
