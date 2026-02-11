@@ -217,6 +217,25 @@ fun GeneralSettings(
                     }
                 )
             }
+
+            // Block KernelPatch Update
+            val blockUpdateTitle = stringResource(id = R.string.settings_block_kernelpatch_update)
+            val blockUpdateSummary = stringResource(id = R.string.settings_block_kernelpatch_update_summary)
+            val showBlockUpdate = matchGeneral || shouldShow(searchText, blockUpdateTitle, blockUpdateSummary)
+
+            if (showBlockUpdate) {
+                var blockUpdateChecked by remember { mutableStateOf(prefs.getBoolean(APApplication.PREF_BLOCK_KERNELPATCH_UPDATE, false)) }
+                SwitchItem(
+                    icon = Icons.Filled.Vaccines,
+                    title = blockUpdateTitle,
+                    summary = blockUpdateSummary,
+                    checked = blockUpdateChecked,
+                    onCheckedChange = {
+                        blockUpdateChecked = it
+                        prefs.edit { putBoolean(APApplication.PREF_BLOCK_KERNELPATCH_UPDATE, it) }
+                    }
+                )
+            }
             
             // FolkX Engine
             if (showFolkXEngine) {

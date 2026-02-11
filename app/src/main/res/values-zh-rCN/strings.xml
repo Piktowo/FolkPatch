@@ -27,6 +27,8 @@
     <string name="settings_show_apm">显示系统模块</string>
     <string name="settings_show_kpm">显示内核模块</string>
     <string name="settings_show_superuser">显示超级用户</string>
+    <string name="settings_block_kernelpatch_update">屏蔽内核补丁更新提示</string>
+    <string name="settings_block_kernelpatch_update_summary">不显示内核补丁的更新通知</string>
 
     <string name="reboot">重启</string>
     <string name="settings">设置</string>

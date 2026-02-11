@@ -51,6 +51,13 @@ fun HomeScreenV2(
 ) {
     val scrollState = rememberScrollState()
     
+    // Check if update notification is blocked
+    val kpState = if (kpState == APApplication.State.KERNELPATCH_NEED_UPDATE && apApp.isKernelPatchUpdateBlocked()) {
+        APApplication.State.KERNELPATCH_INSTALLED
+    } else {
+        kpState
+    }
+    
     val showAuthKeyDialog = remember { mutableStateOf(false) }
     val showUninstallDialog = remember { mutableStateOf(false) }
     val showAuthFailedTipDialog = remember { mutableStateOf(false) }

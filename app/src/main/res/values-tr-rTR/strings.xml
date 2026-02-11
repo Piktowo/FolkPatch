@@ -27,6 +27,8 @@
     <string name="settings_show_apm">APM Göster</string>
     <string name="settings_show_kpm">KPM Göster</string>
     <string name="settings_show_superuser">SuperUser Göster</string>
+    <string name="settings_block_kernelpatch_update">KernelPatch Güncellemesini Engelle</string>
+    <string name="settings_block_kernelpatch_update_summary">KernelPatch güncelleme bildirimlerini gösterme</string>
 
     <string name="reboot">Yeniden Başlat</string>
     <string name="settings">Ayarlar</string>

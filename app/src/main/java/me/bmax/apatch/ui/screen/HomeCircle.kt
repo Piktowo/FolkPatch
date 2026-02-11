@@ -35,6 +35,7 @@ import androidx.core.content.pm.PackageInfoCompat
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.ramcosta.composedestinations.generated.NavGraphs
 import me.bmax.apatch.APApplication
+import me.bmax.apatch.apApp
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.util.Version
@@ -54,6 +55,13 @@ fun HomeScreenCircle(
     kpState: APApplication.State,
     apState: APApplication.State
 ) {
+    // Check if update notification is blocked
+    val kpState = if (kpState == APApplication.State.KERNELPATCH_NEED_UPDATE && apApp.isKernelPatchUpdateBlocked()) {
+        APApplication.State.KERNELPATCH_INSTALLED
+    } else {
+        kpState
+    }
+
     val showUninstallDialog = remember { mutableStateOf(false) }
     val showAuthFailedTipDialog = remember { mutableStateOf(false) }
     val showAuthKeyDialog = remember { mutableStateOf(false) }

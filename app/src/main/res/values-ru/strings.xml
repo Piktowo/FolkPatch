@@ -30,6 +30,8 @@
     <string name="settings_show_apm">Показать APM</string>
     <string name="settings_show_kpm">Показать KPM</string>
     <string name="settings_show_superuser">Показать Суперпользователя</string>
+    <string name="settings_block_kernelpatch_update">Блокировать обновление KernelPatch</string>
+    <string name="settings_block_kernelpatch_update_summary">Не показывать уведомления об обновлении KernelPatch</string>
     <string name="settings_disable_module_update_check">Отключить проверку обновления модулей</string>
     <string name="settings_disable_module_update_check_summary">Отключить автоматическую проверку обновлений для системных модулей</string>
 

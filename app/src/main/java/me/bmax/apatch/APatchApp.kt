@@ -99,6 +99,7 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
         private const val LEGACY_SU_PATH = "/system/bin/su"
 
         const val SP_NAME = "config"
+        const val PREF_BLOCK_KERNELPATCH_UPDATE = "block_kernelpatch_update"
         private const val SHOW_BACKUP_WARN = "show_backup_warning"
         lateinit var sharedPreferences: SharedPreferences
         var isSignatureValid = true
@@ -233,8 +234,17 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
                     Log.d(TAG, "kp installed version: ${installedV}, build version: $buildV")
 
                     // use != instead of > to enable downgrade,
+                    // Check if update notification is blocked
+                    val isBlocked = apApp.isKernelPatchUpdateBlocked()
+
                     if (buildV != installedV) {
-                        _kpStateLiveData.postValue(State.KERNELPATCH_NEED_UPDATE)
+                        if (isBlocked) {
+                            // 如果屏蔽更新，将状态设置为已安装而不是需要更新
+                            _kpStateLiveData.postValue(State.KERNELPATCH_INSTALLED)
+                        } else {
+                            // 正常显示更新提示
+                            _kpStateLiveData.postValue(State.KERNELPATCH_NEED_UPDATE)
+                        }
                     }
                     Log.d(TAG, "kp state: " + _kpStateLiveData.value)
 
@@ -364,6 +374,10 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler, ImageLoade
 
     fun getBackupWarningState(): Boolean {
         return sharedPreferences.getBoolean(SHOW_BACKUP_WARN, true)
+    }
+
+    fun isKernelPatchUpdateBlocked(): Boolean {
+        return sharedPreferences.getBoolean(PREF_BLOCK_KERNELPATCH_UPDATE, false)
     }
 
     fun updateBackupWarningState(state: Boolean) {

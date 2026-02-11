@@ -31,6 +31,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
+import me.bmax.apatch.apApp
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.theme.BackgroundConfig
@@ -50,6 +51,14 @@ fun HomeScreenV3(
     apState: APApplication.State
 ) {
     val scrollState = rememberScrollState()
+    
+    // Check if update notification is blocked
+    val kpState = if (kpState == APApplication.State.KERNELPATCH_NEED_UPDATE && apApp.isKernelPatchUpdateBlocked()) {
+        APApplication.State.KERNELPATCH_INSTALLED
+    } else {
+        kpState
+    }
+    
     val context = LocalContext.current
     // Only enable wallpaper mode (no card shadow) if custom background is actually enabled
     val isWallpaperMode = BackgroundConfig.isCustomBackgroundEnabled && (BackgroundConfig.customBackgroundUri != null || BackgroundConfig.isMultiBackgroundEnabled)

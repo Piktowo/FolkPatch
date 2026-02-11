@@ -706,6 +706,14 @@ private fun KStatusCard(
     }
 
     val prefs = APApplication.sharedPreferences
+    
+    // Check if update notification is blocked
+    val kpState = if (kpState == APApplication.State.KERNELPATCH_NEED_UPDATE && apApp.isKernelPatchUpdateBlocked()) {
+        APApplication.State.KERNELPATCH_INSTALLED
+    } else {
+        kpState
+    }
+    
     val darkThemeFollowSys = prefs.getBoolean("night_mode_follow_sys", false)
     val nightModeEnabled = prefs.getBoolean("night_mode_enabled", true)
     val isDarkTheme = if (darkThemeFollowSys) {

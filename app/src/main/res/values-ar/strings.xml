@@ -27,6 +27,8 @@
     <string name="settings_show_apm">إظهار APM</string>
     <string name="settings_show_kpm">إظهار KPM</string>
     <string name="settings_show_superuser">إظهار المستخدم المتميز</string>
+    <string name="settings_block_kernelpatch_update">حظر تحديث KernelPatch</string>
+    <string name="settings_block_kernelpatch_update_summary">عدم إظهار إشعارات تحديث KernelPatch</string>
     <string name="settings_disable_module_update_check">تعطيل التحقق من تحديث الوحدات</string>
     <string name="settings_disable_module_update_check_summary">تعطيل التحقق التلقائي من التحديثات للوحدات النظام</string>
 

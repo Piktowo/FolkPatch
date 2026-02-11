@@ -30,6 +30,8 @@
     <string name="settings_show_apm">顯示系統模組</string>
     <string name="settings_show_kpm">顯示核心模組</string>
     <string name="settings_show_superuser">顯示超級使用者</string>
+    <string name="settings_block_kernelpatch_update">屏蔽核心修補更新提示</string>
+    <string name="settings_block_kernelpatch_update_summary">不顯示核心修補的更新通知</string>
     <string name="settings_disable_module_update_check">停用模組更新檢查</string>
     <string name="settings_disable_module_update_check_summary">停用系統模組的自動更新檢查</string>
 
