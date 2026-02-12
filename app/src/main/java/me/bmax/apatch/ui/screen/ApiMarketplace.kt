@@ -182,17 +182,11 @@ private fun ApiMarketplaceItemCard(
         1f
     }
 
-    val cardColor = if (isWallpaperMode) {
-        MaterialTheme.colorScheme.surface.copy(alpha = opacity)
-    } else {
-        MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.2f)
-    }
-
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(20.dp),
-        color = cardColor,
-        tonalElevation = 0.dp
+        color = MaterialTheme.colorScheme.surface,
+        tonalElevation = 1.dp
     ) {
         Row(
             modifier = Modifier
