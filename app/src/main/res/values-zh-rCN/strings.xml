@@ -280,6 +280,20 @@
     <string name="apm_folk_banner_saved">已为 %s 注入 FolkBanner。</string>
     <string name="apm_folk_banner_cleared">已为 %s 清除 FolkBanner。</string>
     <string name="apm_folk_banner_failed">为 %s 更新 FolkBanner 失败。</string>
+    <string name="apm_banner_api_mode">API模式</string>
+    <string name="apm_banner_api_mode_summary">使用随机图API或本地目录为模块提供横幅</string>
+    <string name="apm_banner_api_source">配置API源</string>
+    <string name="apm_banner_api_source_hint">输入API地址或本地路径</string>
+    <string name="apm_banner_api_source_saved">API源已保存</string>
+    <string name="apm_banner_api_source_not_configured">未配置</string>
+    <string name="apm_banner_api_url_configured">API地址已配置</string>
+    <string name="apm_banner_local_dir_configured">本地目录已配置</string>
+    <string name="apm_banner_clear_cache">清除缓存</string>
+    <string name="apm_banner_cache_cleared">横幅缓存已清除</string>
+    <string name="apm_banner_api_config_title">配置API源</string>
+    <string name="apm_banner_api_config_desc">输入随机图API地址或本地目录路径，每个模块将获得唯一的横幅图片。</string>
+    <string name="apm_banner_api_examples_title">示例：</string>
+    <string name="apm_banner_api_examples">API: https://picsum.photos/800/400\n本地: /sdcard/Pictures/Banners</string>
     <string name="settings_banner_custom_opacity">横幅透明度</string>
     <string name="settings_banner_custom_opacity_summary">自定义横幅透明度，不再跟随壁纸模式</string>
     <string name="settings_banner_opacity">横幅不透明度</string>
@@ -352,6 +366,7 @@
     <string name="sakura_theme">樱花粉</string>
     <string name="teal_theme">蓝绿色</string>
     <string name="yellow_theme">黄色</string>
+    <string name="ink_wash_theme">水墨风</string>
 
     <string name="about_app_desc">一个基于内核的 Root 解决方案，支持内核模块和内核函数 hook，无需重新编译内核。</string>
     <string name="about_powered_by">由 %1$s 提供支持</string>

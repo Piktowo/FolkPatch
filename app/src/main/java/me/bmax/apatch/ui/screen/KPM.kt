@@ -938,9 +938,31 @@ private fun KPModuleItem(
         module.name,
         BackgroundConfig.isBannerEnabled,
         BackgroundConfig.isFolkBannerEnabled,
+        BackgroundConfig.isBannerApiModeEnabled,
+        BackgroundConfig.bannerApiSource,
         bannerReloadKey
     ) {
-        value = if (BackgroundConfig.isBannerEnabled && BackgroundConfig.isFolkBannerEnabled) {
+        if (!BackgroundConfig.isBannerEnabled) {
+            value = null
+            return@produceState
+        }
+
+        // API模式优先级最高
+        if (BackgroundConfig.isBannerApiModeEnabled && BackgroundConfig.bannerApiSource.isNotBlank()) {
+            val apiBanner = withContext(Dispatchers.IO) {
+                BannerApiService.getModuleBanner(
+                    context = context,
+                    moduleId = "kpm_${module.name}",
+                    source = BackgroundConfig.bannerApiSource
+                )
+            }
+            if (apiBanner != null) {
+                value = apiBanner
+                return@produceState
+            }
+        }
+
+        value = if (BackgroundConfig.isFolkBannerEnabled) {
             withContext(Dispatchers.IO) { readKpmBanner(context, module.name) }
         } else {
             null

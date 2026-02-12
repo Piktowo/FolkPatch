@@ -322,6 +322,17 @@ fun AppearanceSettings(
     val folkBannerSummary = stringResource(id = R.string.apm_enable_folk_banner_summary)
     val showFolkBanner = BackgroundConfig.isBannerEnabled && (matchAppearance || shouldShow(searchText, folkBannerTitle, folkBannerSummary))
 
+    // Banner API Mode
+    val bannerApiModeTitle = stringResource(id = R.string.apm_banner_api_mode)
+    val bannerApiModeSummary = stringResource(id = R.string.apm_banner_api_mode_summary)
+    val showBannerApiModeSwitch = BackgroundConfig.isBannerEnabled && BackgroundConfig.isFolkBannerEnabled && (matchAppearance || shouldShow(searchText, bannerApiModeTitle, bannerApiModeSummary))
+
+    val bannerApiSourceTitle = stringResource(id = R.string.apm_banner_api_source)
+    val bannerApiSourceHint = stringResource(id = R.string.apm_banner_api_source_hint)
+    val showBannerApiSource = BackgroundConfig.isBannerEnabled && BackgroundConfig.isFolkBannerEnabled && BackgroundConfig.isBannerApiModeEnabled && (matchAppearance || shouldShow(searchText, bannerApiSourceTitle, bannerApiSourceHint))
+
+    val bannerApiClearCacheTitle = stringResource(id = R.string.apm_banner_clear_cache)
+
     val bannerCustomOpacityTitle = stringResource(id = R.string.settings_banner_custom_opacity)
     val bannerCustomOpacitySummary = stringResource(id = R.string.settings_banner_custom_opacity_summary)
     val showBannerCustomOpacitySwitch = BackgroundConfig.isBannerEnabled && (matchAppearance || shouldShow(searchText, bannerCustomOpacityTitle, bannerCustomOpacitySummary))
@@ -927,6 +938,68 @@ fun AppearanceSettings(
                 )
             }
 
+            // Banner API Mode Switch
+            if (showBannerApiModeSwitch) {
+                SwitchItem(
+                    icon = Icons.Filled.CloudDownload,
+                    title = bannerApiModeTitle,
+                    summary = bannerApiModeSummary,
+                    checked = BackgroundConfig.isBannerApiModeEnabled,
+                    onCheckedChange = {
+                        BackgroundConfig.setBannerApiModeEnabledState(it)
+                        BackgroundConfig.save(context)
+                    }
+                )
+            }
+
+            // Banner API Source Config Entry
+            if (showBannerApiSource) {
+                val showBannerApiConfigDialog = remember { mutableStateOf(false) }
+                val apiSourceSummary = if (BackgroundConfig.bannerApiSource.isNotBlank()) {
+                    if (BackgroundConfig.bannerApiSource.startsWith("/")) {
+                        context.getString(R.string.apm_banner_local_dir_configured)
+                    } else {
+                        context.getString(R.string.apm_banner_api_url_configured)
+                    }
+                } else {
+                    context.getString(R.string.apm_banner_api_source_not_configured)
+                }
+
+                ListItem(
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                    headlineContent = { Text(bannerApiSourceTitle) },
+                    supportingContent = {
+                        Text(
+                            text = apiSourceSummary,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.outline
+                        )
+                    },
+                    leadingContent = { Icon(Icons.Filled.Settings, null) },
+                    modifier = Modifier.clickable { showBannerApiConfigDialog.value = true }
+                )
+
+                // Banner API Config Dialog
+                if (showBannerApiConfigDialog.value) {
+                    BannerApiConfigDialog(
+                        showDialog = showBannerApiConfigDialog,
+                        currentSource = BackgroundConfig.bannerApiSource,
+                        onConfirm = { newSource ->
+                            BackgroundConfig.setBannerApiSourceValue(newSource)
+                            BackgroundConfig.save(context)
+                        },
+                        onClearCache = {
+                            scope.launch {
+                                loadingDialog.show()
+                                me.bmax.apatch.ui.screen.BannerApiService.clearAllCache(context)
+                                loadingDialog.hide()
+                                Toast.makeText(context, context.getString(R.string.apm_banner_cache_cleared), Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    )
+                }
+            }
+
             if (showBannerCustomOpacitySwitch) {
                 SwitchItem(
                     icon = Icons.Filled.Opacity,
@@ -1501,6 +1574,7 @@ private fun colorsList(): List<APColor> {
         APColor("sakura", R.string.sakura_theme),
         APColor("teal", R.string.teal_theme),
         APColor("yellow", R.string.yellow_theme),
+        APColor("ink_wash", R.string.ink_wash_theme),
     )
 }
 
@@ -1955,6 +2029,132 @@ fun NavModeChooseDialog(
                 }
             }
 
+            val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
+            APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BannerApiConfigDialog(
+    showDialog: MutableState<Boolean>,
+    currentSource: String,
+    onConfirm: (String) -> Unit,
+    onClearCache: () -> Unit
+) {
+    val context = LocalContext.current
+    var sourceText by remember { mutableStateOf(currentSource) }
+
+    BasicAlertDialog(
+        onDismissRequest = { showDialog.value = false },
+        properties = DialogProperties(
+            decorFitsSystemWindows = true,
+            usePlatformDefaultWidth = false,
+        )
+    ) {
+        Surface(
+            modifier = Modifier
+                .width(340.dp)
+                .wrapContentHeight(),
+            shape = RoundedCornerShape(28.dp),
+            tonalElevation = AlertDialogDefaults.TonalElevation,
+            color = AlertDialogDefaults.containerColor,
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(24.dp)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Text(
+                    text = stringResource(R.string.apm_banner_api_config_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                Text(
+                    text = stringResource(R.string.apm_banner_api_config_desc),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                OutlinedTextField(
+                    value = sourceText,
+                    onValueChange = { sourceText = it },
+                    label = { Text(stringResource(R.string.apm_banner_api_source)) },
+                    placeholder = { Text(stringResource(R.string.apm_banner_api_source_hint), style = MaterialTheme.typography.bodySmall) },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    trailingIcon = {
+                        if (sourceText.isNotEmpty()) {
+                            IconButton(onClick = { sourceText = "" }) {
+                                Icon(Icons.Filled.Clear, contentDescription = "Clear")
+                            }
+                        }
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // 提示信息
+                Surface(
+                    shape = RoundedCornerShape(12.dp),
+                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                ) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        Text(
+                            text = stringResource(R.string.apm_banner_api_examples_title),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = stringResource(R.string.apm_banner_api_examples),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    OutlinedButton(
+                        onClick = {
+                            onClearCache()
+                        },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(stringResource(R.string.apm_banner_clear_cache))
+                    }
+                    Button(
+                        onClick = {
+                            onConfirm(sourceText)
+                            showDialog.value = false
+                            Toast.makeText(context, context.getString(R.string.apm_banner_api_source_saved), Toast.LENGTH_SHORT).show()
+                        },
+                        enabled = sourceText.isNotBlank(),
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(stringResource(android.R.string.ok))
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = { showDialog.value = false }) {
+                        Text(stringResource(android.R.string.cancel))
+                    }
+                }
+            }
             val dialogWindowProvider = LocalView.current.parent as DialogWindowProvider
             APDialogBlurBehindUtils.setupWindowBlurListener(dialogWindowProvider.window)
         }

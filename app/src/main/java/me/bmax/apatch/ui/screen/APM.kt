@@ -1205,11 +1205,29 @@ private fun ModuleItem(
         module.id,
         BackgroundConfig.isBannerEnabled,
         BackgroundConfig.isFolkBannerEnabled,
+        BackgroundConfig.isBannerApiModeEnabled,
+        BackgroundConfig.bannerApiSource,
         bannerReloadKey
     ) {
         if (!BackgroundConfig.isBannerEnabled) {
             value = null
             return@produceState
+        }
+
+        // API模式优先级最高
+        if (BackgroundConfig.isBannerApiModeEnabled && BackgroundConfig.bannerApiSource.isNotBlank()) {
+            val apiBanner = withContext(Dispatchers.IO) {
+                BannerApiService.getModuleBanner(
+                    context = context,
+                    moduleId = module.id,
+                    source = BackgroundConfig.bannerApiSource
+                )
+            }
+            if (apiBanner != null) {
+                viewModel.putBannerInfo(module.id, APModuleViewModel.BannerInfo(apiBanner, null))
+                value = APModuleViewModel.BannerInfo(apiBanner, null)
+                return@produceState
+            }
         }
 
         val cached = viewModel.getBannerInfo(module.id)

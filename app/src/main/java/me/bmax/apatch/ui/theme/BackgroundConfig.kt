@@ -79,6 +79,12 @@ object BackgroundConfig {
     var bannerCustomOpacity: Float by mutableStateOf(0.5f)
         private set
 
+    // Banner API Mode Settings
+    var isBannerApiModeEnabled: Boolean by mutableStateOf(false)
+        private set
+    var bannerApiSource: String by mutableStateOf("")
+        private set
+
     // Multi-Background Mode
     var isMultiBackgroundEnabled: Boolean by mutableStateOf(false)
         private set
@@ -125,6 +131,9 @@ object BackgroundConfig {
     private const val KEY_FOLK_BANNER_ENABLED = "folk_banner_enabled"
     private const val KEY_BANNER_CUSTOM_OPACITY_ENABLED = "banner_custom_opacity_enabled"
     private const val KEY_BANNER_CUSTOM_OPACITY = "banner_custom_opacity"
+
+    private const val KEY_BANNER_API_MODE_ENABLED = "banner_api_mode_enabled"
+    private const val KEY_BANNER_API_SOURCE = "banner_api_source"
 
     private const val KEY_MULTI_BACKGROUND_ENABLED = "multi_background_enabled"
     private const val KEY_HOME_BACKGROUND_URI = "home_background_uri"
@@ -300,6 +309,20 @@ object BackgroundConfig {
     }
 
     /**
+     * 启用/禁用横幅API模式
+     */
+    fun setBannerApiModeEnabledState(enabled: Boolean) {
+        isBannerApiModeEnabled = enabled
+    }
+
+    /**
+     * 设置横幅API源（URL或本地路径）
+     */
+    fun setBannerApiSourceValue(source: String) {
+        bannerApiSource = source
+    }
+
+    /**
      * 设置自定义背景模糊度
      */
     fun setCustomBackgroundBlurValue(blur: Float) {
@@ -396,6 +419,9 @@ object BackgroundConfig {
             putBoolean(KEY_BANNER_CUSTOM_OPACITY_ENABLED, isBannerCustomOpacityEnabled)
             putFloat(KEY_BANNER_CUSTOM_OPACITY, bannerCustomOpacity)
 
+            putBoolean(KEY_BANNER_API_MODE_ENABLED, isBannerApiModeEnabled)
+            putString(KEY_BANNER_API_SOURCE, bannerApiSource)
+
             putBoolean(KEY_MULTI_BACKGROUND_ENABLED, isMultiBackgroundEnabled)
             putString(KEY_HOME_BACKGROUND_URI, homeBackgroundUri)
             putString(KEY_KERNEL_BACKGROUND_URI, kernelBackgroundUri)
@@ -443,6 +469,9 @@ object BackgroundConfig {
         val bannerCustomOpacityEnabled = prefs.getBoolean(KEY_BANNER_CUSTOM_OPACITY_ENABLED, false)
         val bannerCustomOpacity = prefs.getFloat(KEY_BANNER_CUSTOM_OPACITY, 0.5f)
 
+        val bannerApiModeEnabled = prefs.getBoolean(KEY_BANNER_API_MODE_ENABLED, false)
+        val bannerApiSourceValue = prefs.getString(KEY_BANNER_API_SOURCE, "") ?: ""
+
         val multiEnabled = prefs.getBoolean(KEY_MULTI_BACKGROUND_ENABLED, false)
         val homeUri = prefs.getString(KEY_HOME_BACKGROUND_URI, null)
         val kernelUri = prefs.getString(KEY_KERNEL_BACKGROUND_URI, null)
@@ -483,6 +512,9 @@ object BackgroundConfig {
         isFolkBannerEnabled = folkBannerEnabled
         isBannerCustomOpacityEnabled = bannerCustomOpacityEnabled
         this.bannerCustomOpacity = bannerCustomOpacity
+
+        isBannerApiModeEnabled = bannerApiModeEnabled
+        bannerApiSource = bannerApiSourceValue
 
         isMultiBackgroundEnabled = multiEnabled
         homeBackgroundUri = homeUri
@@ -528,6 +560,9 @@ object BackgroundConfig {
         isFolkBannerEnabled = false
         isBannerCustomOpacityEnabled = false
         bannerCustomOpacity = 0.5f
+
+        isBannerApiModeEnabled = false
+        bannerApiSource = ""
 
         isMultiBackgroundEnabled = false
         homeBackgroundUri = null

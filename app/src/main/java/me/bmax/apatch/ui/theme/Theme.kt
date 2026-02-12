@@ -150,6 +150,7 @@ fun APatchTheme(
                 "sakura" -> DarkSakuraTheme
                 "teal" -> DarkTealTheme
                 "yellow" -> DarkYellowTheme
+                "ink_wash" -> DarkInkWashTheme
                 else -> DarkBlueTheme
             }
         } else {
@@ -173,6 +174,7 @@ fun APatchTheme(
                 "sakura" -> LightSakuraTheme
                 "teal" -> LightTealTheme
                 "yellow" -> LightYellowTheme
+                "ink_wash" -> LightInkWashTheme
                 else -> LightBlueTheme
             }
         }
