@@ -461,7 +461,6 @@ Oto kilka możliwych przyczyn niepowodzenia uwierzytelnienia—proszę sprawdzi�
     <string name="settings_title_image_dim">Przyciemnienie tła</string>
     <string name="settings_title_image_offset_x">Pozycja pozioma</string>
 
-    <string name="settings_launcher_icon">Ikona launchera</string>
     <!-- KPM AutoLoad Strings -->
     <string name="kpm_autoload_title">Automatyczne ładowanie KPM</string>
     <string name="kpm_autoload_enabled">Włącz automatyczne ładowanie</string>
