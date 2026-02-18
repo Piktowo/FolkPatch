@@ -318,11 +318,46 @@ tasks.register<Copy>("mergeScripts") {
     }
 }
 
+// Build Hide.c for arm64
+tasks.register<Exec>("buildHideArm64") {
+    val ndkDir = android.ndkDirectory
+    val toolchain = File(ndkDir, "toolchains/llvm/prebuilt")
+    // Detect host OS
+    val isWindows = System.getProperty("os.name").lowercase().contains("win")
+    val hostTag = when {
+        isWindows -> "windows-x86_64"
+        System.getProperty("os.name").lowercase().contains("mac") -> "darwin-x86_64"
+        else -> "linux-x86_64"
+    }
+    // On Windows, use .cmd extension for clang
+    val clangExe = if (isWindows) "aarch64-linux-android21-clang.cmd" else "aarch64-linux-android21-clang"
+    val clang = File(File(toolchain, hostTag), "bin/$clangExe")
+    
+    val sourceFile = rootProject.file("FolkS/Hide.c")
+    val outputFile = file("src/main/assets/Service/Hide")
+    
+    onlyIf {
+        !outputFile.exists() || sourceFile.lastModified() > outputFile.lastModified()
+    }
+    
+    doFirst {
+        outputFile.parentFile.mkdirs()
+        println("Building Hide.c for arm64...")
+    }
+    
+    commandLine(clang.absolutePath, "-static", "-o", outputFile.absolutePath, sourceFile.absolutePath)
+    
+    doLast {
+        println("Hide binary built: ${outputFile.absolutePath}")
+    }
+}
+
 tasks.getByName("preBuild").dependsOn(
     "downloadKpimg",
     "downloadKptools",
     "downloadCompatKpatch",
     "mergeScripts",
+    "buildHideArm64",
 )
 
 // https://github.com/bbqsrc/cargo-ndk

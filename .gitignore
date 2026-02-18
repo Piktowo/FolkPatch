@@ -20,3 +20,7 @@ app/src/main/resources/
 private
 .claude/
 .qoder
+
+# Built native binaries
+app/src/main/assets/Service/Hide
+FolkS/build/
