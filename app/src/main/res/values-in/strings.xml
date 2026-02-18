@@ -41,6 +41,7 @@
     <string name="reboot_bootloader">Mulai Ulang ke Bootloader</string>
     <string name="reboot_download">Mulai Ulang ke Download</string>
     <string name="reboot_edl">Mulai Ulang ke EDL</string>
+    <string name="reboot_fastbootd">Mulai Ulang ke FastbootD</string>
     <string name="about">Tentang Aplikasi</string>
     <string name="settings_app_language">Bahasa</string>
     <string name="system_default">Bawaan Sistem</string>

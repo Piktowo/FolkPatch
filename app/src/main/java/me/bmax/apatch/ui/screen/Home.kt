@@ -687,6 +687,10 @@ private fun TopBar(
                         text = { Text(stringResource(id = R.string.reboot_edl)) },
                         onClick = { reboot("edl") }
                     )
+                    WallpaperAwareDropdownMenuItem(
+                        text = { Text(stringResource(id = R.string.reboot_fastbootd)) },
+                        onClick = { reboot("fastboot") }
+                    )
                 }
             }
         }

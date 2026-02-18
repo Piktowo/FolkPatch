@@ -36,6 +36,7 @@
     <string name="reboot_bootloader">去备料间</string>
     <string name="reboot_download">去进货</string>
     <string name="reboot_edl">去抢救</string>
+    <string name="reboot_fastbootd">换换地儿</string>
     <string name="about">咱家底</string>
     <string name="settings_app_language">方言</string>
     <string name="system_default">照旧</string>

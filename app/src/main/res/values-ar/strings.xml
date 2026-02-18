@@ -38,6 +38,7 @@
     <string name="reboot_bootloader">إعادة التشغيل إلى البوتلودر</string>
     <string name="reboot_download">إعادة التشغيل إلى وضع التنزيل</string>
     <string name="reboot_edl">إعادة التشغيل إلى وضع EDL</string>
+    <string name="reboot_fastbootd">إعادة التشغيل إلى وضع FastbootD</string>
     <string name="about">حول</string>
     <string name="settings_app_language">اللغة</string>
     <string name="system_default">افتراضي النظام</string>

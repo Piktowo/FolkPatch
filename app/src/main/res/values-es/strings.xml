@@ -38,6 +38,7 @@
     <string name="reboot_bootloader">Reiniciar en Bootloader</string>
     <string name="reboot_download">Reiniciar en Download</string>
     <string name="reboot_edl">Reiniciar en EDL</string>
+    <string name="reboot_fastbootd">Reiniciar en FastbootD</string>
     <string name="about">Acerca de</string>
     <string name="settings_app_language">Idioma</string>
     <string name="system_default">Predeterminado del sistema</string>

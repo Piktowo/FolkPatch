@@ -36,6 +36,7 @@
     <string name="reboot_bootloader">Bootloader’a Yeniden Başlat</string>
     <string name="reboot_download">Download Moduna Yeniden Başlat</string>
     <string name="reboot_edl">EDL Moduna Yeniden Başlat</string>
+    <string name="reboot_fastbootd">FastbootD Moduna Yeniden Başlat</string>
     <string name="about">Hakkında</string>
     <string name="settings_app_language">Dil</string>
     <string name="system_default">Sistem varsayılanı</string>

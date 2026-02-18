@@ -36,6 +36,7 @@
     <string name="reboot_bootloader">重启到Bootloader模式哒喵！</string>
     <string name="reboot_download">重启到下载模式哒喵！</string>
     <string name="reboot_edl">重启到EDL模式哒喵！</string>
+    <string name="reboot_fastbootd">重启到FastbootD模式哒喵！</string>
     <string name="about">关于人家哒</string>
     <string name="settings_app_language">语言设置喵</string>
     <string name="system_default">系统默认哒</string>

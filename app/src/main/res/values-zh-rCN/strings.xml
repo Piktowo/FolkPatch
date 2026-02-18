@@ -36,6 +36,7 @@
     <string name="reboot_bootloader">重启到 Bootloader</string>
     <string name="reboot_download">重启到 Download</string>
     <string name="reboot_edl">重启到 EDL</string>
+    <string name="reboot_fastbootd">重启到 FastbootD</string>
     <string name="about">关于</string>
     <string name="settings_app_language">语言</string>
     <string name="system_default">系统默认</string>

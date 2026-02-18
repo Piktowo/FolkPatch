@@ -38,6 +38,7 @@
     <string name="reboot_bootloader">Khởi động lại vào Bootloader</string>
     <string name="reboot_download">Khởi động lại vào Chế độ Tải về</string>
     <string name="reboot_edl">Khởi động lại vào EDL</string>
+    <string name="reboot_fastbootd">Khởi động lại vào FastbootD</string>
     <string name="about">Về</string>
     <string name="settings_app_language">Ngôn ngữ</string>
     <string name="system_default">Mặc định hệ thống</string>

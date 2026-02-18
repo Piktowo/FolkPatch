@@ -40,6 +40,7 @@
     <string name="reboot_bootloader">Uruchom ponownie w trybie Bootloader</string>
     <string name="reboot_download">Uruchom ponownie w trybie Download</string>
     <string name="reboot_edl">Uruchom ponownie w trybie EDL</string>
+    <string name="reboot_fastbootd">Uruchom ponownie w trybie FastbootD</string>
     <string name="about">O aplikacji</string>
     <string name="settings_app_language">Język</string>
     <string name="system_default">Domyślne ustawienia systemowe</string>
