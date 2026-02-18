@@ -54,7 +54,13 @@ int main() {
         {"sys.oem_unlock_allowed", "0"},
         {"ro.secureboot.lockstate", "locked"},
         {"ro.boot.realmebootstate", "green"},
-        {"ro.boot.realme.lockstate", "1"}
+        {"ro.boot.realme.lockstate", "1"},
+        {"persist.sys.usb.config", "none"},
+        {"sys.usb.config", "none"},
+        {"sys.usb.state", "disconnected"},
+        {"ro.adb.enabled", "0"},
+        {"persist.adb.enabled", "0"},
+        {"service.adb.root", "0"}
     };
 
     for (size_t i = 0; i < sizeof(core_list) / sizeof(core_list[0]); i++) {
