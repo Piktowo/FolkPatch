@@ -425,6 +425,8 @@ Oto kilka możliwych przyczyn niepowodzenia uwierzytelnienia—proszę sprawdzi�
     <string name="alt_icon_summary">Użyj alternatywnej ikony programu uruchamiającego</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">Włącz wbudowany system montowania modułów</string>
+    <string name="settings_hide_service">FolkPatch Hide</string>
+    <string name="settings_hide_service_summary">Ukryj status odblokowania bootloadera w pewnym stopniu</string>
     <string name="settings_app_title">Tytuł aplikacji</string>
     <string name="settings_custom_background">Niestandardowe tło</string>
     <string name="settings_custom_background_enabled">Włączono niestandardowe tło</string>

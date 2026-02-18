@@ -31,6 +31,7 @@ import me.bmax.apatch.util.APatchKeyHelper
 import me.bmax.apatch.util.getSELinuxMode
 import me.bmax.apatch.util.isGlobalNamespaceEnabled as checkGlobalNamespaceEnabled
 import me.bmax.apatch.util.isMagicMountEnabled as checkMagicMountEnabled
+import me.bmax.apatch.util.isHideServiceEnabled as checkHideServiceEnabled
 import me.bmax.apatch.util.ui.LocalSnackbarHost
 
 import com.ramcosta.composedestinations.generated.destinations.ApiMarketplaceScreenDestination
@@ -47,6 +48,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
     
     var isGlobalNamespaceEnabled by rememberSaveable { mutableStateOf(false) }
     var isMagicMountEnabled by rememberSaveable { mutableStateOf(false) }
+    var isHideServiceEnabled by rememberSaveable { mutableStateOf(false) }
     var currentSELinuxMode by rememberSaveable { mutableStateOf("Unknown") }
     var searchText by rememberSaveable { mutableStateOf("") }
     
@@ -59,9 +61,11 @@ fun SettingScreen(navigator: DestinationsNavigator) {
             withContext(Dispatchers.IO) {
                 val globalNamespace = checkGlobalNamespaceEnabled()
                 val magicMount = checkMagicMountEnabled()
+                val hideService = checkHideServiceEnabled()
                 val seLinux = getSELinuxMode()
                 isGlobalNamespaceEnabled = globalNamespace
                 isMagicMountEnabled = magicMount
+                isHideServiceEnabled = hideService
                 currentSELinuxMode = seLinux
             }
         }
@@ -98,6 +102,8 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                 onGlobalNamespaceChange = { isGlobalNamespaceEnabled = it },
                 isMagicMountEnabled = isMagicMountEnabled,
                 onMagicMountChange = { isMagicMountEnabled = it },
+                isHideServiceEnabled = isHideServiceEnabled,
+                onHideServiceChange = { isHideServiceEnabled = it },
                 snackBarHost = snackBarHost
             )
 

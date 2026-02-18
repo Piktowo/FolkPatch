@@ -65,6 +65,8 @@ fun GeneralSettings(
     onGlobalNamespaceChange: (Boolean) -> Unit,
     isMagicMountEnabled: Boolean,
     onMagicMountChange: (Boolean) -> Unit,
+    isHideServiceEnabled: Boolean,
+    onHideServiceChange: (Boolean) -> Unit,
     snackBarHost: SnackbarHostState
 ) {
     val context = LocalContext.current
@@ -96,6 +98,10 @@ fun GeneralSettings(
     val magicMountTitle = stringResource(id = R.string.settings_magic_mount)
     val magicMountSummary = stringResource(id = R.string.settings_magic_mount_summary)
     val showMagicMount = (kPatchReady && aPatchReady) && (matchGeneral || shouldShow(searchText, magicMountTitle, magicMountSummary))
+
+    val hideServiceTitle = stringResource(id = R.string.settings_hide_service)
+    val hideServiceSummary = stringResource(id = R.string.settings_hide_service_summary)
+    val showHideService = (kPatchReady && aPatchReady) && (matchGeneral || shouldShow(searchText, hideServiceTitle, hideServiceSummary))
 
     val selinuxModeTitle = stringResource(id = R.string.settings_selinux_mode)
     val selinuxModeSummary = stringResource(id = R.string.settings_selinux_mode_summary)
@@ -153,7 +159,7 @@ fun GeneralSettings(
     val currentSchemeLabel = if (currentScheme == "root_service") stringResource(R.string.app_list_loading_scheme_root_service) else stringResource(R.string.app_list_loading_scheme_package_manager)
     val showAppListLoadingScheme = kPatchReady && (matchGeneral || shouldShow(searchText, appListLoadingSchemeTitle, currentSchemeLabel))
 
-    val showGeneralCategory = showLanguage || showUpdate || showAutoUpdate || showGlobalNamespace || showMagicMount || showResetSuPath || showLauncherIcon || showAppTitle || showDesktopAppName || showDpi || showLog || showFolkXEngine || showAppListLoadingScheme || showSELinuxMode
+    val showGeneralCategory = showLanguage || showUpdate || showAutoUpdate || showGlobalNamespace || showMagicMount || showHideService || showResetSuPath || showLauncherIcon || showAppTitle || showDesktopAppName || showDpi || showLog || showFolkXEngine || showAppListLoadingScheme || showSELinuxMode
 
     // Dialog States
     val showLanguageDialog = remember { mutableStateOf(false) }
@@ -353,6 +359,19 @@ fun GeneralSettings(
                     onCheckedChange = {
                         setMagicMountEnabled(it)
                         onMagicMountChange(it)
+                    })
+            }
+
+            // Hide Service
+            if (showHideService) {
+                SwitchItem(
+                    icon = Icons.Filled.KeyOff,
+                    title = hideServiceTitle,
+                    summary = hideServiceSummary,
+                    checked = isHideServiceEnabled,
+                    onCheckedChange = {
+                        setHideServiceEnabled(it)
+                        onHideServiceChange(it)
                     })
             }
 

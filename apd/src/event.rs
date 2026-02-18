@@ -172,6 +172,31 @@ pub fn on_post_data_fs(superkey: Option<String>) -> Result<()> {
         }
     }
 
+    // Execute Hide Service if enabled
+    if Path::new(defs::HIDE_SERVICE_FILE).exists() {
+        info!("Hide Service enabled, executing hide binary...");
+        if Path::new(defs::HIDE_BINARY_PATH).exists() {
+            let result = Command::new(defs::HIDE_BINARY_PATH)
+                .status();
+            match result {
+                Ok(status) => {
+                    if status.success() {
+                        info!("Hide binary executed successfully");
+                    } else {
+                        warn!("Hide binary exited with status: {:?}", status.code());
+                    }
+                }
+                Err(e) => {
+                    warn!("Failed to execute hide binary: {}", e);
+                }
+            }
+        } else {
+            warn!("Hide binary not found at {}", defs::HIDE_BINARY_PATH);
+        }
+    } else {
+        info!("Hide Service disabled");
+    }
+
     // exec modules post-fs-data scripts
     // TODO: Add timeout
     if let Err(e) = module::exec_stage_script("post-fs-data", true) {

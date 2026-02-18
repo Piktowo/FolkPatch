@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+/*
+Core author: SevenOnePlus(https://github.com/SevenOnePlus)
+Packaging: Matsuzaka Yuki(https://github.com/matsuzaka-yuki)
+*/
 
 typedef struct {
     const char *key;

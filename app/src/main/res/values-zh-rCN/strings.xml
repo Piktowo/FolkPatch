@@ -414,6 +414,8 @@
     <string name="settings_app_dpi">应用 DPI</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">启用内置的模块挂载系统</string>
+    <string name="settings_hide_service">FolkPatch Hide</string>
+    <string name="settings_hide_service_summary">一定程度上隐藏Bootloader锁解锁状态</string>
     <string name="settings_app_title">应用名称</string>
     <string name="settings_custom_background">自定义背景</string>
     <string name="settings_custom_background_enabled">已启用自定义背景</string>

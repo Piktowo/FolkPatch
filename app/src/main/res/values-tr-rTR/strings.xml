@@ -423,6 +423,8 @@ Bol şans! Ayrıca, aşağıdaki belge butonuna tıklamak kesinlikle doğru!</st
     <string name="settings_app_dpi">Uygulama DPI</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">Dahili modül bağlama sistemini etkinleştir</string>
+    <string name="settings_hide_service">FolkPatch Hide</string>
+    <string name="settings_hide_service_summary">Bootloader kilidi açık durumunu bir ölçüde gizle</string>
     <string name="settings_app_title">Uygulama Başlığı</string>
     <string name="settings_custom_background">Özel Arka Plan</string>
     <string name="settings_custom_background_enabled">Özel Arka Plan Etkin</string>

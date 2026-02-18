@@ -434,6 +434,8 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="settings_app_dpi">App DPI</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">Enable the built-in module mounting system</string>
+    <string name="settings_hide_service">FolkPatch Hide</string>
+    <string name="settings_hide_service_summary">Hide Bootloader unlock status to some extent</string>
     <string name="settings_app_title">App Title</string>
     <string name="settings_custom_background">Custom Background</string>
     <string name="settings_custom_background_enabled">Custom Background Enabled</string>

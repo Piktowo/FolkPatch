@@ -406,6 +406,59 @@ fun setMagicMountEnabled(enable: Boolean) {
         }
 }
 
+fun isHideServiceEnabled(): Boolean {
+    val hideService = SuFile(APApplication.HIDE_SERVICE_FILE)
+    hideService.shell = getRootShell()
+    return hideService.exists()
+}
+
+fun setHideServiceEnabled(enable: Boolean) {
+    val shell = getRootShell()
+    shell.newJob().add("${if (enable) "touch" else "rm -rf"} ${APApplication.HIDE_SERVICE_FILE}")
+        .submit { result ->
+            Log.i(TAG, "setHideServiceEnabled result: ${result.isSuccess} [${result.out}]")
+        }
+    // 如果启用，立即执行一次 Hide 二进制
+    if (enable) {
+        executeHideBinary()
+    }
+}
+
+fun executeHideBinary(): Boolean {
+    val shell = getRootShell()
+    val context = apApp.applicationContext
+    
+    // 确保 bin 目录存在
+    shell.newJob().add("mkdir -p ${APApplication.APATCH_FOLDER}bin").exec()
+    
+    // 从 assets 复制 Hide 二进制文件到可执行目录
+    try {
+        val hideAsset = context.assets.open("Service/Hide")
+        val tempFile = File(context.cacheDir, "hide_temp")
+        tempFile.outputStream().use { output ->
+            hideAsset.copyTo(output)
+        }
+        hideAsset.close()
+        
+        // 复制到目标目录并设置权限
+        val cmds = arrayOf(
+            "cp ${tempFile.absolutePath} ${APApplication.HIDE_BINARY_PATH}",
+            "chmod 755 ${APApplication.HIDE_BINARY_PATH}",
+            "restorecon ${APApplication.HIDE_BINARY_PATH}",
+            APApplication.HIDE_BINARY_PATH
+        )
+        
+        val result = shell.newJob().add(*cmds).exec()
+        tempFile.delete()
+        
+        Log.i(TAG, "executeHideBinary result: ${result.isSuccess} [${result.out}]")
+        return result.isSuccess
+    } catch (e: Exception) {
+        Log.e(TAG, "executeHideBinary failed: ${e.message}", e)
+        return false
+    }
+}
+
 /**
  * Get current SELinux mode
  * @return "Enforcing" | "Permissive" | "Unknown"

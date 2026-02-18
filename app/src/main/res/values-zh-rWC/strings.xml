@@ -414,6 +414,8 @@
     <string name="settings_app_dpi">仙器DPI</string>
     <string name="settings_magic_mount">Folk Mount API</string>
     <string name="settings_magic_mount_summary">启内建仙符挂载系统</string>
+    <string name="settings_hide_service">FolkPatch Hide</string>
+    <string name="settings_hide_service_summary">施展障眼法隐藏Bootloader解锁状态</string>
     <string name="settings_app_title">仙器名讳</string>
     <string name="settings_custom_background">自定仙府背景</string>
     <string name="settings_custom_background_enabled">已启自定仙府背景</string>
