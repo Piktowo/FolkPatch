@@ -745,12 +745,6 @@ Komutların çalışması için uygulamanın tamamen kapatılıp yeniden açıld
     <string name="settings_list_card_hide_status_badge_summary">Ana sayfa durum rozetini klasik emojiye dönüştür</string>
     <string name="settings_custom_badge_text">Özel Rozet Metni</string>
     <string name="settings_custom_badge_text_summary">Rozetin metin gösterimini değiştir, sadece eğlence amaçlı</string>
-    <string name="settings_custom_badge_text_full_half">Tam/Yarım (Varsayılan)</string>
-    <string name="settings_custom_badge_text_lkm">LKM</string>
-    <string name="settings_custom_badge_text_gki">GKI</string>
-    <string name="settings_custom_badge_text_n_gki">N-GKI</string>
-    <string name="settings_custom_badge_text_oki">OKI</string>
-    <string name="settings_custom_badge_text_built_in">Yerleşik</string>
 
     <!-- Install Mode Select -->
     <string name="kp_install_methods">KernelPatch Yamala/Kur</string>

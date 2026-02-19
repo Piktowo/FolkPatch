@@ -662,12 +662,6 @@
     <string name="settings_list_card_hide_status_badge_summary">ホームのステータスバッジにクラシックの絵文字を使用します。</string>
     <string name="settings_custom_badge_text">カスタムバッジテキスト</string>
     <string name="settings_custom_badge_text_summary">バッジのテキスト表示を変更します。</string>
-    <string name="settings_custom_badge_text_full_half">完全/一部 (デフォルト)</string>
-    <string name="settings_custom_badge_text_lkm">LKM</string>
-    <string name="settings_custom_badge_text_gki">GKI</string>
-    <string name="settings_custom_badge_text_n_gki">非 GKI</string>
-    <string name="settings_custom_badge_text_oki">OKI</string>
-    <string name="settings_custom_badge_text_built_in">内蔵</string>
     <!-- Install Mode Select -->
     <string name="kp_install_methods">KernelPatch をパッチ/インストール</string>
     <string name="restore_boot_methods">boot パーティションを復元する boot を選択してください</string>
