@@ -76,6 +76,7 @@ class APModuleViewModel : ViewModel() {
     private val prefs = APApplication.sharedPreferences
     var sortOptimizationEnabled by mutableStateOf(prefs.getBoolean("module_sort_optimization", true))
     private val bannerCache = mutableStateMapOf<String, BannerInfo>()
+    private val moduleSizeCache = mutableStateMapOf<String, Long>()
 
     private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         if (key == "module_sort_optimization") {
@@ -150,6 +151,11 @@ class APModuleViewModel : ViewModel() {
         keysToRemove.forEach { bannerCache.remove(it) }
     }
 
+    private fun pruneModuleSizeCache(validIds: Set<String>) {
+        val keysToRemove = moduleSizeCache.keys.filter { it !in validIds }
+        keysToRemove.forEach { moduleSizeCache.remove(it) }
+    }
+
     fun fetchModuleList() {
         viewModelScope.launch(Dispatchers.IO) {
             isRefreshing = true
@@ -191,6 +197,7 @@ class APModuleViewModel : ViewModel() {
                         )
                     }.toList()
                 pruneBannerCache(modules.map { it.id }.toSet())
+                pruneModuleSizeCache(modules.map { it.id }.toSet())
                 isNeedRefresh = false
             }.onFailure { e ->
                 Log.e(TAG, "fetchModuleList: ", e)
@@ -257,17 +264,24 @@ class APModuleViewModel : ViewModel() {
     }
 
     fun getModuleSize(moduleId: String): String {
+        moduleSizeCache[moduleId]?.let { cachedBytes ->
+            return formatFileSize(cachedBytes)
+        }
+
         val bytes = runCatching {
-            // Commit: https://github.com/SukiSU-Ultra/SukiSU-Ultra/commit/787c88ab2d070f3c6ec7ddff2f4ace1f3ebdd0c3#diff-0096fc38da30ffd8ed48e51a10354d85ca6218b67506538beae11fe4fe035ea4
-            val command = "/data/adb/ap/bin/busybox du -sb /data/adb/modules/$moduleId"
+            val command = "/data/adb/ap/bin/busybox find /data/adb/modules/$moduleId -type f -exec stat -c '%s %i' {} + 2>/dev/null | /data/adb/ap/bin/busybox awk '{if(!seen[\$2]++) total+=\$1} END {print total}'"
             val result = getRootShell().newJob().add(command).to(ArrayList(), null).exec()
 
             if (result.isSuccess && result.out.isNotEmpty()) {
-                val sizeStr = result.out.firstOrNull()?.split("\t")?.firstOrNull()
-                sizeStr?.toLongOrNull() ?: 0L
+                val size = result.out.firstOrNull()?.trim()?.toLongOrNull() ?: 0L
+                moduleSizeCache[moduleId] = size
+                size
             } else {
                 0L
             }
+        }.onFailure { e ->
+            Log.e(TAG, "Error calculating module size for $moduleId", e)
+            0L
         }.getOrDefault(0L)
 
         return formatFileSize(bytes)
