@@ -43,6 +43,7 @@
     <string name="reboot_edl">Перезагрузить в EDL</string>
     <string name="reboot_fastbootd">Перезагрузить в FastbootD</string>
     <string name="about">О приложении</string>
+    <string name="developer_and_maintainer">Разработчик | Сопровождающий</string>
     <string name="settings_app_language">Язык</string>
     <string name="system_default">По умолчанию системы</string>
     <string name="settings_global_namespace_mode">Глобальный режим пространства имён</string>
@@ -62,6 +63,9 @@
     <string name="save_log">Сохранить логи</string>
     <string name="log_saved">Логи сохранены</string>
     <string name="safe_mode">Безопасный режим</string>
+    <string name="github">GitHub</string>
+    <string name="telegram">Telegram</string>
+    <string name="support_or_donate">Поддержка / Пожертвование</string>
 
     <string name="super_key">SuperKey</string>
     <string name="clear_super_key">Очистить SuperKey</string>

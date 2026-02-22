@@ -42,6 +42,7 @@
     <string name="reboot_edl">Uruchom ponownie w trybie EDL</string>
     <string name="reboot_fastbootd">Uruchom ponownie w trybie FastbootD</string>
     <string name="about">O aplikacji</string>
+    <string name="developer_and_maintainer">Deweloper | Opiekun</string>
     <string name="settings_app_language">Język</string>
     <string name="system_default">Domyślne ustawienia systemowe</string>
     <string name="settings_global_namespace_mode">Tryb globalnej przestrzeni nazw</string>
@@ -61,6 +62,9 @@
     <string name="save_log">Zapisz logi</string>
     <string name="log_saved">Logi zapisane</string>
     <string name="safe_mode">Tryb awaryjny</string>
+    <string name="github">GitHub</string>
+    <string name="telegram">Telegram</string>
+    <string name="support_or_donate">Wsparcie / Darowizna</string>
 
     <string name="super_key">SuperKlucz</string>
     <string name="clear_super_key">Wyczyść SuperKlucz</string>

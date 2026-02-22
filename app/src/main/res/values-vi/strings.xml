@@ -40,6 +40,7 @@
     <string name="reboot_edl">Khởi động lại vào EDL</string>
     <string name="reboot_fastbootd">Khởi động lại vào FastbootD</string>
     <string name="about">Về</string>
+    <string name="developer_and_maintainer">Nhà phát triển | Người bảo trì</string>
     <string name="settings_app_language">Ngôn ngữ</string>
     <string name="system_default">Mặc định hệ thống</string>
     <string name="settings_global_namespace_mode">Chế độ không gian tên toàn cục</string>
@@ -56,6 +57,9 @@
     <string name="save_log">Lưu nhật ký</string>
     <string name="log_saved">Nhật ký đã được lưu</string>
     <string name="safe_mode">Chế độ an toàn</string>
+    <string name="github">GitHub</string>
+    <string name="telegram">Telegram</string>
+    <string name="support_or_donate">Hỗ trợ / Quyên góp</string>
 
     <string name="super_key">Khóa siêu cấp</string>
     <string name="clear_super_key">Xóa khóa siêu cấp</string>

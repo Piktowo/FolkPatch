@@ -38,6 +38,7 @@
     <string name="reboot_edl">重启到 EDL</string>
     <string name="reboot_fastbootd">重启到 FastbootD</string>
     <string name="about">关于</string>
+    <string name="developer_and_maintainer">开发者 | 维护者</string>
     <string name="settings_app_language">语言</string>
     <string name="system_default">系统默认</string>
     <string name="settings_global_namespace_mode">全局命名空间模式</string>
@@ -70,6 +71,9 @@
     <string name="save_log">保存日志</string>
     <string name="log_saved">日志已保存</string>
     <string name="safe_mode">安全模式</string>
+    <string name="github">GitHub</string>
+    <string name="telegram">Telegram</string>
+    <string name="support_or_donate">支持 / 捐赠</string>
 
     <string name="super_key">超级密钥</string>
     <string name="clear_super_key">清除超级密钥</string>

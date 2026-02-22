@@ -65,6 +65,10 @@
     <string name="save_log">ログを保存</string>
     <string name="log_saved">ログを保存しました。</string>
     <string name="safe_mode">セーフモード</string>
+    <string name="developer_and_maintainer">開発者 | メンテナ</string>
+    <string name="github">GitHub</string>
+    <string name="telegram">Telegram</string>
+    <string name="support_or_donate">サポート / 寄付</string>
     <string name="super_key">SuperKey</string>
     <string name="clear_super_key">SuperKey を消去</string>
     <string name="patch_set_superkey">SuperKey を設定</string>

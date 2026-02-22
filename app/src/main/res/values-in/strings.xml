@@ -43,6 +43,7 @@
     <string name="reboot_edl">Mulai Ulang ke EDL</string>
     <string name="reboot_fastbootd">Mulai Ulang ke FastbootD</string>
     <string name="about">Tentang Aplikasi</string>
+    <string name="developer_and_maintainer">Pengembang | Pemelihara</string>
     <string name="settings_app_language">Bahasa</string>
     <string name="system_default">Bawaan Sistem</string>
     <string name="settings_global_namespace_mode">Mode Ruang Nama Global</string>
@@ -62,6 +63,9 @@
     <string name="save_log">Simpan Log</string>
     <string name="log_saved">Log tersimpan</string>
     <string name="safe_mode">Mode Aman</string>
+    <string name="github">GitHub</string>
+    <string name="telegram">Telegram</string>
+    <string name="support_or_donate">Dukung / Donasi</string>
 
     <string name="super_key">SuperKey</string>
     <string name="clear_super_key">Hapus SuperKey</string>

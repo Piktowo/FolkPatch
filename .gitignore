@@ -24,3 +24,6 @@ private
 # Built native binaries
 app/src/main/assets/Service/Hide
 FolkS/build/
+
+# demo project
+demo

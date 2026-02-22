@@ -38,6 +38,7 @@
     <string name="reboot_edl">Reboot to EDL</string>
     <string name="reboot_fastbootd">Reboot to FastbootD</string>
     <string name="about">About</string>
+    <string name="developer_and_maintainer">Developer | Maintainer</string>
     <string name="settings_app_language">Language</string>
     <string name="system_default">System default</string>
     <string name="settings_global_namespace_mode">Global namespace mode</string>
@@ -78,6 +79,7 @@
     <string name="save_log">Save logs</string>
     <string name="log_saved">Logs saved</string>
     <string name="safe_mode">Safe mode</string>
+    <string name="support_or_donate">Support / Donate</string>
 
     <string name="super_key">SuperKey</string>
     <string name="clear_super_key">Clear SuperKey</string>
@@ -389,6 +391,8 @@ Here are some possible reasons for authentication failure—please check which o
     <string name="about_app_desc">A kernel-based root solution that supports kernel modules and kernel function hooks without recompiling the kernel.</string>
     <string name="about_powered_by">Powered by %1$s</string>
     <string name="about_telegram_group">Telegram Group</string>
+    <string name="github">GitHub</string>
+    <string name="telegram">Telegram</string>
     
     <!-- Online Module Strings -->
     <string name="online_module_title">Online System Module</string>

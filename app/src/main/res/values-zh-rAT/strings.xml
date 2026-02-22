@@ -40,6 +40,7 @@
     <string name="reboot_edl">进入梦界圣域</string>
     <string name="reboot_fastbootd">前往天使神殿</string>
     <string name="about">创世之纪</string>
+    <string name="developer_and_maintainer">圣光使者 | 圣域守护者</string>
     <string name="settings_app_language">圣域语言</string>
     <string name="system_default">天意默认</string>
     <string name="settings_global_namespace_mode">全域圣境领域</string>
@@ -56,6 +57,9 @@
     <string name="save_log">保存神谕日志</string>
     <string name="log_saved">神谕日志已保存</string>
     <string name="safe_mode">圣域守护模式</string>
+    <string name="github">GitHub</string>
+    <string name="telegram">Telegram</string>
+    <string name="support_or_donate">神力支持 / 圣光捐赠</string>
 
     <string name="super_key">圣光之心</string>
     <string name="clear_super_key">净化圣光之心</string>

@@ -38,6 +38,7 @@
     <string name="reboot_edl">EDL Moduna Yeniden Başlat</string>
     <string name="reboot_fastbootd">FastbootD Moduna Yeniden Başlat</string>
     <string name="about">Hakkında</string>
+    <string name="developer_and_maintainer">Geliştirici | Bakımcı</string>
     <string name="settings_app_language">Dil</string>
     <string name="system_default">Sistem varsayılanı</string>
     <string name="settings_global_namespace_mode">Global ad alanı modu</string>
@@ -78,6 +79,9 @@
     <string name="save_log">Günlükleri kaydet</string>
     <string name="log_saved">Günlükler kaydedildi</string>
     <string name="safe_mode">Güvenli mod</string>
+    <string name="github">GitHub</string>
+    <string name="telegram">Telegram</string>
+    <string name="support_or_donate">Destek / Bağış</string>
 	
     <string name="super_key">SuperKey</string>
     <string name="clear_super_key">SuperKey’i Temizle</string>

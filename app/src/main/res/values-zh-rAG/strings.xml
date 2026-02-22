@@ -38,6 +38,7 @@
     <string name="reboot_edl">重启到EDL模式哒喵！</string>
     <string name="reboot_fastbootd">重启到FastbootD模式哒喵！</string>
     <string name="about">关于人家哒</string>
+    <string name="developer_and_maintainer">开发者喵 | 维护者喵</string>
     <string name="settings_app_language">语言设置喵</string>
     <string name="system_default">系统默认哒</string>
     <string name="settings_global_namespace_mode">全局命名空间模式喵</string>
@@ -70,6 +71,9 @@
     <string name="save_log">保存日志喵！</string>
     <string name="log_saved">日志已经乖乖存好了喵！</string>
     <string name="safe_mode">安全模式喵</string>
+    <string name="github">GitHub</string>
+    <string name="telegram">Telegram</string>
+    <string name="support_or_donate">支持喵 / 捐赠喵</string>
 
     <string name="super_key">超级密钥喵</string>
     <string name="clear_super_key">清掉这个密钥喵</string>

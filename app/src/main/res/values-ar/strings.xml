@@ -40,6 +40,7 @@
     <string name="reboot_edl">إعادة التشغيل إلى وضع EDL</string>
     <string name="reboot_fastbootd">إعادة التشغيل إلى وضع FastbootD</string>
     <string name="about">حول</string>
+    <string name="developer_and_maintainer">المطور | المشرف</string>
     <string name="settings_app_language">اللغة</string>
     <string name="system_default">افتراضي النظام</string>
     <string name="settings_global_namespace_mode">وضع مساحة الاسم العام</string>
@@ -88,6 +89,9 @@
     <string name="save_log">حفظ السجلات</string>
     <string name="log_saved">تم حفظ السجلات</string>
     <string name="safe_mode">الوضع الآمن</string>
+    <string name="github">GitHub</string>
+    <string name="telegram">Telegram</string>
+    <string name="support_or_donate">دعم / تبرع</string>
 
     <string name="super_key">المفتاح الخارق</string>
     <string name="clear_super_key">مسح المفتاح الخارق</string>

@@ -52,6 +52,7 @@ fun SearchAppBar(
     onConfirm: (() -> Unit)? = null,
     dropdownContent: @Composable (() -> Unit)? = null,
     leadingActions: @Composable (() -> Unit)? = null,
+    trailingActions: @Composable (() -> Unit)? = null,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
@@ -157,6 +158,7 @@ fun SearchAppBar(
             }
 
             dropdownContent?.invoke()
+            trailingActions?.invoke()
 
         }
     )
