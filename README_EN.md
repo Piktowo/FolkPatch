@@ -1,5 +1,5 @@
 <div align="center">
-<img src='logo.png'alt="FolkPatch logo">
+<img src='logo.png' width='500px' alt="FolkPatch logo">
 
 [![Latest Release](https://img.shields.io/github/v/release/matsuzaka-yuki/FolkPatch?label=Release&logo=github)](https://github.com/matsuzaka-yuki/FolkPatch/releases/latest)
 [![Channel](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/FolkPatch)
@@ -28,89 +28,66 @@ Get started quickly with our comprehensive documentation. Whether it's installat
   <tr>
 </table>
 
-## 🚀 NEW: Core Features Optimization
-
-> **🎯 Smart Module Management** - Fully automated KPM loading mechanism without embedding into Boot, providing a more stable Root experience
-
-
-### 🔧 Module System Refactoring
-- **APM Batch Flashing System:** Supports a Magisk-like module system with batch flashing for greater efficiency
-- **KPM Automated Loading:** Supports kernel-injectable modules with fully automated loading mechanism, no manual embedding required
-- **Full Module Backup:** One-click backup of all modules, enjoy Root access with peace of mind
-
-### 📐 Interface Design Optimization
-- **Custom Wallpaper System:** Enhanced customization with support for custom wallpapers, creating your personalized interface
-- **Modern UI Design:** Carefully optimized interface design providing a smooth visual experience
-- **Multi-language Support:** Multiple featured language styles for on-demand switching
-
-### 🛠 Feature Enhancements
-- **Online Module Download:** Integrated online module download functionality for quick access to popular modules
-- **Global Module Exclusion:** Global module exclusion feature for faster and more convenient operation
-- **Removed Auto-update:** Removed auto-update feature for a more stable user experience
-
 ---
 
-## ✨ Features
+## ✨ Introduction
 
 ### 🎨 Core Features
-- [x] Kernel-based Android device rooting solution
-- [x] Supports ARM64 architecture devices
-- [x] Supports Android kernel versions 3.18 - 6.12
-- [x] APM: Supports a Magisk-like module system
-- [x] KPM: Supports kernel-injectable modules (providing kernel functions `inline-hook` and `syscall-table-hook`)
+- [x] Android kernel-level Root implementation
+- [x] Hook kernel functions without recompiling the kernel
 
-### 🎨 Interface & Design
-- [x] Optimized modern interface design
-- [x] Custom wallpaper support
-- [x] Multi-language support
-- [x] Smooth user experience
-- [x] Beautiful visual effects
+### 📱 Prerequisites
 
-### 📦 Module System
-- [x] Batch flashing APM modules
-- [x] Fully automated KPM loading mechanism
-- [x] Full module backup functionality
-- [x] Global module exclusion
-- [x] Online module download
+- **Required:** ARM64 architecture Android device with Linux kernel version 3.18 to 6.15
+
+### 🎨 Manager Interface & Design
+- [x] Brand new UI and interaction experience optimization
+- [x] Personalized wallpaper support
+- [x] Internationalization support
+- [x] Animation performance and interaction fluency optimization
+- [x] Interface visual details and dynamic effects enhancement
+- [x] Support for manually disabling automatic update checks, giving users control over version upgrades
+
+### 📦 Module Related
+- [x] APM: Magisk-like module system, supports batch flashing and full backup
+- [x] KPM: Kernel module system (supports inline-hook and syscall-table-hook), supports automatic loading
+- [x] Download popular APM or KPM through the store
 
 ### ⚡ Technical Features
-- [x] Based on [KernelPatch](https://github.com/bmax121/KernelPatch/) core
-- [x] Removed auto-update for stable experience
-- [x] KPM loading without Boot embedding
-- [x] Smart module management
+- [x] Based on [KernelPatch](https://github.com/bmax121/KernelPatch/)
 
 ## 🚀 Download & Install
 
-### 📦 Installation
+### 📦 Installation Guide
 
 1. **Download & Install:**
-   Download the latest APK file from the [Releases Section](https://github.com/matsuzaka-yuki/FolkPatch/releases/latest)
+   Download the latest installation package from the [Releases page](https://github.com/matsuzaka-yuki/FolkPatch/releases/latest)
 
 2. **Install App:**
-   Directly install the APK file to your Android device
+   Install the latest installation package to your Android device
 
 3. **Get Started:**
-   Open FolkPatch application and follow the guide to complete Root setup
-
-### 📱 System Requirements
-
-- **Architecture:** Supports ARM64 architecture
-- **Kernel Version:** Supports Android kernel versions 3.18 - 6.12
+   Read https://fp.mysqil.com/
 
 ## 🙏 Open Source Credits
 
 This project is based on the following open source projects:
 
-- [KernelPatch](https://github.com/bmax121/KernelPatch/) - The core component
-- [Magisk](https://github.com/topjohnwu/Magisk) - magiskboot and magiskpolicy
-- [KernelSU](https://github.com/tiann/KernelSU) - App UI, and Magisk module like support
-- [Sukisu-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) - Reference some UI designs
+- [KernelPatch](https://github.com/bmax121/KernelPatch/) - Core component
+- [Magisk](https://github.com/topjohnwu/Magisk) - magiskpolicy
+- [KernelSU](https://github.com/tiann/KernelSU) - App UI and Magisk-like module support
+- [Sukisu-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) - Referenced some interface designs
 - [APatch](https://github.com/bmax121/APatch) - Upstream branch
 
 ## 📄 License
 
-FolkPatch is licensed under the [GNU General Public License v3 (GPL-3)](http://www.gnu.org/copyleft/gpl.html).
-
+- FolkPatch is open sourced under the [GNU General Public License v3 (GPL-3)](http://www.gnu.org/copyleft/gpl.html) license. As a modifier or distributor, you must comply with the following standards:
+- If you modify the code or integrate FolkPatch into your project and distribute it to a third party, your entire project must also be open sourced under the GPLv3 license
+- When distributing binary files, you must actively provide or promise to provide complete and readable source code
+- Strictly prohibit charging licensing fees for the software license itself. You may charge for distribution, technical support, or customized development
+- Distribution implies that you grant all users the relevant patents involved in the use of the project
+- This software is provided "as is", without any warranty. The original author is not responsible for any losses caused by using this software
+- Any violation of the above terms will automatically terminate your GPLv3 license. At that time, you will lose the legal right to distribute FolkPatch. The original author reserves the right to pursue copyright infringement liability (including but not limited to applying for injunctions to stop infringement, economic compensation, and removing infringing projects)
 ## 💬 Community & Discussion
 
 ### FolkPatch Discussion & Communication

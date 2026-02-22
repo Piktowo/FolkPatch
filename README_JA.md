@@ -1,5 +1,5 @@
 <div align="center">
-<img src='logo.png'alt="FolkPatch logo">
+<img src='logo.png' width='500px' alt="FolkPatch logo">
 
 [![Latest Release](https://img.shields.io/github/v/release/matsuzaka-yuki/FolkPatch?label=Release&logo=github)](https://github.com/matsuzaka-yuki/FolkPatch/releases/latest)
 [![Channel](https://img.shields.io/badge/Follow-Telegram-blue.svg?logo=telegram)](https://t.me/FolkPatch)
@@ -9,7 +9,7 @@
 
 🌏 **README の言語:** [**English**](./README_EN.md) / [**中文**](./README.md) / [**日本語**](./README_JA.md)
 
-FolkPatch - インターフェースの最適化と拡張機能に重視した root 管理ツール。
+FolkPatch - インターフェースの最適化と拡張機能に重視した Root 管理ツール
 
 包括的なドキュメントですぐに開始しましょう。インストール、モジュールの管理、カスタム設定など FolkPatch を快適に使用するための情報はドキュメントに網羅しています。
 
@@ -28,91 +28,68 @@ FolkPatch - インターフェースの最適化と拡張機能に重視した r
   <tr>
 </table>
 
-## 🚀 NEW: コア機能の最適化
-
-> **🎯 スマートなモジュール管理** - boot に埋め込むことなく KPM の読み込みメカニズムを完全に自動化、より安定した root エクスペリエンスを提供します。
-
-
-### 🔧 モジュールシステムのリファクタリング
-- **APM 一括フラッシュシステム:** 一括フラッシュ機能を備えた、Magisk ライクなモジュールシステムをサポート、高い効率性が期待できます
-- **KPM の自動読み込み:** 完全に自動化された読み込みメカニズムを備えたカーネルインジェクションでのモジュールのサポートで、手動での埋め込みが不要です
-- **完全なモジュールのバックアップ:** すべてのモジュールをワンタップでバックアップ、安心して root アクセスを楽しみましょう
-
-### 📐 インターフェースデザインの最適化
-- **カスタム壁紙システム:** カスタム壁紙のサポートでのカスタマイズの強化、パーソナライズされたインターフェースの作成に対応
-- **モダン UI デザイン:** スムーズな視覚体験を提供、最適化されたインターフェース設計になっています
-- **多言語をサポート:** オンデマンドで複数の言語スタイルを切り替え
-
-### 🛠 機能の強化
-- **オンラインモジュールのダウンロード:** 人気のモジュールに素早くアクセスするためにオンラインモジュールダウンロード機能を統合しています
-- **グローバルモジュールを除外:** より高速で便利な操作が可能な、グローバルモジュールの除外機能
-- **自動更新を削除:** より安定したユーザーエクスペリエンスを実現するために自動更新機能を削除
-
 ---
 
-## ✨ 機能
+## ✨ 紹介
 
 ### 🎨 コア機能
-- [x] カーネルベースな Android デバイスの root ソリューション
-- [x] ARM64 アーキテクチャに対応しているデバイス
-- [x] Android カーネル バージョン 3.18 - 6.12 に対応
-- [x] APM: Magisk ライクなモジュールシステムに対応
-- [x] KPM: カーネルインジェクションのモジュールに対応 (カーネル関数 `inline-hook` と `syscall-table-hook`)
+- [x] Android カーネルレベルの Root 実装ソリューション
+- [x] カーネルの再コンパイルなしでカーネル関数をフック可能
 
-### 🎨 インターフェースとデザイン
-- [x] 最適化されたモダンなインターフェース
-- [x] カスタム壁紙に対応
-- [x] 多言語に対応
-- [x] スムーズなユーザーエクスペリエンス
-- [x] 美しいビジュアル効果
+### 📱 前提条件
 
-### 📦 モジュールシステム
-- [x] APM を一括でフラッシュ
-- [x] 完全な自動 KPM 読み込みメカニズム
-- [x] 完全なモジュールのバックアップ機能
-- [x] グローバルモジュールの除外
-- [x] オンラインモジュールのダウンロード
+- **必須：** ARM64 アーキテクチャベースで Linux カーネルバージョン 3.18 から 6.15 の Android デバイス
 
-### ⚡ 技術的な特徴
-- [x] [KernelPatch](https://github.com/bmax121/KernelPatch/) のコアをベースにしています
-- [x] 安定したエクスペリエンスのために自動更新を削除
-- [x] KPM を boot に埋め込みなしで読み込み
-- [x] スマートなモジュール管理
+### 🎨 マネージャーのインターフェースとデザイン
+- [x] 全く新しい UI とインタラクションエクスペリエンスの最適化
+- [x] パーソナライズされた壁紙サポート
+- [x] 国際化サポート
+- [x] アニメーションパフォーマンスとインタラクションの滑らかさの最適化
+- [x] インターフェースの視覚的詳細と動的効果の向上
+- [x] 自動更新チェックの手動無効化をサポートし、バージョンアップグレードの主導権をユーザーに返還
+
+### 📦 モジュール関連
+- [x] APM: Magisk ライクなモジュールシステム、一括フラッシュとフルバックアップをサポート
+- [x] KPM: カーネルモジュールシステム（inline-hook と syscall-table-hook をサポート）、自動ロードをサポート
+- [x] ストアから人気のある APM または KPM をダウンロード可能
+
+### ⚡ 技術的特徴
+- [x] [KernelPatch](https://github.com/bmax121/KernelPatch/) に基づいています
 
 ## 🚀 ダウンロードとインストール
 
-### 📦 インストール
+### 📦 インストールガイド
 
 1. **ダウンロードとインストール:**
-   [Releases](https://github.com/matsuzaka-yuki/FolkPatch/releases/latest) の項目から最新の APK をダウンロードしてください
+   [リリースページ](https://github.com/matsuzaka-yuki/FolkPatch/releases/latest)から最新のインストールパッケージをダウンロード
 
 2. **アプリをインストール:**
-   直接で APK ファイルを Android デバイスにインストールしてください
+   最新のインストールパッケージをあなたの Android デバイスにインストール
 
 3. **使用開始:**
-   FolkPatch アプリを開いてガイドに従い、root 設定を完了します
-
-### 📱 システム要件
-
-- **アーキテクチャ:** ARM64 のアーキテクチャに対応
-- **カーネル バージョン:** Android カーネル バージョン 3.18 - 6.12 に対応
+   https://fp.mysqil.com/ を読んでください
 
 ## 🙏 オープンソースクレジット
 
-このプロジェクトは、以下のオープンソースプロジェクトに基づいています:
+このプロジェクトは以下のオープンソースプロジェクトに基づいています:
 
 - [KernelPatch](https://github.com/bmax121/KernelPatch/) - コアコンポーネント
-- [Magisk](https://github.com/topjohnwu/Magisk) - magiskboot と magiskpolicy
-- [KernelSU](https://github.com/tiann/KernelSU) - アプリ UI と Magisk モジュールライクのサポート
-- [Sukisu-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) - UI デザインのリファレンス
-- [APatch](https://github.com/bmax121/APatch) - 上流のブランチ
+- [Magisk](https://github.com/topjohnwu/Magisk) - magiskpolicy
+- [KernelSU](https://github.com/tiann/KernelSU) - アプリ UI と Magisk ライクなモジュールサポート
+- [Sukisu-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) - 一部のインターフェースデザインを参照
+- [APatch](https://github.com/bmax121/APatch) - 上流ブランチ
 
 ## 📄 ライセンス
 
-FolkPatch は [GNU General Public License v3 (GPL-3)](http://www.gnu.org/copyleft/gpl.html) に基づいています。
-
+- FolkPatch は [GNU General Public License v3 (GPL-3)](http://www.gnu.org/copyleft/gpl.html) ライセンスの下でオープンソースされています。変更者または配布者として、以下の基準を遵守する必要があります:
+- コードを変更した場合、またはプロジェクトに FolkPatch を統合して第三者に配布する場合、プロジェクト全体も GPLv3 ライセンスの下でオープンソースする必要があります
+- バイナリファイルを配布する場合、完全かつ読み取り可能なソースコードを積極的に提供するか、提供することを約束する必要があります
+- ソフトウェアライセンス自体に対するライセンス料の徴収を厳禁します。配布、技術サポート、カスタム開発に対して料金を請求できます
+- 配布行為は、プロジェクトに関連するすべてのユーザーにあなたの関連特許の使用権を付与することを意味します
+- 本ソフトウェアは「現状のまま」提供され、いかなる保証もありません。原作者は本ソフトウェアの使用による損失について責任を負いません
+- 上記の条項に違反すると GPLv3 ライセンスは自動的に終了します。その際、FolkPatch を配布する正当な権利を失い、原作者は著作権侵害の責任を追求する権利（侵害停止命令の申請、経済的賠償、違反プロジェクトの削除を含むがこれらに限定されない）を留保します
 ## 💬 コミュニティとディスカッション
 
-### FolkPatch コミュニティとディスカッション
+### FolkPatch ディスカッションとコミュニケーション
 - Telegram チャンネル: [@FolkPatch](https://t.me/FolkPatch)
-- QQ Group: 1074588103
+- QQ グループ: 1074588103
